@@ -235,7 +235,7 @@ if __name__ == "__main__":
     quali = False
     dpi_convert = 300
     out_path = f"/storage/projects/GerParCorEmptyOut/"
-    with open("/storage/xmi/GerParCorDownload/emptySofa.txt", "-r", encoding="UTF-8") as txt:
+    with open("/storage/xmi/GerParCorDownload/emptySofa.txt", "r", encoding="UTF-8") as txt:
         all_files = txt.readlines()
         scan_List_to_text(all_files, out_path, quali, dpi_convert, "deu")
 
