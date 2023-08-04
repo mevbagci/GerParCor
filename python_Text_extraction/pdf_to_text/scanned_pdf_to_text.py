@@ -11,6 +11,7 @@ import cv2
 import pathlib
 from multiprocessing import Pool
 from functools import partial
+from typing import List
 
 set_files = set()
 
@@ -65,7 +66,8 @@ def preprocess_bad_quality_text(img_path: str):
     img_erode = cv2.erode(img_dilate, kernel, iterations=1)
     img_bilateral = cv2.bilateralFilter(img_erode, 5, 75, 75)
     img_filter = cv2.threshold(img_bilateral, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)[1]
-    img_threshold = cv2.adaptiveThreshold(cv2.bilateralFilter(img_filter, 9, 75, 75), 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY, 31, 2)
+    img_threshold = cv2.adaptiveThreshold(cv2.bilateralFilter(img_filter, 9, 75, 75), 255,
+                                          cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY, 31, 2)
     cv2.imwrite(img_path, img_threshold)
 
 
@@ -177,7 +179,7 @@ def scan_dir_to_text(dir_path: str, out_name_dir: str, bad_quali: bool, dpi: int
     :param lang: Language of Tesseract OCR
     """
     part_func = partial(scanned_pdf_to_text, dpi=dpi, lang=lang, out_name_dir=out_name_dir, bad_quali=bad_quali)
-    number_core = int(multiprocessing.cpu_count()/4)
+    number_core = int(multiprocessing.cpu_count() / 4)
     pool = Pool(number_core)
     # files = [os.path.join(dir_path, file) for file in os.listdir(dir_path)]
     global set_files
@@ -198,12 +200,53 @@ def scan_dir_to_text(dir_path: str, out_name_dir: str, bad_quali: bool, dpi: int
     print(f"successes: {successes}, fails: {fails}")
 
 
+def scan_List_to_text(dir_path: List[str], out_name_dir: str, bad_quali: bool, dpi: int = 200, lang: str = "deu"):
+    """
+    Function to convert whole direcotry.
+    :param out_name_dir: Directory for the output
+    :param bad_quali: True if the scanned pdfs have a bad quality otherwise False
+    :param dir_path: Directory of all pdf-files
+    :param dpi: Dpi number of the converted pictures from the pdf pages
+    :param lang: Language of Tesseract OCR
+    """
+    part_func = partial(scanned_pdf_to_text, dpi=dpi, lang=lang, out_name_dir=out_name_dir, bad_quali=bad_quali)
+    number_core = int(multiprocessing.cpu_count() / 4)
+    pool = Pool(number_core)
+    # files = [os.path.join(dir_path, file) for file in os.listdir(dir_path)]
+    # global set_files
+    # set_files = set()
+    # get_all_path_pdf(dir_path)
+    # print(set_files)
+    files = dir_path
+    result = list(tqdm(pool.imap_unordered(part_func, files),
+                       desc=f"Converting files from: {dir_path[0].split('/')[-1]}", total=len(files)))
+    pool.close()
+    pool.join()
+    successes, fails = 0, 0
+    for i in result:
+        if i:
+            successes += 1
+        else:
+            fails += 1
+    print(f"successes: {successes}, fails: {fails}")
+
+
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser()
-    parser.add_argument("-p", "--path_directory", help="path to the directory with the .pdf files")
-    parser.add_argument("-o", "--out", default="pdf_to_txt_out", help="directory path for the outputs of the Tessseract OCR extraction")
-    parser.add_argument("-q", "--quali", default=False, help="Boolean True if scanned pdf documents have a bad quality otherwise False")
-    parser.add_argument("-d", "--dpi", default=200, help="The dpi for converting ever page to a picture")
-    parser.add_argument("-l", "--lang", default="deu", help="The language for the Tesseract OCR extraction")
-    args = parser.parse_args()
-    scan_dir_to_text(dir_path=args.path_directory, out_name_dir=args.out, bad_quali=args.quali, dpi=args.dpi, lang=args.lang)
+    quali = False
+    dpi_convert = 300
+    out_path = f"/storage/projects/GerParCorEmptyOut/"
+    with open("/storage/xmi/GerParCorDownload/emptySofa.txt", "-r", encoding="UTF-8") as txt:
+        all_files = txt.readlines()
+        scan_List_to_text(all_files, out_path, quali, dpi_convert, "deu")
+
+    # parser = argparse.ArgumentParser()
+    # parser.add_argument("-p", "--path_directory", help="path to the directory with the .pdf files")
+    # parser.add_argument("-o", "--out", default="pdf_to_txt_out",
+    #                     help="directory path for the outputs of the Tessseract OCR extraction")
+    # parser.add_argument("-q", "--quali", default=False,
+    #                     help="Boolean True if scanned pdf documents have a bad quality otherwise False")
+    # parser.add_argument("-d", "--dpi", default=200, help="The dpi for converting ever page to a picture")
+    # parser.add_argument("-l", "--lang", default="deu", help="The language for the Tesseract OCR extraction")
+    # args = parser.parse_args()
+    # scan_dir_to_text(dir_path=args.path_directory, out_name_dir=args.out, bad_quali=args.quali, dpi=args.dpi,
+    #                  lang=args.lang)
