@@ -16,7 +16,7 @@ from typing import List
 set_files = set()
 
 
-def pdf_to_image(pdf_path: str, dpi: int, lang: str, bad_quali: bool = False) -> (int, str):
+def pdf_to_image(pdf_path: str, dpi: int, lang: str, output_path, bad_quali: bool = False) -> (int, str):
     """
     Function takes pdf scan as input and converts it to single images (one per page).
     Returns amount of pages
@@ -26,7 +26,7 @@ def pdf_to_image(pdf_path: str, dpi: int, lang: str, bad_quali: bool = False) ->
     :param bad_quali: True if the scanned pdfs have a bad quality otherwise False
     :return:
     """
-    output_path = pdf_path.strip(".pdf") + "_image_safe"
+    output_path = output_path + "/" + pdf_path.split("/")[-1].strip(".pdf") + "_image_safe"
     pathlib.Path(output_path).mkdir(parents=True, exist_ok=True)
     # Store all the pages of the PDF in a variable
     pages = convert_from_path(pdf_path, dpi)
@@ -87,6 +87,7 @@ def image_to_text(image_path: str, pdf_path: str, file_limit: int, lang: str, ou
     # Open the file in append mode so that
     # All contents of all images are added to the same file
     txt_data_name = str(os.path.basename(pdf_path)).replace(".pdf", ".txt")
+    txt_data_name = txt_data_name.replace(" ", "_")
     txt_path = f"{out_dir}/{txt_data_name}"
     makedirs(os.path.dirname(txt_path), exist_ok=True)
     with open(txt_path, "w", encoding="UTF-8") as f:
@@ -160,7 +161,7 @@ def scanned_pdf_to_text(pdf_path: str, out_name_dir: str, bad_quali: bool, dpi=2
     """
     success = False
     try:
-        counter, output_path = pdf_to_image(pdf_path, dpi, lang, bad_quali)
+        counter, output_path = pdf_to_image(pdf_path, dpi, lang, out_name_dir, bad_quali)
         image_to_text(output_path, pdf_path, counter, lang, out_name_dir)
         success = True
     except Exception as e:
@@ -237,8 +238,18 @@ if __name__ == "__main__":
     out_path = f"/storage/projects/GerParCorEmptyOut/"
     with open("/storage/xmi/GerParCorDownload/emptySofa.txt", "r", encoding="UTF-8") as txt:
         all_files = txt.readlines()
-        scan_List_to_text(all_files, out_path, quali, dpi_convert, "deu")
-
+        files = []
+        for file_i in all_files:
+            new_name = file_i.replace("xmi.gz", "pdf").replace("/xmi/", "/pdf/").replace("\n", "").replace("file:", "")
+            new_file = new_name.split("/")[-1]
+            index_i = new_file.find("_")
+            new_file = new_file.replace("_", " ")
+            new_file = new_file[:index_i] + "_" + new_file[index_i+1:]
+            new_name = new_name.split("/")
+            new_name = new_name[:-1] + [new_file]
+            new_name = "/".join(new_name)
+            files.append(new_name)
+        scan_List_to_text(files, out_path, quali, dpi_convert, "deu")
     # parser = argparse.ArgumentParser()
     # parser.add_argument("-p", "--path_directory", help="path to the directory with the .pdf files")
     # parser.add_argument("-o", "--out", default="pdf_to_txt_out",
