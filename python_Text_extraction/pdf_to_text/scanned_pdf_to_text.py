@@ -67,9 +67,9 @@ def preprocess_bad_quality_text(img_path: str):
     img_dilate = cv2.dilate(img_erode, kernel, iterations=1)
     img_bilateral = cv2.bilateralFilter(img_dilate, 5, 75, 75)
     img_filter = cv2.threshold(img_bilateral, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)[1]
-    img_threshold = cv2.adaptiveThreshold(cv2.bilateralFilter(img_filter, 9, 75, 75), 255,
-                                          cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY, 31, 2)
-    cv2.imwrite(img_path, img_threshold)
+    # img_threshold = cv2.adaptiveThreshold(cv2.bilateralFilter(img_filter, 9, 75, 75), 255,
+    #                                       cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY, 31, 2)
+    cv2.imwrite(img_path, img_filter)
 
 
 def image_to_text(image_path: str, pdf_path: str, file_limit: int, lang: str, out_dir: str) -> None:
@@ -235,7 +235,7 @@ def scan_List_to_text(dir_path: List[str], out_name_dir: str, bad_quali: bool, d
 
 if __name__ == "__main__":
     quali = False
-    dpi_convert = 400
+    dpi_convert = 200
     lang_old = "frk"
     out_path = f"/storage/projects/bagci/test/old_data_test/output2"
     scan_dir_to_text(f"/storage/projects/bagci/test/old_data_test/input", out_path, True, dpi_convert, lang_old)
