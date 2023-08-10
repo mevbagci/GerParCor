@@ -26,7 +26,9 @@ def pdf_to_image(pdf_path: str, dpi: int, lang: str, output_path, bad_quali: boo
     :param bad_quali: True if the scanned pdfs have a bad quality otherwise False
     :return:
     """
-    output_path = output_path + "/" + pdf_path.split("/")[-1].strip(".pdf") + "_image_safe"
+    output_path = pdf_path.replace("/pdf/", "/txt/")
+    output_path = output_path.strip(".pdf") + "_image_safe"
+    # output_path = output_path + "/" + pdf_path.split("/")[-1].strip(".pdf") + "_image_safe"
     pathlib.Path(output_path).mkdir(parents=True, exist_ok=True)
     # Store all the pages of the PDF in a variable
     pages = convert_from_path(pdf_path, dpi)
@@ -237,8 +239,9 @@ if __name__ == "__main__":
     quali = False
     dpi_convert = 300
     lang_old = "frk"
-    out_path = f"/storage/projects/bagci/test/old_data_test/output2"
-    scan_dir_to_text(f"/storage/projects/bagci/test/old_data_test/input", out_path, True, dpi_convert, lang_old)
+    out_path = f"/storage/projects/abrami/GerParCor/txt/BadenWuertemmberg/older"
+    input_path = f"/storage/projects/abrami/GerParCor/pdf/BadenWuertemmberg/older"
+    scan_dir_to_text(input_path, out_path, True, dpi_convert, lang_old)
     # with open("/storage/xmi/GerParCorDownload/emptySofa.txt", "r", encoding="UTF-8") as txt:
     #     all_files = txt.readlines()
     #     files = []
