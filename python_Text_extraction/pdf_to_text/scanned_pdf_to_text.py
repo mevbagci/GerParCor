@@ -122,15 +122,15 @@ def image_to_text(image_path: str, pdf_path: str, file_limit: int, lang: str, ou
         # Close the file after writing all the text.
 
     # Delete saved images
-    # for i in range(1, file_limit):
-    #     filename = f"page_{i}.jpg"
-    #     os.remove(f"{image_path}/{filename}")
-    # if len(os.listdir(image_path)) == 0:
-    #     # removing the file using the os.remove() method
-    #     os.rmdir(image_path)
-    # else:
-    #     # messaging saying folder not empty
-    #     print("Folder is not empty")
+    for i in range(1, file_limit):
+        filename = f"page_{i}.jpg"
+        os.remove(f"{image_path}/{filename}")
+    if len(os.listdir(image_path)) == 0:
+        # removing the file using the os.remove() method
+        os.rmdir(image_path)
+    else:
+        # messaging saying folder not empty
+        print("Folder is not empty")
     return
 
 
