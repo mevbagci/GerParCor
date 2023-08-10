@@ -61,10 +61,10 @@ def preprocess_bad_quality_text(img_path: str):
     img = cv2.imread(f"{img_path}", cv2.IMREAD_UNCHANGED)
     img_resize = cv2.resize(img, None, fx=2, fy=2, interpolation=cv2.INTER_CUBIC)
     img_gray = cv2.cvtColor(img_resize, cv2.COLOR_BGR2GRAY)
-    kernel = np.ones((1, 1), np.uint8)
-    img_dilate = cv2.dilate(img_gray, kernel, iterations=1)
-    img_erode = cv2.erode(img_dilate, kernel, iterations=1)
-    img_bilateral = cv2.bilateralFilter(img_erode, 5, 75, 75)
+    kernel = np.ones((5, 5), np.uint8)
+    img_erode = cv2.erode(img_gray, kernel, iterations=1)
+    img_dilate = cv2.dilate(img_erode, kernel, iterations=1)
+    img_bilateral = cv2.bilateralFilter(img_dilate, 5, 75, 75)
     img_filter = cv2.threshold(img_bilateral, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)[1]
     img_threshold = cv2.adaptiveThreshold(cv2.bilateralFilter(img_filter, 9, 75, 75), 255,
                                           cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY, 31, 2)
