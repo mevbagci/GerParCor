@@ -236,7 +236,7 @@ def scan_List_to_text(dir_path: List[str], out_name_dir: str, bad_quali: bool, d
 
 if __name__ == "__main__":
     quali = False
-    dpi_convert = 600
+    dpi_convert = 400
     lang_old = "frk"
     out_path = f"/storage/projects/bagci/test/old_data_test/output"
     scan_dir_to_text(f"/storage/projects/bagci/test/old_data_test/input", out_path, True, dpi_convert, lang_old)
