@@ -184,7 +184,7 @@ def scan_dir_to_text(dir_path: str, out_name_dir: str, bad_quali: bool, dpi: int
     :param lang: Language of Tesseract OCR
     """
     part_func = partial(scanned_pdf_to_text, dpi=dpi, lang=lang, out_name_dir=out_name_dir, bad_quali=bad_quali)
-    number_core = int(multiprocessing.cpu_count() / 4)
+    number_core = int(int(multiprocessing.cpu_count() / 4) / 2)
     pool = Pool(number_core)
     # files = [os.path.join(dir_path, file) for file in os.listdir(dir_path)]
     global set_files
