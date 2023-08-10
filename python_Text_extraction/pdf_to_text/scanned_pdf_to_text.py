@@ -92,7 +92,7 @@ def image_to_text(image_path: str, pdf_path: str, file_limit: int, lang: str, ou
     # txt_data_name = str(os.path.basename(pdf_path)).replace(".pdf", ".txt")
     # txt_data_name = txt_data_name.replace(" ", "_")
     # txt_path = f"{out_dir}/{txt_data_name}"
-    txt_path = pdf_path.replace("/pdf/", "/txt/").replace(".pdf", ".txt").replace(" ", "_")
+    txt_path = pdf_path.replace("/pdf/", "/txt/").replace(".pdf", ".txt")
     makedirs(os.path.dirname(txt_path), exist_ok=True)
     with open(txt_path, "w", encoding="UTF-8") as f:
         # Iterate from 1 to total number of pages
