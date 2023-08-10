@@ -240,9 +240,10 @@ if __name__ == "__main__":
     quali = False
     dpi_convert = 300
     lang_old = "frk"
+    lang_deu = "deu"
     out_path = f"/storage/projects/abrami/GerParCor/txt/BadenWuertemmberg/older"
-    input_path = f"/storage/projects/abrami/GerParCor/pdf/BadenWuertemmberg/older"
-    scan_dir_to_text(input_path, out_path, True, dpi_convert, lang_old)
+    input_path = f"/storage/projects/abrami/GerParCor/pdf/BadenWuertemmberg/0"
+    scan_dir_to_text(input_path, out_path, True, dpi_convert, lang_deu)
     # with open("/storage/xmi/GerParCorDownload/emptySofa.txt", "r", encoding="UTF-8") as txt:
     #     all_files = txt.readlines()
     #     files = []
