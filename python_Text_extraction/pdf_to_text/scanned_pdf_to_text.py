@@ -89,9 +89,10 @@ def image_to_text(image_path: str, pdf_path: str, file_limit: int, lang: str, ou
 
     # Open the file in append mode so that
     # All contents of all images are added to the same file
-    txt_data_name = str(os.path.basename(pdf_path)).replace(".pdf", ".txt")
-    txt_data_name = txt_data_name.replace(" ", "_")
-    txt_path = f"{out_dir}/{txt_data_name}"
+    # txt_data_name = str(os.path.basename(pdf_path)).replace(".pdf", ".txt")
+    # txt_data_name = txt_data_name.replace(" ", "_")
+    # txt_path = f"{out_dir}/{txt_data_name}"
+    txt_path = pdf_path.replace("/pdf/", "txt").replace(".pdf", ".txt").replace(" ", "_")
     makedirs(os.path.dirname(txt_path), exist_ok=True)
     with open(txt_path, "w", encoding="UTF-8") as f:
         # Iterate from 1 to total number of pages
