@@ -236,8 +236,8 @@ if __name__ == "__main__":
     quali = False
     dpi_convert = 300
     lang_old = "deu-frak"
-    out_path = f"/storage/projects/bagci/test/older"
-    scan_dir_to_text(f"/storage/projects/abrami/GerParCor/pdf/BadenWuertemmberg/older", out_path, True, dpi_convert, lang_old)
+    out_path = f"/storage/projects/bagci/test/older/Alter Landtag Württemberg (1797-1799)"
+    scan_dir_to_text(f"/storage/projects/abrami/GerParCor/pdf/BadenWuertemmberg/older/Alter Landtag Württemberg (1797-1799)", out_path, True, dpi_convert, lang_old)
     # with open("/storage/xmi/GerParCorDownload/emptySofa.txt", "r", encoding="UTF-8") as txt:
     #     all_files = txt.readlines()
     #     files = []
