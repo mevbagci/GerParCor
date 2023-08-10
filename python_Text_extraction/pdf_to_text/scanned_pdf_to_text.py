@@ -238,7 +238,7 @@ if __name__ == "__main__":
     quali = False
     dpi_convert = 400
     lang_old = "frk"
-    out_path = f"/storage/projects/bagci/test/old_data_test/output"
+    out_path = f"/storage/projects/bagci/test/old_data_test/output2"
     scan_dir_to_text(f"/storage/projects/bagci/test/old_data_test/input", out_path, True, dpi_convert, lang_old)
     # with open("/storage/xmi/GerParCorDownload/emptySofa.txt", "r", encoding="UTF-8") as txt:
     #     all_files = txt.readlines()
