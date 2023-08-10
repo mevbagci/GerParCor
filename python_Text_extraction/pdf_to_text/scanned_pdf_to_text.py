@@ -121,15 +121,15 @@ def image_to_text(image_path: str, pdf_path: str, file_limit: int, lang: str, ou
         # Close the file after writing all the text.
 
     # Delete saved images
-    for i in range(1, file_limit):
-        filename = f"page_{i}.jpg"
-        os.remove(f"{image_path}/{filename}")
-    if len(os.listdir(image_path)) == 0:
-        # removing the file using the os.remove() method
-        os.rmdir(image_path)
-    else:
-        # messaging saying folder not empty
-        print("Folder is not empty")
+    # for i in range(1, file_limit):
+    #     filename = f"page_{i}.jpg"
+    #     os.remove(f"{image_path}/{filename}")
+    # if len(os.listdir(image_path)) == 0:
+    #     # removing the file using the os.remove() method
+    #     os.rmdir(image_path)
+    # else:
+    #     # messaging saying folder not empty
+    #     print("Folder is not empty")
     return
 
 
@@ -235,21 +235,23 @@ def scan_List_to_text(dir_path: List[str], out_name_dir: str, bad_quali: bool, d
 if __name__ == "__main__":
     quali = False
     dpi_convert = 300
-    out_path = f"/storage/projects/GerParCorEmptyOut/"
-    with open("/storage/xmi/GerParCorDownload/emptySofa.txt", "r", encoding="UTF-8") as txt:
-        all_files = txt.readlines()
-        files = []
-        for file_i in all_files:
-            new_name = file_i.replace("xmi.gz", "pdf").replace("/xmi/", "/pdf/").replace("\n", "").replace("file:", "")
-            new_file = new_name.split("/")[-1]
-            index_i = new_file.find("_")
-            new_file = new_file.replace("_", " ")
-            new_file = new_file[:index_i] + "_" + new_file[index_i+1:]
-            new_name = new_name.split("/")
-            new_name = new_name[:-1] + [new_file]
-            new_name = "/".join(new_name)
-            files.append(new_name)
-        scan_List_to_text(files, out_path, quali, dpi_convert, "deu")
+    lang_old = "deu-frak"
+    out_path = f"/storage/projects/bagci/test/older"
+    scan_dir_to_text(f"/storage/projects/abrami/GerParCor/pdf/BadenWuertemmberg/older", out_path, True, dpi_convert, lang_old)
+    # with open("/storage/xmi/GerParCorDownload/emptySofa.txt", "r", encoding="UTF-8") as txt:
+    #     all_files = txt.readlines()
+    #     files = []
+    #     for file_i in all_files:
+    #         new_name = file_i.replace("xmi.gz", "pdf").replace("/xmi/", "/pdf/").replace("\n", "").replace("file:", "")
+    #         new_file = new_name.split("/")[-1]
+    #         index_i = new_file.find("_")
+    #         new_file = new_file.replace("_", " ")
+    #         new_file = new_file[:index_i] + "_" + new_file[index_i+1:]
+    #         new_name = new_name.split("/")
+    #         new_name = new_name[:-1] + [new_file]
+    #         new_name = "/".join(new_name)
+    #         files.append(new_name)
+    #     scan_List_to_text(files, out_path, quali, dpi_convert, "deu")
     # parser = argparse.ArgumentParser()
     # parser.add_argument("-p", "--path_directory", help="path to the directory with the .pdf files")
     # parser.add_argument("-o", "--out", default="pdf_to_txt_out",
