@@ -66,11 +66,10 @@ def preprocess_bad_quality_text(img_path: str):
     img_erode = cv2.erode(img_gray, kernel, iterations=1)
     img_dilate = cv2.dilate(img_erode, kernel, iterations=1)
     img_bilateral = cv2.bilateralFilter(img_dilate, 5, 75, 75)
-    img_filter = cv2.threshold(img_dilate, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)[1]
-    # cv2.putText(rotated, "Angle: {:.2f} degrees".format(angle),
-    # (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 255), 2)
-
-    cv2.imwrite(img_path, img_filter)
+    img_filter = cv2.threshold(img_bilateral, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)[1]
+    img_threshold = cv2.adaptiveThreshold(cv2.bilateralFilter(img_filter, 9, 75, 75), 255,
+                                          cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY, 31, 2)
+    cv2.imwrite(img_path, img_threshold)
 
 
 def image_to_text(image_path: str, pdf_path: str, file_limit: int, lang: str, out_dir: str) -> None:
