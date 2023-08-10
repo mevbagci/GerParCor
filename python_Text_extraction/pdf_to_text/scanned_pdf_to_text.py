@@ -242,7 +242,7 @@ if __name__ == "__main__":
     lang_old = "frk"
     lang_deu = "deu"
     out_path = f"/storage/projects/abrami/GerParCor/txt/BadenWuertemmberg/older"
-    input_path = f"/storage/projects/abrami/GerParCor/pdf/BadenWuertemmberg/0"
+    input_path = f"/storage/projects/abrami/GerParCor/pdf/BadenWuertemmberg/1"
     scan_dir_to_text(input_path, out_path, True, dpi_convert, lang_deu)
     # with open("/storage/xmi/GerParCorDownload/emptySofa.txt", "r", encoding="UTF-8") as txt:
     #     all_files = txt.readlines()
