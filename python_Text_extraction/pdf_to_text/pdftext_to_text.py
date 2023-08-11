@@ -21,11 +21,12 @@ def pdf_to_text(pdf_path: str, use_external_source: bool = True) -> bool:
     if use_external_source:
         try:
             new_path = os.path.join(PATH, "/".join(pdf_path.split("/")[4:-1])).replace("pdf", "txt")
-            pathlib.Path(new_path).mkdir(parents=True, exist_ok=True)
-            text = textract.process(pdf_path)
-            text = text.decode("utf-8")
-            with open(os.path.join(new_path, pdf_path.split("/")[-1].replace("pdf", "txt")), "w") as f:
-                f.write(text)
+            if not os.path.exists(os.path.join(new_path, pdf_path.split("/")[-1].replace("pdf", "txt"))):
+                pathlib.Path(new_path).mkdir(parents=True, exist_ok=True)
+                text = textract.process(pdf_path)
+                text = text.decode("utf-8")
+                with open(os.path.join(new_path, pdf_path.split("/")[-1].replace("pdf", "txt")), "w") as f:
+                    f.write(text)
             success = True
         except Exception as e:
             success = False
@@ -127,7 +128,7 @@ if __name__ == "__main__":
           # "Thueringen",
           "BadenWuertemmberg"
           ]
-    exclusion = [0, 1, 2, 3, 4, 5, 6, 7, 8]
+    exclusion = [0, 1, 2, 3, 4, 5, 6, 7, 8, "older"]
     exclude = []
     for ex in exclusion:
         exclude.append(f"/storage/projects/abrami/GerParCor/pdf/BadenWuertemmberg/{ex}")
