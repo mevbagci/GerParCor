@@ -119,19 +119,19 @@ if __name__ == "__main__":
           # "Bremen",
           # "Bundesrat",
           # "Liechtenstein",
-          "MeckPom",
-          "Niedersachsen",
-          "NordrheinWestfahlen",
-          "RheinlandPfalz",
-          "Saarland",
-          "Thueringen"
+          # "MeckPom",
+          # "Niedersachsen",
+          # "NordrheinWestfahlen",
+          # "RheinlandPfalz",
+          # "Saarland",
+          # "Thueringen",
+          "BadenWuertemmberg"
           ]
+    exclusion = [0, 1, 2, 3, 4, 5, 6, 7, 8]
+    exclude = []
+    for ex in exclusion:
+        exclude.append(f"/storage/projects/abrami/GerParCor/pdf/BadenWuertemmberg/{ex}")
     for bundesland in bd:
         global PATH
         PATH = "/storage/projects/abrami"
-        dir_of_subdirs_to_txt(f"/storage/projects/abrami/GerParCor/pdf/{bundesland}", [
-            # "/resources/corpora/parlamentary_germany/Sachsen/pdf/1",
-            # "/resources/corpora/parlamentary_germany/Sachsen/pdf/2",
-            # "/resources/corpora/parlamentary_germany/Sachsen/pdf/3"
-            # "/storage/projects/abrami/GerParCor/pdf/Hessen/17",
-        ])
+        dir_of_subdirs_to_txt(f"/storage/projects/abrami/GerParCor/pdf/{bundesland}", exclude)
