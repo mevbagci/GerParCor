@@ -114,11 +114,24 @@ def convert_path(input_path:str):
 """
 
 if __name__ == "__main__":
-    global PATH
-    PATH = "/storage/projects/abrami"
-    dir_of_subdirs_to_txt("/storage/projects/abrami/GerParCor/pdf/Hessen", [
-        # "/resources/corpora/parlamentary_germany/Sachsen/pdf/1",
-        # "/resources/corpora/parlamentary_germany/Sachsen/pdf/2",
-        # "/resources/corpora/parlamentary_germany/Sachsen/pdf/3"
-        "/storage/projects/abrami/GerParCor/pdf/Hessen/17",
-    ])
+    bd = [
+          "Berlin",
+          "Bremen",
+          "Bundesrat",
+          "Liechtenstein",
+          # "MeckPom",
+          # "Niedersachsen",
+          # "NordrheinWestfahlen",
+          # "RheinlandPfalz",
+          # "Saarland",
+          # "Thueringen"
+          ]
+    for bundesland in bd:
+        global PATH
+        PATH = "/storage/projects/abrami"
+        dir_of_subdirs_to_txt(bundesland, [
+            # "/resources/corpora/parlamentary_germany/Sachsen/pdf/1",
+            # "/resources/corpora/parlamentary_germany/Sachsen/pdf/2",
+            # "/resources/corpora/parlamentary_germany/Sachsen/pdf/3"
+            # "/storage/projects/abrami/GerParCor/pdf/Hessen/17",
+        ])
