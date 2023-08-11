@@ -115,24 +115,20 @@ def convert_path(input_path:str):
 """
 
 if __name__ == "__main__":
-    bd = [
-          # "Berlin",
-          # "Bremen",
-          # "Bundesrat",
-          # "Liechtenstein",
-          # "MeckPom",
-          # "Niedersachsen",
-          # "NordrheinWestfahlen",
-          # "RheinlandPfalz",
-          # "Saarland",
-          # "Thueringen",
-          "BadenWuertemmberg"
-          ]
-    exclusion = [0, 1, 2, 3, 4, 5, 6, 7, 8, "older"]
-    exclude = []
-    for ex in exclusion:
-        exclude.append(f"/storage/projects/abrami/GerParCor/pdf/BadenWuertemmberg/{ex}")
-    for bundesland in bd:
-        global PATH
-        PATH = "/storage/projects/abrami"
-        dir_of_subdirs_to_txt(f"/storage/projects/abrami/GerParCor/pdf/{bundesland}", exclude)
+    dir_to_txt(f"/storage/projects/abrami/GerParCor/pdf/BadenWuertemmberg/17")
+    # bd = [
+    #       # "Berlin",
+    #       # "Bremen",
+    #       # "Bundesrat",
+    #       # "Liechtenstein",
+    #       # "MeckPom",
+    #       # "Niedersachsen",
+    #       # "NordrheinWestfahlen",
+    #       # "RheinlandPfalz",
+    #       # "Saarland",
+    #       # "Thueringen",
+    #       ]
+    # for bundesland in bd:
+    #     global PATH
+    #     PATH = "/storage/projects/abrami"
+    #     dir_of_subdirs_to_txt(f"/storage/projects/abrami/GerParCor/pdf/{bundesland}", [])
