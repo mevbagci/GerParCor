@@ -214,17 +214,19 @@ if __name__ == '__main__':
         "/storage/projects/abrami/GerParCor/txt/Thueringen/6/1_14.10.2014.txt"
     ]
     bd = [
-          "Hessen",
-          "Berlin",
+          # "Hessen",
+          # "Berlin",
+          # "Bremen",
+          # "Bundesrat",
+          # "Liechtenstein",
+          # "MeckPom",
+          # "Niedersachsen",
+          # "NordrheinWestfahlen",
+          # "RheinlandPfalz",
+          # "Saarland",
+          # "Thueringen",
           "Bremen",
-          "Bundesrat",
-          "Liechtenstein",
-          "MeckPom",
-          "Niedersachsen",
-          "NordrheinWestfahlen",
-          "RheinlandPfalz",
-          "Saarland",
-          "Thueringen",
+          "BadenWuertemmberg/17"
           ]
     for bundesland in bd:
         reset_set_files()
