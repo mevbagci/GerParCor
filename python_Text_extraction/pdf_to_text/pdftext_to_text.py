@@ -90,7 +90,7 @@ def dir_of_subdirs_to_txt(dir_path: str, forbidden_dirs: Union[list, None]) -> N
     if forbidden_dirs != None:
         for forbidden_dir in forbidden_dirs:
             dir_with_pdf.remove(forbidden_dir)
-    pool = Pool(5)
+    pool = Pool(10)
     result = pool.map(dir_to_txt, dir_with_pdf)
     pool.close()
     pool.join()
