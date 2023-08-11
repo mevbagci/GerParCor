@@ -115,6 +115,8 @@ def convert_path(input_path:str):
 """
 
 if __name__ == "__main__":
+    global PATH
+    PATH = "/storage/projects/abrami"
     dir_to_txt(f"/storage/projects/abrami/GerParCor/pdf/BadenWuertemmberg/17")
     # bd = [
     #       # "Berlin",
@@ -130,5 +132,5 @@ if __name__ == "__main__":
     #       ]
     # for bundesland in bd:
     #     global PATH
-    #     PATH = "/storage/projects/abrami"
+    #
     #     dir_of_subdirs_to_txt(f"/storage/projects/abrami/GerParCor/pdf/{bundesland}", [])
