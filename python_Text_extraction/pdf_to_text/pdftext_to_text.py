@@ -115,16 +115,16 @@ def convert_path(input_path:str):
 
 if __name__ == "__main__":
     bd = [
-          "Berlin",
-          "Bremen",
-          "Bundesrat",
-          "Liechtenstein",
-          # "MeckPom",
-          # "Niedersachsen",
-          # "NordrheinWestfahlen",
-          # "RheinlandPfalz",
-          # "Saarland",
-          # "Thueringen"
+          # "Berlin",
+          # "Bremen",
+          # "Bundesrat",
+          # "Liechtenstein",
+          "MeckPom",
+          "Niedersachsen",
+          "NordrheinWestfahlen",
+          "RheinlandPfalz",
+          "Saarland",
+          "Thueringen"
           ]
     for bundesland in bd:
         global PATH
