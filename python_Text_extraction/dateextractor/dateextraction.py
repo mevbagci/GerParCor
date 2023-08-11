@@ -214,7 +214,7 @@ if __name__ == '__main__':
         "/storage/projects/abrami/GerParCor/txt/Thueringen/6/1_14.10.2014.txt"
     ]
     bd = [
-          "Hessen"
+          "Hessen",
           "Berlin",
           "Bremen",
           "Bundesrat",
@@ -228,7 +228,7 @@ if __name__ == '__main__':
           ]
     for bundesland in bd:
         reset_set_files()
-        get_all_path_files(f"/storage/projects/abrami/GerParCor/txt/{bd}", ".txt")
+        get_all_path_files(f"/storage/projects/abrami/GerParCor/txt/{bundesland}", ".txt")
         all_files = list(get_set_files())
-        print(f"Get Date for {bd}")
+        print(f"Get Date for {bundesland}")
         extract_Bundeslaender(all_files)
