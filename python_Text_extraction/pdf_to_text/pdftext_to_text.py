@@ -11,7 +11,7 @@ from multiprocessing import Pool
 from functools import partial
 
 
-def pdf_to_text(pdf_path:str, use_external_source:bool=True) -> bool:
+def pdf_to_text(pdf_path: str, use_external_source: bool = True) -> bool:
     """
     Converts pdf to txt file
     :param pdf_path:
@@ -29,7 +29,7 @@ def pdf_to_text(pdf_path:str, use_external_source:bool=True) -> bool:
             success = True
         except Exception as e:
             success = False
-            #print(e)
+            # print(e)
     else:
         try:
             pathlib.Path("/".join(pdf_path.split("/")[:-1])).mkdir(parents=True, exist_ok=True)
@@ -43,7 +43,7 @@ def pdf_to_text(pdf_path:str, use_external_source:bool=True) -> bool:
     return success
 
 
-def dir_to_txt(dir_path:str) -> [bool]:
+def dir_to_txt(dir_path: str) -> [bool]:
     """
     Converts whole pdf directory to txt
     :param dir_path:
@@ -59,7 +59,7 @@ def dir_to_txt(dir_path:str) -> [bool]:
     return successes
 
 
-def dir_of_subdirs_to_txt(dir_path:str, forbidden_dirs:Union[list, None]) -> None:
+def dir_of_subdirs_to_txt(dir_path: str, forbidden_dirs: Union[list, None]) -> None:
     """
     Converts a whole directory with subdirectories to txt files.
     :param dir_path:
@@ -86,11 +86,11 @@ def dir_of_subdirs_to_txt(dir_path:str, forbidden_dirs:Union[list, None]) -> Non
                 dir_with_pdf.add(dir_path)
         dir_stack = dir_stack[1:]
     dir_with_pdf = list(dir_with_pdf)
-    #print(dir_with_txt)
+    # print(dir_with_txt)
     if forbidden_dirs != None:
         for forbidden_dir in forbidden_dirs:
             dir_with_pdf.remove(forbidden_dir)
-    pool = Pool(14)
+    pool = Pool(5)
     result = pool.map(dir_to_txt, dir_with_pdf)
     pool.close()
     pool.join()
@@ -107,6 +107,7 @@ def dir_of_subdirs_to_txt(dir_path:str, forbidden_dirs:Union[list, None]) -> Non
     print(f"Successes: {good}; fails: {bad}")
     return
 
+
 """
 def convert_path(input_path:str):
     pathlib.Path(new_path).mkdir(parents=True, exist_ok=True)
@@ -114,7 +115,10 @@ def convert_path(input_path:str):
 
 if __name__ == "__main__":
     global PATH
-    PATH = "/resources/corpora/parlamentary_germany"
-    dir_of_subdirs_to_txt("/resources/corpora/parlamentary_germany/Sachsen/pdf", ["/resources/corpora/parlamentary_germany/Sachsen/pdf/1",
-                                                                                  "/resources/corpora/parlamentary_germany/Sachsen/pdf/2",
-                                                                                  "/resources/corpora/parlamentary_germany/Sachsen/pdf/3"])
+    PATH = "/storage/projects/abrami"
+    dir_of_subdirs_to_txt("/storage/projects/abrami/GerParCor/pdf/Hessen", [
+        # "/resources/corpora/parlamentary_germany/Sachsen/pdf/1",
+        # "/resources/corpora/parlamentary_germany/Sachsen/pdf/2",
+        # "/resources/corpora/parlamentary_germany/Sachsen/pdf/3"
+        "/storage/projects/abrami/GerParCor/pdf/Hessen/17",
+    ])
