@@ -163,11 +163,22 @@ def extract_date_BadenWuertemmberg(file_dir: str):
     except:
         return None
 
+def extract_date_BadenWuertemmberg_0_8(file_dir: str):
+    try:
+        date_time = file_dir.split("_")[-1].replace(".txt", "")
+        date_i = datetime.strptime(date_time, "%d%m%Y")
+        return {"year": int(date_i.year), "month": int(date_i.month), "day": int(date_i.day)}
+    except:
+        return None
+
 
 def extract_Bundeslaender(list_files: List[str]):
     for file_i in tqdm.tqdm(list_files, desc="Extract date from Files"):
         if "BadenWuertemmberg" in file_i:
-            date_now = extract_date_BadenWuertemmberg(file_i)
+            if "/17/" in file_i:
+                date_now = extract_date_BadenWuertemmberg(file_i)
+            else:
+                date_now = extract_date_BadenWuertemmberg_0_8(file_i)
         elif "Berlin" in file_i:
             date_now = extract_date_berlin(file_i)
         elif "Bundesrat" in file_i:
@@ -199,20 +210,22 @@ def extract_Bundeslaender(list_files: List[str]):
 
 if __name__ == '__main__':
     bsp = [
-        "/storage/projects/abrami/GerParCor/txt/BadenWuertemmberg/17/Plenarprotokoll 17_1 11.05.2021 S. 1-13.txt",
-        "/storage/projects/abrami/GerParCor/txt/Berlin/18/18_001.txt",
-        "/storage/projects/abrami/GerParCor/txt/Bremen/20/P20L0001.txt",
-        "/storage/projects/abrami/GerParCor/txt/Bundesrat/2021-2025/Plenarprotokoll 999. Sitzung, 18.01.2021.txt",
-        "/storage/projects/abrami/GerParCor/txt/Hessen/19/1.txt",
-        "/storage/projects/abrami/GerParCor/txt/Liechtenstein/2021/2021_1_29.txt",
-        "/storage/projects/abrami/GerParCor/txt/MeckPom/7/7_1_04.10.2016_.txt",
-        "/storage/projects/abrami/GerParCor/txt/Niedersachsen/18/004.txt",
-        "/storage/projects/abrami/GerParCor/txt/NordrheinWestfahlen/17/2.txt",
-        "/storage/projects/abrami/GerParCor/txt/RheinlandPfalz/18/1.txt",
-        "/storage/projects/abrami/GerParCor/txt/Saarland/1/1_1_2023-06-05.txt",
-        "/storage/projects/abrami/GerParCor/txt/Saarland/16/16_5_2017-08-30.txt",
-        "/storage/projects/abrami/GerParCor/txt/Thueringen/6/1_14.10.2014.txt"
+        # "/storage/projects/abrami/GerParCor/txt/BadenWuertemmberg/17/Plenarprotokoll 17_1 11.05.2021 S. 1-13.txt",
+        # "/storage/projects/abrami/GerParCor/txt/Berlin/18/18_001.txt",
+        # "/storage/projects/abrami/GerParCor/txt/Bremen/20/P20L0001.txt",
+        # "/storage/projects/abrami/GerParCor/txt/Bundesrat/2021-2025/Plenarprotokoll 999. Sitzung, 18.01.2021.txt",
+        # "/storage/projects/abrami/GerParCor/txt/Hessen/19/1.txt",
+        # "/storage/projects/abrami/GerParCor/txt/Liechtenstein/2021/2021_1_29.txt",
+        # "/storage/projects/abrami/GerParCor/txt/MeckPom/7/7_1_04.10.2016_.txt",
+        # "/storage/projects/abrami/GerParCor/txt/Niedersachsen/18/004.txt",
+        # "/storage/projects/abrami/GerParCor/txt/NordrheinWestfahlen/17/2.txt",
+        # "/storage/projects/abrami/GerParCor/txt/RheinlandPfalz/18/1.txt",
+        # "/storage/projects/abrami/GerParCor/txt/Saarland/1/1_1_2023-06-05.txt",
+        # "/storage/projects/abrami/GerParCor/txt/Saarland/16/16_5_2017-08-30.txt",
+        # "/storage/projects/abrami/GerParCor/txt/Thueringen/6/1_14.10.2014.txt"
+        "/storage/projects/abrami/GerParCor/txt/BadenWuertemmberg/8/08_0001_03061980.txt"
     ]
+    extract_Bundeslaender(bsp)
     bd = [
           # "Hessen",
           # "Berlin",
@@ -225,10 +238,13 @@ if __name__ == '__main__':
           # "RheinlandPfalz",
           # "Saarland",
           # "Thueringen",
-          "Bremen",
+          # "Bremen",
           "BadenWuertemmberg/17"
           ]
-    for bundesland in bd:
+    BadenW = []
+    for i in range(0,9):
+        BadenW.append(f"BadenWuertemmberg/{i}")
+    for bundesland in BadenW:
         reset_set_files()
         get_all_path_files(f"/storage/projects/abrami/GerParCor/txt/{bundesland}", ".txt")
         all_files = list(get_set_files())
