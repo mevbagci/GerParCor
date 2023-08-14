@@ -252,13 +252,13 @@ if __name__ == "__main__":
         # "Alter Landtag Württemberg (1797-1799)",
         # "Landtag Baden-Württemberg (1953-1996)",
         # "Landtag Württemberg",
-        "Landtag Württemberg-Baden (1946-1952)",
+        # "Landtag Württemberg-Baden (1946-1952)",
         # "Landtag Württemberg-Hohenzollern (1946-1952)",
-        "Ständeversammlung Württemberg (1815-1819)"
-        # "Verfassungsgebende Landesversammlung Baden-Württemberg"
-        # "Verfassungsgebende Landesversammlungen Württemberg (1849-1850, 1919-1920)",
-        # "Verfassungsgebende Landesversammlung Württemberg-Baden"
-        # "Verfassungsgebende Landesversammlung Württemberg-Hohenzollern"
+        # "Ständeversammlung Württemberg (1815-1819)",
+        "Verfassungsgebende Landesversammlung Baden-Württemberg",
+        "Verfassungsgebende Landesversammlungen Württemberg (1849-1850, 1919-1920)",
+        "Verfassungsgebende Landesversammlung Württemberg-Baden",
+        "Verfassungsgebende Landesversammlung Württemberg-Hohenzollern"
 
     ]
     for i in older_input:
