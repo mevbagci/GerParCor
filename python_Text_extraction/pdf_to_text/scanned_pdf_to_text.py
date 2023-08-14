@@ -184,7 +184,7 @@ def scan_dir_to_text(dir_path: str, out_name_dir: str, bad_quali: bool, dpi: int
     :param lang: Language of Tesseract OCR
     """
     part_func = partial(scanned_pdf_to_text, dpi=dpi, lang=lang, out_name_dir=out_name_dir, bad_quali=bad_quali)
-    number_core = int(int(multiprocessing.cpu_count() / 4) / 1)
+    number_core = int(int(multiprocessing.cpu_count() / 4) / 4)
     pool = Pool(number_core)
     # files = [os.path.join(dir_path, file) for file in os.listdir(dir_path)]
     global set_files
@@ -249,16 +249,16 @@ if __name__ == "__main__":
     lang_deu = "deu"
     out_path = f"/storage/projects/abrami/GerParCor/txt/BadenWuertemmberg/older"
     older_input = [
-        "Alter Landtag Württemberg (1797-1799)",
+        # "Alter Landtag Württemberg (1797-1799)",
         # "Landtag Baden-Württemberg (1953-1996)",
         # "Landtag Württemberg",
-        # "Landtag Württemberg-Baden (1946-1952)",
-        "Landtag Württemberg-Hohenzollern (1946-1952)",
-        # "Ständeversammlung Württemberg (1815-1819)"
-        "Verfassungsgebende Landesversammlung Baden-Württemberg"
-        "Verfassungsgebende Landesversammlungen Württemberg (1849-1850, 1919-1920)",
-        "Verfassungsgebende Landesversammlung Württemberg-Baden"
-        "Verfassungsgebende Landesversammlung Württemberg-Hohenzollern"
+        "Landtag Württemberg-Baden (1946-1952)",
+        # "Landtag Württemberg-Hohenzollern (1946-1952)",
+        "Ständeversammlung Württemberg (1815-1819)"
+        # "Verfassungsgebende Landesversammlung Baden-Württemberg"
+        # "Verfassungsgebende Landesversammlungen Württemberg (1849-1850, 1919-1920)",
+        # "Verfassungsgebende Landesversammlung Württemberg-Baden"
+        # "Verfassungsgebende Landesversammlung Württemberg-Hohenzollern"
 
     ]
     for i in older_input:
