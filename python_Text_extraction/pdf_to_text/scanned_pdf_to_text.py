@@ -190,8 +190,14 @@ def scan_dir_to_text(dir_path: str, out_name_dir: str, bad_quali: bool, dpi: int
     global set_files
     set_files = set()
     get_all_path_pdf(dir_path)
+    files_exist = set()
     # print(set_files)
     files = list(set_files)
+    for file_i in files:
+        txt_file = file_i.replace("pdf", "txt")
+        if os.path.exists(txt_file):
+            files_exist.add(file_i)
+    set_files = set_files.difference(files_exist)
     result = list(tqdm(pool.imap_unordered(part_func, files),
                        desc=f"Converting files from: {dir_path.split('/')[-1]}", total=len(files)))
     pool.close()
@@ -242,9 +248,22 @@ if __name__ == "__main__":
     lang_old = "frk"
     lang_deu = "deu"
     out_path = f"/storage/projects/abrami/GerParCor/txt/BadenWuertemmberg/older"
-    for i in [3, 4, 5, 6, 7, 8]:
-        input_path = f"/storage/projects/abrami/GerParCor/pdf/BadenWuertemmberg/{i}"
-        scan_dir_to_text(input_path, out_path, True, dpi_convert, lang_deu)
+    older_input = [
+        "Alter Landtag Württemberg (1797-1799)",
+        # "Landtag Baden-Württemberg (1953-1996)",
+        # "Landtag Württemberg",
+        # "Landtag Württemberg-Baden (1946-1952)",
+        "Landtag Württemberg-Hohenzollern (1946-1952)",
+        # "Ständeversammlung Württemberg (1815-1819)"
+        "Verfassungsgebende Landesversammlung Baden-Württemberg"
+        "Verfassungsgebende Landesversammlungen Württemberg (1849-1850, 1919-1920)",
+        "Verfassungsgebende Landesversammlung Württemberg-Baden"
+        "Verfassungsgebende Landesversammlung Württemberg-Hohenzollern"
+
+    ]
+    for i in older_input:
+        input_path = f"/storage/projects/abrami/GerParCor/pdf/BadenWuertemmberg/older/{i}"
+        scan_dir_to_text(input_path, out_path, True, dpi_convert, lang_old)
     # with open("/storage/xmi/GerParCorDownload/emptySofa.txt", "r", encoding="UTF-8") as txt:
     #     all_files = txt.readlines()
     #     files = []
