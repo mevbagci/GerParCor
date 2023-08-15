@@ -251,7 +251,7 @@ if __name__ == "__main__":
     older_input = [
         # "Alter Landtag Württemberg (1797-1799)",
         # "Landtag Baden-Württemberg (1953-1996)",
-        "Landtag Württemberg/Zweite Kammer (1820-1847, 1848-1918, 1920-1933)",
+        "Landtag Württemberg/ Zweite Kammer (1820-1847, 1848-1918, 1920-1933)",
         # "Landtag Württemberg/Erste Kammer (1820-1847, 1848-1918)",
         # "Landtag Württemberg-Baden (1946-1952)",
         # "Landtag Württemberg-Hohenzollern (1946-1952)",
