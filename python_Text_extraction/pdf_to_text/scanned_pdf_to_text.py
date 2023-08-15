@@ -199,7 +199,8 @@ def scan_dir_to_text(dir_path: str, out_name_dir: str, bad_quali: bool, dpi: int
     set_files = set_files.difference(files_exist)
     files = list(set_files)
     files.sort()
-    result = list(tqdm(pool.imap_unordered(part_func, files[:100]),
+    files = files[:100]
+    result = list(tqdm(pool.imap_unordered(part_func, files),
                        desc=f"Converting files from: {dir_path.split('/')[-1]}", total=len(files)))
     pool.close()
     pool.join()
