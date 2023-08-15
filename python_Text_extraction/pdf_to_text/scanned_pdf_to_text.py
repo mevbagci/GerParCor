@@ -184,8 +184,8 @@ def scan_dir_to_text(dir_path: str, out_name_dir: str, bad_quali: bool, dpi: int
     :param lang: Language of Tesseract OCR
     """
     part_func = partial(scanned_pdf_to_text, dpi=dpi, lang=lang, out_name_dir=out_name_dir, bad_quali=bad_quali)
-    number_core = int(int(multiprocessing.cpu_count() / 4) / 4) - 2
-    pool = Pool(2)
+    number_core = int(int(multiprocessing.cpu_count() / 4) / 1)
+    pool = Pool(number_core)
     # files = [os.path.join(dir_path, file) for file in os.listdir(dir_path)]
     global set_files
     set_files = set()
@@ -251,8 +251,8 @@ if __name__ == "__main__":
     older_input = [
         # "Alter Landtag Württemberg (1797-1799)",
         # "Landtag Baden-Württemberg (1953-1996)",
-        # "Landtag Württemberg/ Zweite Kammer (1820-1847, 1848-1918, 1920-1933)",
-        "Landtag Württemberg/ Erste Kammer (1820-1847, 1848-1918)",
+        "Landtag Württemberg/ Zweite Kammer (1820-1847, 1848-1918, 1920-1933)",
+        # "Landtag Württemberg/ Erste Kammer (1820-1847, 1848-1918)",
         # "Landtag Württemberg-Baden (1946-1952)",
         # "Landtag Württemberg-Hohenzollern (1946-1952)",
         # "Ständeversammlung Württemberg (1815-1819)",
