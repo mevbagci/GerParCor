@@ -12,7 +12,7 @@ def download_landtag_evidenz(page, name_document):
     prefs = {'download.default_directory': dir_download, 'intl.accept_languages': 'de,de_DE'}
     os.makedirs(dir_download, exist_ok=True)
     chrome_options.add_experimental_option('prefs', prefs)
-    # chrome_options.add_argument("--headless")
+    chrome_options.add_argument("--headless")
     service = Service()
     driver = webdriver.Chrome(service=service, options=chrome_options)
     driver.get(page)
