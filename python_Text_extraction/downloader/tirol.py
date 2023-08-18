@@ -80,3 +80,6 @@ def download_landtag_evidenz():
         except Exception as ex:
             print(ex)
             y = False
+
+if __name__ == '__main__':
+    download_landtag_evidenz()
