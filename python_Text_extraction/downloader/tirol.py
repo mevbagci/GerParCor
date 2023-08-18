@@ -73,6 +73,7 @@ def download_landtag_evidenz():
                     print(f"Downloaded Tirol {counter}")
                     time.sleep(3)
                 except Exception as ex:
+                    print(ex)
                     x = False
             counter_menu += 1
             print(counter_menu)
