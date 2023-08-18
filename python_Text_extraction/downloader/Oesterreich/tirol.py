@@ -39,6 +39,7 @@ def download_landtag_evidenz(page, name_document):
             while x:
                 try:
                     for i in range(0, 25):
+                        time.sleep(0.5)
                         text_sitzung = driver.find_element(By.XPATH,
                                                            f'//*[@id="listContent:resultForm:resultTable_data"]/tr[{i + 1}]/td[2]').text
                         text_bezeichung = driver.find_element(By.XPATH,
@@ -52,7 +53,11 @@ def download_landtag_evidenz(page, name_document):
                                             f'//*[@id="listContent:resultForm:resultTable:{counter}:j_id_52"]').click()
                         while len(get_last_downloaded_file(download_temp))==0:
                             time.sleep(0.5)
-                        last_element = get_last_downloaded_file(download_temp)[0]
+                        while True:
+                            last_element = get_last_downloaded_file(download_temp)[0]
+                            if last_element.endswith(".pdf"):
+                                break
+                            time.sleep(0.5)
                         text_in = last_element.split("/")[-1]
                         end = text_in.split(".")[-1]
                         text_bezeichung = text_bezeichung.replace("/", ";")
