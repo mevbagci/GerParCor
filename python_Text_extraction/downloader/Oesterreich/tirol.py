@@ -5,11 +5,16 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 
 
+def get_last_downloaded_file(directory):
+    return os.listdir(directory)
+
+
 def download_landtag_evidenz(page, name_document):
     # page = f"https://portal.tirol.gv.at/LteWeb/public/sitzung/sitzungsbericht/sitzungsberichtList.xhtml?cid=1"
     chrome_options = webdriver.ChromeOptions()
     dir_download = f'/storage/projects/abrami/GerParCor/pdf/Austria/Tirol/{name_document}'
-    prefs = {'download.default_directory': dir_download, 'intl.accept_languages': 'de,de_DE'}
+    download_temp = f'/storage/projects/bagci/test/temp'
+    prefs = {'download.default_directory': download_temp, 'intl.accept_languages': 'de,de_DE'}
     os.makedirs(dir_download, exist_ok=True)
     chrome_options.add_experimental_option('prefs', prefs)
     chrome_options.add_argument("--headless")
@@ -38,31 +43,21 @@ def download_landtag_evidenz(page, name_document):
                                                            f'//*[@id="listContent:resultForm:resultTable_data"]/tr[{i + 1}]/td[2]').text
                         text_bezeichung = driver.find_element(By.XPATH,
                                                               f'//*[@id="listContent:resultForm:resultTable:{counter}:fileTypeIcon"]/span[2]').text
-                        if os.path.exists(f"{dir_download}/{text_periode}/{text_bezeichung}_{text_sitzung}.pdf") or os.path.exists(f"{dir_download}/{text_periode}/{text_bezeichung}_{text_sitzung}.docx"):
+                        if os.path.exists(
+                                f"{dir_download}/{text_periode}/{text_bezeichung}_{text_sitzung}.pdf") or os.path.exists(
+                                f"{dir_download}/{text_periode}/{text_bezeichung}_{text_sitzung}.docx"):
                             counter += 1
                             continue
                         driver.find_element(By.XPATH,
                                             f'//*[@id="listContent:resultForm:resultTable:{counter}:j_id_52"]').click()
-                        text_in = text_bezeichung.replace(" ", "_")
-                        if "ä" in text_in:
-                            text_in = text_in.replace("ä", "_C3_A4")
-                        if "/" in text_in:
-                            text_in = text_in.replace(f"/", "_2F")
-                        if "(" in text_in:
-                            text_in = text_in.replace(f"(", "_28")
-                        if ")" in text_in:
-                            text_in = text_in.replace(f"(", "_29")
-                        if "ß" in text_in:
-                            text_in = text_in.replace(f"(", "_C3_9F")
-                        while not os.path.exists(f"{dir_download}/{text_in}.pdf") and not os.path.exists(
-                                f"{dir_download}/{text_in}.docx"):
+                        while len(get_last_downloaded_file(download_temp))==0:
                             time.sleep(0.5)
+                        last_element = get_last_downloaded_file(download_temp)[0]
+                        text_in = last_element.split("/")[-1]
+                        end = text_in.split(".")[-1]
                         text_bezeichung = text_bezeichung.replace("/", ";")
                         text_sitzung = text_sitzung.replace("/", ";")
-                        end = "pdf"
-                        if os.path.exists(f"{dir_download}/{text_in}.docx"):
-                            end = "docx"
-                        os.rename(f"{dir_download}/{text_in}.{end}",
+                        os.rename(f"{download_temp}/{last_element}",
                                   f"{dir_download}/{text_periode}/{text_bezeichung}_{text_sitzung}.{end}")
                         counter += 1
                     driver.find_element(By.XPATH,
