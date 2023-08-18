@@ -55,7 +55,7 @@ def download_landtag_evidenz(page, name_document):
                             time.sleep(0.5)
                         while True:
                             last_element = get_last_downloaded_file(download_temp)[0]
-                            if last_element.endswith(".pdf"):
+                            if last_element.endswith(".pdf") or last_element.endswith(".docx"):
                                 break
                             time.sleep(0.5)
                         text_in = last_element.split("/")[-1]
