@@ -18,10 +18,10 @@ import warnings
 import glob
 
 
-def download_landtag_evidenz(page, name_dokumente):
+def download_landtag_evidenz(page, name_document):
     # page = f"https://portal.tirol.gv.at/LteWeb/public/sitzung/sitzungsbericht/sitzungsberichtList.xhtml?cid=1"
     chrome_options = webdriver.ChromeOptions()
-    dir_download = f'/storage/projects/abrami/GerParCor/pdf/Austria/Tirol/{name_dokumente}'
+    dir_download = f'/storage/projects/abrami/GerParCor/pdf/Austria/Tirol/{name_document}'
     prefs = {'download.default_directory': dir_download, 'intl.accept_languages': 'de,de_DE'}
     os.makedirs(dir_download, exist_ok=True)
     chrome_options.add_experimental_option('prefs', prefs)
@@ -71,7 +71,7 @@ def download_landtag_evidenz(page, name_dokumente):
                         counter += 1
                     driver.find_element(By.XPATH,
                                         f'//*[@id="listContent:resultForm:resultTable_paginator_top"]/a[3]').click()
-                    print(f"Downloaded Tirol {counter}")
+                    print(f"Downloaded Tirol {name_document} {counter}")
                     time.sleep(3)
                 except Exception as ex:
                     # print(ex)
@@ -84,6 +84,7 @@ def download_landtag_evidenz(page, name_dokumente):
 
 
 if __name__ == '__main__':
-    document_name = f"Sitzungsbericht"
-    page_name = f"https://portal.tirol.gv.at/LteWeb/public/sitzung/{document_name.lower()}/{document_name.lower()}List.xhtml"
-    download_landtag_evidenz(page_name, document_name)
+    document_names = ["Sitzungsbericht", "Kurzprotokoll"]
+    for document_name in document_names:
+        page_name = f"https://portal.tirol.gv.at/LteWeb/public/sitzung/{document_name.lower()}/{document_name.lower()}List.xhtml"
+        download_landtag_evidenz(page_name, document_name)
