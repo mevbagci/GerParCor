@@ -18,10 +18,10 @@ import warnings
 import glob
 
 
-def download_landtag_evidenz():
-    page = f"https://portal.tirol.gv.at/LteWeb/public/sitzung/sitzungsbericht/sitzungsberichtList.xhtml?cid=1"
+def download_landtag_evidenz(page, name_dokumente):
+    # page = f"https://portal.tirol.gv.at/LteWeb/public/sitzung/sitzungsbericht/sitzungsberichtList.xhtml?cid=1"
     chrome_options = webdriver.ChromeOptions()
-    dir_download = f'/storage/projects/bagci/test/gerparcor'
+    dir_download = f'/storage/projects/abrami/GerParCor/pdf/Austria/Tirol/{name_dokumente}'
     prefs = {'download.default_directory': dir_download, 'intl.accept_languages': 'de,de_DE'}
     os.makedirs(dir_download, exist_ok=True)
     chrome_options.add_experimental_option('prefs', prefs)
@@ -58,7 +58,8 @@ def download_landtag_evidenz():
                             text_in = text_in.replace("ä", "_C3_A4")
                         if "/" in text_in:
                             text_in = text_in.replace(f"/", "_2F")
-                        while not os.path.exists(f"{dir_download}/{text_in}.pdf") and not os.path.exists(f"{dir_download}/{text_in}.docx"):
+                        while not os.path.exists(f"{dir_download}/{text_in}.pdf") and not os.path.exists(
+                                f"{dir_download}/{text_in}.docx"):
                             time.sleep(0.5)
                         text_bezeichung = text_bezeichung.replace("/", ";")
                         text_sitzung = text_sitzung.replace("/", ";")
@@ -73,7 +74,7 @@ def download_landtag_evidenz():
                     print(f"Downloaded Tirol {counter}")
                     time.sleep(3)
                 except Exception as ex:
-                    print(ex)
+                    # print(ex)
                     x = False
             counter_menu += 1
             print(counter_menu)
@@ -81,5 +82,8 @@ def download_landtag_evidenz():
             print(ex)
             y = False
 
+
 if __name__ == '__main__':
-    download_landtag_evidenz()
+    document_name = f"Sitzungsbericht"
+    page_name = f"https://portal.tirol.gv.at/LteWeb/public/sitzung/{document_name.lower()}/{document_name.lower()}List.xhtml"
+    download_landtag_evidenz(page_name, document_name)
