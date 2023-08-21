@@ -31,7 +31,7 @@ def download_pdf(file_name, url):
 
 
 def downlaod_from_tsv(tsv_dir):
-    download_dir = f"/home/bagci/data/tmp"
+    download_dir = f"/storage/projects/abrami/GerParCor/pdf/Austria/Vorarlberg"
     df = pd.read_csv(tsv_dir, sep="\t", encoding="utf-8", header=None)
     failed = []
     for index, row in tqdm(df.iterrows()):
@@ -60,7 +60,7 @@ def downlaod_from_tsv(tsv_dir):
                     failed.append(f"{year}-{name}")
                     print(ex)
     os.makedirs(os.path.dirname(f"/storage/projects/bagci/test"), exist_ok=True)
-    with open(f"/storage/projects/bagci/test", "w", encoding="UTF-8") as json_file:
+    with open(f"/storage/projects/bagci/test/failed.json", "w", encoding="UTF-8") as json_file:
         json.dump(failed, json_file, indent=2)
     print("h")
 

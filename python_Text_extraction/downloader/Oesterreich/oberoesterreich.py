@@ -20,10 +20,11 @@ def downloader():
     chrome_options = webdriver.ChromeOptions()
     page = f'https://www.land-oberoesterreich.gv.at/ltgspsuche.htm'
     dir_download = f'/storage/projects/abrami/GerParCor/pdf/Austria/Oberoestereich'
+    # dir_download = f"/storage/projects/bagci/data/test"
     prefs = {'download.default_directory': dir_download, 'intl.accept_languages': 'de,de_DE'}
     os.makedirs(dir_download, exist_ok=True)
     chrome_options.add_experimental_option('prefs', prefs)
-    # chrome_options.add_argument("--headless")
+    chrome_options.add_argument("--headless")
     service = Service()
     driver = webdriver.Chrome(service=service, options=chrome_options)
     driver.get(page)
@@ -58,7 +59,6 @@ def downloader():
                     if pdf_link is not None:
                         # driver.get(pdf_link)
                         dowload_pdf(f"{dir_download}/{path_var}/{file_name}.pdf", pdf_link)
-                    print("h")
                 else:
                     file_name = intern_link.text
 
