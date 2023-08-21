@@ -38,17 +38,18 @@ def download_landtag_evidenz(page, name_document):
             counter = 0
             while x:
                 try:
-                    for i in range(0, 25):
+                    range_max = driver.find_element(By.XPATH, f'//*[@id="listContent:resultForm:resultTable"]/div[1]/div/span').text.split("-")[-1].split(" ")[0]
+                    for i in range(0, int(range_max)):
                         time.sleep(0.5)
                         text_sitzung = driver.find_element(By.XPATH,
                                                            f'//*[@id="listContent:resultForm:resultTable_data"]/tr[{i + 1}]/td[2]').text
                         text_bezeichung = driver.find_element(By.XPATH,
                                                               f'//*[@id="listContent:resultForm:resultTable:{counter}:fileTypeIcon"]/span[2]').text
-                        if os.path.exists(
-                                f"{dir_download}/{text_periode}/{text_bezeichung}_{text_sitzung}.pdf") or os.path.exists(
-                                f"{dir_download}/{text_periode}/{text_bezeichung}_{text_sitzung}.docx"):
-                            counter += 1
-                            continue
+                        # if os.path.exists(
+                        #         f"{dir_download}/{text_periode}/{text_bezeichung}_{text_sitzung}.pdf") or os.path.exists(
+                        #         f"{dir_download}/{text_periode}/{text_bezeichung}_{text_sitzung}.docx"):
+                        #     counter += 1
+                        #     continue
                         driver.find_element(By.XPATH,
                                             f'//*[@id="listContent:resultForm:resultTable:{counter}:j_id_52"]').click()
                         while len(get_last_downloaded_file(download_temp))==0:
@@ -68,6 +69,13 @@ def download_landtag_evidenz(page, name_document):
                     driver.find_element(By.XPATH,
                                         f'//*[@id="listContent:resultForm:resultTable_paginator_top"]/a[3]').click()
                     print(f"Downloaded Tirol {name_document} {counter}")
+                    loading = True
+                    while loading:
+                        try:
+                            driver.find_element(By.XPATH, f'//*[@id="listContent:resultForm:resultTable:0:j_id_52"]')
+                            time.sleep(1)
+                        except:
+                            loading = False
                     time.sleep(3)
                 except Exception as ex:
                     # print(ex)
