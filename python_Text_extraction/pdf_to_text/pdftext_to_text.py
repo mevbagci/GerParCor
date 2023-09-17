@@ -138,6 +138,15 @@ if __name__ == "__main__":
     PATH = "/storage/projects/abrami"
     for i_list in input_list:
         dir_to_txt(f"/storage/projects/abrami/GerParCor/pdf/Austria/Bundesrat/{i_list}")
+
+    for i_list in kaernten:
+        dir_to_txt(f"{path_kaernten}/{i_list}")
+
+    for i_list in national_rat:
+        dir_to_txt(f"{path_national}/{i_list}")
+
+    for i_list in niederaustria:
+        dir_to_txt(f"{path_nieder}/{i_list}")
     # bd = [
     #       # "Berlin",
     #       # "Bremen",
