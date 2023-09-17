@@ -248,21 +248,24 @@ if __name__ == "__main__":
     dpi_convert = 300
     lang_old = "frk"
     lang_deu = "deu"
-    out_path = f"/storage/projects/abrami/GerParCor/txt/BadenWuertemmberg/older"
+    out_path = f"/storage/projects/abrami/GerParCor/txt/Austria/Bundesrat"
     older_input = [
-        # "Alter Landtag Württemberg (1797-1799)",
-        # "Landtag Baden-Württemberg (1953-1996)",
-        "Landtag Württemberg/ Zweite Kammer (1820-1847, 1848-1918, 1920-1933)",
-        # "Landtag Württemberg/ Erste Kammer (1820-1847, 1848-1918)",
-        # "Landtag Württemberg-Baden (1946-1952)",
-        # "Landtag Württemberg-Hohenzollern (1946-1952)",
-        # "Ständeversammlung Württemberg (1815-1819)",
-        # "Verfassungsgebende Landesversammlung Baden-Württemberg",
-        # "Verfassungsgebende Landesversammlungen Württemberg (1849-1850, 1919-1920)",
-        # "Verfassungsgebende Landesversammlung Württemberg-Baden",
-        # "Verfassungsgebende Landesversammlung Württemberg-Hohenzollern"
-
+        "I", "II", "III", "IV", #frak
     ]
+    # older_input = [
+    #     # "Alter Landtag Württemberg (1797-1799)",
+    #     # "Landtag Baden-Württemberg (1953-1996)",
+    #     "Landtag Württemberg/ Zweite Kammer (1820-1847, 1848-1918, 1920-1933)",
+    #     # "Landtag Württemberg/ Erste Kammer (1820-1847, 1848-1918)",
+    #     # "Landtag Württemberg-Baden (1946-1952)",
+    #     # "Landtag Württemberg-Hohenzollern (1946-1952)",
+    #     # "Ständeversammlung Württemberg (1815-1819)",
+    #     # "Verfassungsgebende Landesversammlung Baden-Württemberg",
+    #     # "Verfassungsgebende Landesversammlungen Württemberg (1849-1850, 1919-1920)",
+    #     # "Verfassungsgebende Landesversammlung Württemberg-Baden",
+    #     # "Verfassungsgebende Landesversammlung Württemberg-Hohenzollern"
+    #
+    # ]
     for i in older_input:
         input_path = f"/storage/projects/abrami/GerParCor/pdf/BadenWuertemmberg/older/{i}"
         scan_dir_to_text(input_path, out_path, True, dpi_convert, lang_old)
