@@ -115,9 +115,13 @@ def convert_path(input_path:str):
 """
 
 if __name__ == "__main__":
+    input_list = [
+        "IX", "V", "VI", "VII", "VIII", "X", "XI", "XIII", "XIV", "XIX", "XV", "XVI", "XVII", "XVIII", "XX", "XXI", "XXII", "XXIII", "XXIV", "XXV", "XXVI", "XXVII"
+    ]
     global PATH
     PATH = "/storage/projects/abrami"
-    dir_to_txt(f"/storage/projects/abrami/GerParCor/pdf/BadenWuertemmberg/17")
+    for i_list in input_list:
+        dir_to_txt(f"/storage/projects/abrami/GerParCor/pdf/Austria/Bundesrat/{i_list}")
     # bd = [
     #       # "Berlin",
     #       # "Bremen",
