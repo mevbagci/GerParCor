@@ -267,7 +267,7 @@ if __name__ == "__main__":
     #
     # ]
     for i in older_input:
-        input_path = f"/storage/projects/abrami/GerParCor/pdf/BadenWuertemmberg/older/{i}"
+        input_path = f"/storage/projects/abrami/GerParCor/pdf/Austria/Bundesrat/{i}"
         scan_dir_to_text(input_path, out_path, True, dpi_convert, lang_old)
     # with open("/storage/xmi/GerParCorDownload/emptySofa.txt", "r", encoding="UTF-8") as txt:
     #     all_files = txt.readlines()
