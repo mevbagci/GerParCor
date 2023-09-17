@@ -118,6 +118,22 @@ if __name__ == "__main__":
     input_list = [
         "IX", "V", "VI", "VII", "VIII", "X", "XI", "XIII", "XIV", "XIX", "XV", "XVI", "XVII", "XVIII", "XX", "XXI", "XXII", "XXIII", "XXIV", "XXV", "XXVI", "XXVII"
     ]
+    kaernten = [
+        "27", "28", "29", "30", "31", "32", "33"
+    ]
+    base_path = "f/storage/projects/abrami/GerParCor/pdf/"
+    path_kaernten = f"{base_path}/Austria/Kaernten"
+
+    # National_rat
+    national_rat = ["XXVII"]
+    path_national = f"{base_path}/Austria/Nationalrat"
+
+    # Niederaustria
+    niederaustria = [
+        "VIII. Gesetzgebungsperiode", "XI. Gesetzgebungsperiode", "XIV. Gesetzgebungsperiode", "XIX. Gesetzgebungsperiode", "XV. Gesetzgebungsperiode", "XVI. Gesetzgebungsperiode", "XVII. Gesetzgebungsperiode",
+        "XVIII. Gesetzgebungsperiode", "XX. Gesetzgebungsperiode"
+    ]
+    path_nieder = f"{base_path}/Austria/Niederoestereich"
     global PATH
     PATH = "/storage/projects/abrami"
     for i_list in input_list:
