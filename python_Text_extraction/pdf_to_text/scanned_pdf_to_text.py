@@ -263,14 +263,19 @@ if __name__ == "__main__":
     path_nieder = f"{base_path}/Austria/Niederoestereich"
     out_nieder = f"{out_base}/Austria/Niederoestereich"
 
-    for i in older_input:
+    for i in niederaustria:
         input_path = f"{path_nieder}/{i}"
         scan_dir_to_text(input_path, out_nieder, True, dpi_convert, lang_deu)
 
     path_steiermark = f"{base_path}/Austria/Steiermark"
+    out_steiermark = f"{out_base}/Austria/Steiermark"
     steiermark = [
-        "1848", "1861 - 1866 (Periode I)", "1867 - 1869 (Periode II)", "1870 (Periode III)", "1871 - 1877 (Periode IV)"
+        "1848", "1861 - 1866 (Periode I)", "1867 - 1869 (Periode II)", "1870 (Periode III)", "1871 - 1877 (Periode IV)", "1878 - 1883 (Periode V)", "1884 - 1889 (Periode VI)", "1890 - 1896 (Periode VII)", "1896 - 1902 (Periode VIII)", "1902 - 1908 (Periode IX)", "1909 - 1914 (Periode X)", "1918 - 1919", "1919 - 1920", "1920 - 1923 (Periode I)", "1923 - 1927 (Periode II)", "1927 - 1930 (Periode III)", "1931 - 1934 (Periode IV)", "1934 - 1938 (Periode V)"
     ]
+
+    for i in steiermark:
+        input_path = f"{path_steiermark}/{i}"
+        scan_dir_to_text(input_path, out_steiermark, True, dpi_convert, lang_old)
 
     # older_input = [
     #     # "Alter Landtag Württemberg (1797-1799)",
