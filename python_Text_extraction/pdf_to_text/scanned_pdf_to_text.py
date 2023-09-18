@@ -263,20 +263,75 @@ if __name__ == "__main__":
     path_nieder = f"{base_path}/Austria/Niederoestereich"
     out_nieder = f"{out_base}/Austria/Niederoestereich"
 
-    for i in niederaustria:
-        input_path = f"{path_nieder}/{i}"
-        scan_dir_to_text(input_path, out_nieder, True, dpi_convert, lang_deu)
+    # for i in niederaustria:
+    #     input_path = f"{path_nieder}/{i}"
+    #     scan_dir_to_text(input_path, out_nieder, True, dpi_convert, lang_deu)
+    #
+    # path_steiermark = f"{base_path}/Austria/Steiermark"
+    # out_steiermark = f"{out_base}/Austria/Steiermark"
+    # steiermark = [
+    #     "1848", "1861 - 1866 (Periode I)", "1867 - 1869 (Periode II)", "1870 (Periode III)", "1871 - 1877 (Periode IV)", "1878 - 1883 (Periode V)", "1884 - 1889 (Periode VI)", "1890 - 1896 (Periode VII)", "1896 - 1902 (Periode VIII)", "1902 - 1908 (Periode IX)", "1909 - 1914 (Periode X)", "1918 - 1919", "1919 - 1920", "1920 - 1923 (Periode I)", "1923 - 1927 (Periode II)", "1927 - 1930 (Periode III)", "1931 - 1934 (Periode IV)", "1934 - 1938 (Periode V)"
+    # ]
+    #
+    # for i in steiermark:
+    #     input_path = f"{path_steiermark}/{i}"
+    #     scan_dir_to_text(input_path, out_steiermark, True, dpi_convert, lang_old)
 
-    path_steiermark = f"{base_path}/Austria/Steiermark"
-    out_steiermark = f"{out_base}/Austria/Steiermark"
-    steiermark = [
-        "1848", "1861 - 1866 (Periode I)", "1867 - 1869 (Periode II)", "1870 (Periode III)", "1871 - 1877 (Periode IV)", "1878 - 1883 (Periode V)", "1884 - 1889 (Periode VI)", "1890 - 1896 (Periode VII)", "1896 - 1902 (Periode VIII)", "1902 - 1908 (Periode IX)", "1909 - 1914 (Periode X)", "1918 - 1919", "1919 - 1920", "1920 - 1923 (Periode I)", "1923 - 1927 (Periode II)", "1927 - 1930 (Periode III)", "1931 - 1934 (Periode IV)", "1934 - 1938 (Periode V)"
+
+    list_failed = [
+        "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/older/Landtag Baden-W\u00fcrttemberg (1953-1996)/1953-1954, Bd. 1.pdf",
+        "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/older/Landtag Baden-W\u00fcrttemberg (1953-1996)/1955, Bd. 4.pdf",
+        "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/older/Landtag Baden-W\u00fcrttemberg (1953-1996)/1956, Bd. 1.pdf",
+        "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/older/Landtag Baden-W\u00fcrttemberg (1953-1996)/1957, Bd. 2.pdf",
+        "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/older/Landtag Baden-W\u00fcrttemberg (1953-1996)/1957-1958, Bd. 3.pdf",
+        "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/older/Landtag Baden-W\u00fcrttemberg (1953-1996)/1958-1959, Bd. 4.pdf",
+        "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/older/Landtag Baden-W\u00fcrttemberg (1953-1996)/1959-1960, Bd. 5.pdf",
+        "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/older/Landtag Baden-W\u00fcrttemberg (1953-1996)/1960, Bd. 6.pdf",
+        "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/older/Landtag Baden-W\u00fcrttemberg (1953-1996)/1961, Bd. 2.pdf",
+        "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/older/Landtag Baden-W\u00fcrttemberg (1953-1996)/1962-1963, Bd. 4.pdf",
+        "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/older/Landtag Baden-W\u00fcrttemberg (1953-1996)/1963, Bd. 5.pdf",
+        "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/older/Landtag Baden-W\u00fcrttemberg (1953-1996)/1963-1964, Bd. 6.pdf",
+        "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/older/Landtag Baden-W\u00fcrttemberg (1953-1996)/1964, Bd. 1.pdf",
+        "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/older/Landtag Baden-W\u00fcrttemberg (1953-1996)/1965-1966, Bd. 3.pdf",
+        "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/older/Landtag Baden-W\u00fcrttemberg (1953-1996)/1966-1967, Bd. 4.pdf",
+        "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/older/Landtag Baden-W\u00fcrttemberg (1953-1996)/1967, Bd. 5.pdf",
+        "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/older/Landtag Baden-W\u00fcrttemberg (1953-1996)/1967-1968, Bd. 6.pdf",
+        "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/older/Landtag Baden-W\u00fcrttemberg (1953-1996)/1968-1969, Bd. 1.pdf",
+        "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/older/Landtag Baden-W\u00fcrttemberg (1953-1996)/1969, Bd. 2.pdf",
+        "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/older/Landtag Baden-W\u00fcrttemberg (1953-1996)/1969-1970, Bd. 3.pdf",
+        "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/older/Landtag Baden-W\u00fcrttemberg (1953-1996)/1970, Bd. 4.pdf",
+        "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/older/Landtag Baden-W\u00fcrttemberg (1953-1996)/1970-1971, Bd. 5.pdf",
+        "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/older/Landtag Baden-W\u00fcrttemberg (1953-1996)/1971, Bd. 6.pdf",
+        "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/older/Landtag Baden-W\u00fcrttemberg (1953-1996)/1971-1972, Bd. 7.pdf",
+        "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/older/Landtag Baden-W\u00fcrttemberg (1953-1996)/1972-1973, Bd. 1.pdf",
+        "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/older/Landtag Baden-W\u00fcrttemberg (1953-1996)/1973, Bd. 2.pdf",
+        "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/older/Landtag Baden-W\u00fcrttemberg (1953-1996)/1974-1975, Bd. 4.pdf",
+        "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/older/Landtag Baden-W\u00fcrttemberg (1953-1996)/1975-1976, Bd. 6.pdf",
+        "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/older/Landtag Baden-W\u00fcrttemberg (1953-1996)/1978-1979, Bd. 5.pdf",
+        "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/older/Landtag Baden-W\u00fcrttemberg (1953-1996)/1979, Bd. 6.pdf",
+        "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/older/Landtag Baden-W\u00fcrttemberg (1953-1996)/1980, Bd. 1.pdf",
+        "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/older/Landtag Baden-W\u00fcrttemberg (1953-1996)/1983, Bd. 6.pdf",
+        "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/older/Landtag Baden-W\u00fcrttemberg (1953-1996)/1983-1984, Bd. 7.pdf",
+        "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/older/Landtag Baden-W\u00fcrttemberg (1953-1996)/1984, Bd. 1.pdf",
+        "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/older/Landtag Baden-W\u00fcrttemberg (1953-1996)/1985, Bd. 2.pdf",
+        "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/older/Landtag Baden-W\u00fcrttemberg (1953-1996)/1986, Bd. 4.pdf",
+        "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/older/Landtag Baden-W\u00fcrttemberg (1953-1996)/1986-1987, Bd. 6.pdf",
+        "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/older/Landtag Baden-W\u00fcrttemberg (1953-1996)/1987, Bd. 7.pdf",
+        "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/older/Landtag Baden-W\u00fcrttemberg (1953-1996)/1988, Bd. 1.pdf",
+        "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/older/Landtag Baden-W\u00fcrttemberg (1953-1996)/1989-1990, Bd. 3.pdf",
+        "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/older/Landtag Baden-W\u00fcrttemberg (1953-1996)/1990, Bd. 4.pdf",
+        "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/older/Landtag Baden-W\u00fcrttemberg (1953-1996)/1990-1991, Bd. 5.pdf",
+        "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/older/Landtag Baden-W\u00fcrttemberg (1953-1996)/1991, Bd. 6.pdf",
+        "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/older/Landtag Baden-W\u00fcrttemberg (1953-1996)/1991-1992, Bd. 7.pdf",
+        "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/older/Landtag Baden-W\u00fcrttemberg (1953-1996)/1992, Bd. 1.pdf",
+        "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/older/Landtag Baden-W\u00fcrttemberg (1953-1996)/1992-1993, Bd. 2.pdf",
+        "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/older/Landtag Baden-W\u00fcrttemberg (1953-1996)/1993, Bd. 3.pdf",
+        "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/older/Landtag Baden-W\u00fcrttemberg (1953-1996)/1993-1994, Bd. 4.pdf",
+        "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/older/Landtag Baden-W\u00fcrttemberg (1953-1996)/1994, Bd. 5.pdf",
+        "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/older/Landtag Baden-W\u00fcrttemberg (1953-1996)/1995, Bd. 7.pdf",
+        "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/older/Landtag Baden-W\u00fcrttemberg (1953-1996)/1995-1996, Bd. 8.pdf",
     ]
-
-    for i in steiermark:
-        input_path = f"{path_steiermark}/{i}"
-        scan_dir_to_text(input_path, out_steiermark, True, dpi_convert, lang_old)
-
+    scan_List_to_text(list_failed, f"/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/older/Landtag Baden-W\u00fcrttemberg (1953-1996)", True, dpi_convert, lang_old)
     # older_input = [
     #     # "Alter Landtag Württemberg (1797-1799)",
     #     # "Landtag Baden-Württemberg (1953-1996)",

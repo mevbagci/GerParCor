@@ -154,53 +154,58 @@ if __name__ == "__main__":
     global PATH
     PATH = "/storage/projects/abrami"
 
-    #Bayern
-    path_bayern = f"{base_path}/Germany/Bayern"
-    bayern = [18]
-    for i_list in bayern:
-        dir_to_txt(f"{path_bayern}/{i_list}")
+    # #Bayern
+    # path_bayern = f"{base_path}/Germany/Bayern"
+    # bayern = [18]
+    # for i_list in bayern:
+    #     dir_to_txt(f"{path_bayern}/{i_list}")
+    #
+    # #Brandenburg
+    # path_brandenburg = f"{base_path}/Germany/Brandenburg"
+    # brandenburg = [7]
+    # for i_list in brandenburg:
+    #     dir_to_txt(f"{path_brandenburg}/{i_list}")
+    #
+    # #Hamburg
+    # path_hamburg = f"{base_path}/Germany/Hamburg"
+    # hamburg = [22]
+    # for i_list in hamburg:
+    #     dir_to_txt(f"{path_hamburg}/{i_list}")
+    #
+    # #MeckPom
+    # path_meckpom = f"{base_path}/Germany/MeckPom"
+    # meckpom = [8]
+    # for i_list in meckpom:
+    #     dir_to_txt(f"{path_meckpom}/{i_list}")
+    #
+    # #Sachsen
+    # path_sachsen = f"{base_path}/Germany/Sachsen"
+    # sachsen = [7]
+    # for i_list in sachsen:
+    #     dir_to_txt(f"{path_sachsen}/{i_list}")
+    #
+    # # SachsenAnhalt
+    # path_sachsenanhalt = f"{base_path}/Germany/SachsenAnhalt"
+    # sachsenanhalt = [8]
+    # for i_list in sachsenanhalt:
+    #     dir_to_txt(f"{path_sachsenanhalt}/{i_list}")
+    #
+    # #SchleswigHolstein
+    # path_schleswig = f"{base_path}/Germany/SchleswigHolstein"
+    # schleswigholstein = [19, 20]
+    # for i_list in schleswigholstein:
+    #     dir_to_txt(f"{path_schleswig}/{i_list}")
+    #
+    # #Bundesrat Austria
+    # path_bundesrat = f"{base_path}/Austria/Bundesrat"
+    # bundesrat = ["XII"]
+    # for i_list in bundesrat:
+    #     dir_to_txt(f"{path_bundesrat}/{i_list}")
 
-    #Brandenburg
-    path_brandenburg = f"{base_path}/Germany/Brandenburg"
-    brandenburg = [7]
-    for i_list in brandenburg:
-        dir_to_txt(f"{path_brandenburg}/{i_list}")
 
-    #Hamburg
-    path_hamburg = f"{base_path}/Germany/Hamburg"
-    hamburg = [22]
-    for i_list in hamburg:
-        dir_to_txt(f"{path_hamburg}/{i_list}")
-
-    #MeckPom
-    path_meckpom = f"{base_path}/Germany/MeckPom"
-    meckpom = [8]
-    for i_list in meckpom:
-        dir_to_txt(f"{path_meckpom}/{i_list}")
-
-    #Sachsen
-    path_sachsen = f"{base_path}/Germany/Sachsen"
-    sachsen = [7]
-    for i_list in sachsen:
-        dir_to_txt(f"{path_sachsen}/{i_list}")
-
-    # SachsenAnhalt
-    path_sachsenanhalt = f"{base_path}/Germany/SachsenAnhalt"
-    sachsenanhalt = [8]
-    for i_list in sachsenanhalt:
-        dir_to_txt(f"{path_sachsenanhalt}/{i_list}")
-
-    #SchleswigHolstein
-    path_schleswig = f"{base_path}/Germany/SchleswigHolstein"
-    schleswigholstein = [19, 20]
-    for i_list in schleswigholstein:
-        dir_to_txt(f"{path_schleswig}/{i_list}")
-
-    #Bundesrat Austria
-    path_bundesrat = f"{base_path}/Austria/Bundesrat"
-    bundesrat = ["XII"]
-    for i_list in bundesrat:
-        dir_to_txt(f"{path_bundesrat}/{i_list}")
+    #
+    path_nieder2 = f"/storage/projects/abrami/GerParCor/pdf/Austria/Niederoestereich/VIII. Gesetzgebungsperiode/4. Session – 11. Landtagssitzung"
+    dir_to_txt(path_nieder2)
 
     # for i_list in input_list:
     #     dir_to_txt(f"/storage/projects/abrami/GerParCor/pdf/Austria/Bundesrat/{i_list}")
