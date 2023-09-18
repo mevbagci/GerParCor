@@ -121,7 +121,7 @@ if __name__ == "__main__":
     kaernten = [
         "27", "28", "29", "30", "31", "32", "33"
     ]
-    base_path = "f/storage/projects/abrami/GerParCor/pdf/"
+    base_path = "f/storage/projects/abrami/GerParCor/pdf"
     path_kaernten = f"{base_path}/Austria/Kaernten"
 
     # National_rat
@@ -136,8 +136,8 @@ if __name__ == "__main__":
     path_nieder = f"{base_path}/Austria/Niederoestereich"
     global PATH
     PATH = "/storage/projects/abrami"
-    for i_list in input_list:
-        dir_to_txt(f"/storage/projects/abrami/GerParCor/pdf/Austria/Bundesrat/{i_list}")
+    # for i_list in input_list:
+    #     dir_to_txt(f"/storage/projects/abrami/GerParCor/pdf/Austria/Bundesrat/{i_list}")
 
     for i_list in kaernten:
         dir_to_txt(f"{path_kaernten}/{i_list}")
