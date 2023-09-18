@@ -248,10 +248,30 @@ if __name__ == "__main__":
     dpi_convert = 300
     lang_old = "frk"
     lang_deu = "deu"
-    out_path = f"/storage/projects/abrami/GerParCor/txt/Austria/Bundesrat"
+    # out_path = f"/storage/projects/abrami/GerParCor/txt/Austria/Bundesrat"
+    out_base = f"/storage/projects/abrami/GerParCor/txt"
+    base_path = f"/storage/projects/abrami/GerParCor/pdf"
     older_input = [
         "I", "II", "III", "IV", #frak
     ]
+
+
+    # NiederOestereich
+    niederaustria = [
+        "IV. Gesetzgebungsperiode", "V. Gesetzgebungsperiode", "VI. Gesetzgebungsperiode", "VII. Gesetzgebungsperiode"
+    ]
+    path_nieder = f"{base_path}/Austria/Niederoestereich"
+    out_nieder = f"{out_base}/Austria/Niederoestereich"
+
+    for i in older_input:
+        input_path = f"{path_nieder}/{i}"
+        scan_dir_to_text(input_path, out_nieder, True, dpi_convert, lang_deu)
+
+    path_steiermark = f"{base_path}/Austria/Steiermark"
+    steiermark = [
+        "1848", "1861 - 1866 (Periode I)", "1867 - 1869 (Periode II)", "1870 (Periode III)", "1871 - 1877 (Periode IV)"
+    ]
+
     # older_input = [
     #     # "Alter Landtag Württemberg (1797-1799)",
     #     # "Landtag Baden-Württemberg (1953-1996)",
@@ -266,9 +286,9 @@ if __name__ == "__main__":
     #     # "Verfassungsgebende Landesversammlung Württemberg-Hohenzollern"
     #
     # ]
-    for i in older_input:
-        input_path = f"/storage/projects/abrami/GerParCor/pdf/Austria/Bundesrat/{i}"
-        scan_dir_to_text(input_path, out_path, True, dpi_convert, lang_old)
+    # for i in older_input:
+    #     input_path = f"/storage/projects/abrami/GerParCor/pdf/Austria/Bundesrat/{i}"
+    #     scan_dir_to_text(input_path, out_path, True, dpi_convert, lang_old)
     # with open("/storage/xmi/GerParCorDownload/emptySofa.txt", "r", encoding="UTF-8") as txt:
     #     all_files = txt.readlines()
     #     files = []
