@@ -134,21 +134,45 @@ if __name__ == "__main__":
         "XVIII. Gesetzgebungsperiode", "XX. Gesetzgebungsperiode"
     ]
     path_nieder = f"{base_path}/Austria/Niederoestereich"
+
+    #Salzburg
+    salzburg = [
+        "11", "12", "13", "14", "15", "16"
+    ]
+    path_salzburg = f"{base_path}/Austria/Salzburg"
+
+
+    #Steiermark
+    path_steiermark = f"{base_path}/Austria/Steiermark"
+    steiermark = [
+        "1945 - 1949 (Periode I)", "1949 - 1953 (Periode II)", "1953 - 1957 (Periode III)", "1957 - 1961 (Periode IV)", "1961 - 1965 (Periode V)", "1965 - 1970 (Periode VI)"
+    ]
+
+    #Wien
+    path_wien = f"{base_path}/Austria/Wien"
+    wien = list(range(1998, 2024))
     global PATH
     PATH = "/storage/projects/abrami"
-    "/storage/projects/abrami/GerParCor/pdf/Austria/Kaernten"
-    "/storage/projects/abrami/GerParCor/pdf/Austria/Kaernten"
     # for i_list in input_list:
     #     dir_to_txt(f"/storage/projects/abrami/GerParCor/pdf/Austria/Bundesrat/{i_list}")
 
-    for i_list in kaernten:
-        dir_to_txt(f"{path_kaernten}/{i_list}")
+    # for i_list in kaernten:
+    #     dir_to_txt(f"{path_kaernten}/{i_list}")
+    #
+    # for i_list in national_rat:
+    #     dir_to_txt(f"{path_national}/{i_list}")
+    #
+    # for i_list in niederaustria:
+    #     dir_to_txt(f"{path_nieder}/{i_list}")
 
-    for i_list in national_rat:
-        dir_to_txt(f"{path_national}/{i_list}")
+    for i_list in salzburg:
+        dir_to_txt(f"{path_salzburg}/{i_list}")
 
-    for i_list in niederaustria:
-        dir_to_txt(f"{path_nieder}/{i_list}")
+    for i_list in steiermark:
+        dir_to_txt(f"{path_steiermark}/{i_list}")
+
+    for i_list in wien:
+        dir_to_txt(f"{path_wien}/{i_list}")
     # bd = [
     #       # "Berlin",
     #       # "Bremen",
