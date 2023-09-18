@@ -196,6 +196,12 @@ if __name__ == "__main__":
     for i_list in schleswigholstein:
         dir_to_txt(f"{path_schleswig}/{i_list}")
 
+    #Bundesrat Austria
+    path_bundesrat = f"{base_path}/Austria/Bundesrat"
+    bundesrat = ["XII"]
+    for i_list in bundesrat:
+        dir_to_txt(f"{path_bundesrat}/{i_list}")
+
     # for i_list in input_list:
     #     dir_to_txt(f"/storage/projects/abrami/GerParCor/pdf/Austria/Bundesrat/{i_list}")
 
