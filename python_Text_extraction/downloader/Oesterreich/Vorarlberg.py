@@ -34,6 +34,7 @@ def downlaod_from_tsv(tsv_dir):
     download_dir = f"/storage/projects/abrami/GerParCor/pdf/Austria/Vorarlberg"
     df = pd.read_csv(tsv_dir, sep="\t", encoding="utf-8", header=None)
     failed = []
+    counter_number = 0
     for index, row in tqdm(df.iterrows()):
         name = row[0]
         if name is None or name == "" or name is np.nan:
@@ -44,21 +45,29 @@ def downlaod_from_tsv(tsv_dir):
         url_enconde_name = quote(name, safe="")
         link_new = f"{link_new}/$FILE/{url_enconde_name}.pdf"
         other_link = row[3]
-        file_dir = f"{download_dir}/{year}/{name}.pdf"
+        counter = 1
+        file_dir = f"{download_dir}/{year}/{name}#1.pdf"
+        while os.path.exists(file_dir):
+            counter += 1
+            file_dir = f"{download_dir}/{year}/{name}#{counter}.pdf"
         try:
             download_pdf(file_dir, link_new)
+            counter_number += 1
         except Exception as ex:
             try:
                 download_pdf(file_dir, other_link)
+                counter_number += 1
             except Exception as ex1:
                 try:
                     file_name_i = quote(other_link.split("/")[-1].split(".pdf")[0], safe="")
                     start_url = other_link.replace(other_link.split("/")[-1], "")
                     alternative_link = f"{start_url}{file_name_i}.pdf"
                     download_pdf(file_dir, alternative_link)
+                    counter_number += 1
                 except Exception as ex:
                     failed.append(f"{year}-{name}")
                     print(ex)
+    print(counter_number)
     os.makedirs(os.path.dirname(f"/storage/projects/bagci/test"), exist_ok=True)
     with open(f"/storage/projects/bagci/test/failed.json", "w", encoding="UTF-8") as json_file:
         json.dump(failed, json_file, indent=2)
