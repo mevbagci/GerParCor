@@ -31,10 +31,8 @@ def download_landtag_evidenz(page, name_document):
     counter_menu = driver.find_element(By.XPATH, f'//*[@id="listContent:resultForm:resultTable_paginator_top"]/span[1]').text
     counter_menu = int(int(counter_menu.split("von ")[-1])/25)+1
     counter_i = 0
-    downloaded_now = 0
     for page_site in list(range(1, counter_menu+1)):
         for id_i in list(range(0,25)):
-            download_temp = downloaded_now
             element = driver.find_element(By.XPATH, f'//*[@id="listContent:resultForm:resultTable:{counter_i}:j_id_52"]')
             sitzung = driver.find_element(By.XPATH, f'//*[@id="listContent:resultForm:resultTable_data"]/tr[{id_i+1}]/td[2]')
             element_name = element.text
@@ -54,7 +52,6 @@ def download_landtag_evidenz(page, name_document):
             downloaded_elements = get_last_downloaded_file(download_temp)
             os.makedirs(f"{dir_download}/{periode} Periode", exist_ok=True)
             os.rename(f"{download_temp}/{downloaded_elements[0]}", f"{dir_download}/{periode} Periode/{file_name}")
-            downloaded_now += 1
             time.sleep(1)
             for i in get_last_downloaded_file(download_temp):
                 os.remove(f"{download_temp}/{i}")
