@@ -130,8 +130,9 @@ if __name__ == "__main__":
 
     # Niederaustria
     niederaustria = [
-        "VIII. Gesetzgebungsperiode", "XI. Gesetzgebungsperiode", "XIV. Gesetzgebungsperiode", "XIX. Gesetzgebungsperiode", "XV. Gesetzgebungsperiode", "XVI. Gesetzgebungsperiode", "XVII. Gesetzgebungsperiode",
-        "XVIII. Gesetzgebungsperiode", "XX. Gesetzgebungsperiode"
+        # "VIII. Gesetzgebungsperiode", "XI. Gesetzgebungsperiode", "XIV. Gesetzgebungsperiode", "XIX. Gesetzgebungsperiode", "XV. Gesetzgebungsperiode", "XVI. Gesetzgebungsperiode", "XVII. Gesetzgebungsperiode",
+        # "XVIII. Gesetzgebungsperiode",
+        "XX. Gesetzgebungsperiode"
     ]
     path_nieder = f"{base_path}/Austria/Niederoestereich"
 
@@ -203,14 +204,14 @@ if __name__ == "__main__":
     #     dir_to_txt(f"{path_bundesrat}/{i_list}")
 
     #voralberg
-    path_vorarlberg = f"/storage/projects/abrami/GerParCor/pdf/Austria/Vorarlberg"
-    vorarlberg = [
-        1861, 1863, 1864, 1868, 1870, 1871, 1881, 1882, 1883, 1884, 1885, 1886, 1888, 1889, 1890, 1892, 1893,
-        1894, 1896, 1897, 1899, 1900, 1901, 1902, 1903, 1904, 1905, 1906, 1907, 1908, 1913, 1928, 1929, 1933,
-        1934, 1935, 1936, 1965, 1966, 1967, 1968, 1969, 1972, 1973, 1974, 1984, 1985, 1986
-    ]
-    for i_list in vorarlberg:
-        dir_to_txt(f"{path_vorarlberg}/{i_list}")
+    # path_vorarlberg = f"/storage/projects/abrami/GerParCor/pdf/Austria/Vorarlberg"
+    # vorarlberg = [
+    #     1861, 1863, 1864, 1868, 1870, 1871, 1881, 1882, 1883, 1884, 1885, 1886, 1888, 1889, 1890, 1892, 1893,
+    #     1894, 1896, 1897, 1899, 1900, 1901, 1902, 1903, 1904, 1905, 1906, 1907, 1908, 1913, 1928, 1929, 1933,
+    #     1934, 1935, 1936, 1965, 1966, 1967, 1968, 1969, 1972, 1973, 1974, 1984, 1985, 1986
+    # ]
+    # for i_list in vorarlberg:
+    #     dir_to_txt(f"{path_vorarlberg}/{i_list}")
 
     #
     # path_nieder2 = f"/storage/projects/abrami/GerParCor/pdf/Austria/Niederoestereich/VIII. Gesetzgebungsperiode/4. Session – 11. Landtagssitzung"
@@ -225,8 +226,8 @@ if __name__ == "__main__":
     # for i_list in national_rat:
     #     dir_to_txt(f"{path_national}/{i_list}")
     #
-    # for i_list in niederaustria:
-    #     dir_to_txt(f"{path_nieder}/{i_list}")
+    for i_list in niederaustria:
+        dir_to_txt(f"{path_nieder}/{i_list}")
 
     # for i_list in salzburg:
     #     dir_to_txt(f"{path_salzburg}/{i_list}")
