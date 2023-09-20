@@ -37,8 +37,8 @@ def download_landtag_evidenz(page, name_document):
             sitzung = driver.find_element(By.XPATH, f'//*[@id="listContent:resultForm:resultTable_data"]/tr[{id_i+1}]/td[2]')
             element_name = element.text
             sitzung_name = sitzung.text
-            periode = sitzung_name.split(" Periode")[0].split(" ")[-1]
-            periode = re.findall(r'\d{4}', sitzung_name)[0]
+            # periode = sitzung_name.split(" Periode")[0].split(" ")[-1]
+            periode = re.findall(r'\d{4}', element_name)[0]
             file_name = f"{sitzung_name}_{element_name}.pdf".replace("/", "_")
             if os.path.exists(f"{dir_download}/{periode} Periode/{file_name}"):
                 counter_i += 1
