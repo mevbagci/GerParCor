@@ -38,7 +38,13 @@ def download_landtag_evidenz(page, name_document):
             element_name = element.text
             sitzung_name = sitzung.text
             # periode = sitzung_name.split(" Periode")[0].split(" ")[-1]
-            periode = re.findall(r'\d{4}', element_name)[0]
+            try:
+                periode = re.findall(r'\d{4}', element_name)[0]
+            except:
+                try:
+                    periode = re.findall(r'\d{4}', sitzung_name)[0]
+                except:
+                    periode = "not assignable"
             file_name = f"{sitzung_name}_{element_name}.pdf".replace("/", "_")
             if os.path.exists(f"{dir_download}/{periode} Periode/{file_name}"):
                 counter_i += 1
