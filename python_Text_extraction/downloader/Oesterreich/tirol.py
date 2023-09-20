@@ -132,7 +132,7 @@ def download_landtag_evidenz(page, name_document):
 
 
 if __name__ == '__main__':
-    document_names = ["Sitzungsbericht", "Kurzprotokoll"]
+    document_names = ["Kurzprotokoll", "Sitzungsbericht"]
     for document_name in document_names:
         page_name = f"https://portal.tirol.gv.at/LteWeb/public/sitzung/{document_name.lower()}/{document_name.lower()}List.xhtml"
         download_landtag_evidenz(page_name, document_name)
