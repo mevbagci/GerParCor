@@ -277,7 +277,7 @@ if __name__ == "__main__":
     #     input_path = f"{path_steiermark}/{i}"
     #     scan_dir_to_text(input_path, out_steiermark, True, dpi_convert, lang_old)
 
-    tirol = list(range(1921,1907))
+    tirol = list(range(1921, 1970))
     path_tirol =f"{base_path}/Austria/Tirol/Sitzungsbericht"
     out_tirol = f"{out_base}/Austria/Tirol/Sitzungsbericht"
     for i in tirol:
