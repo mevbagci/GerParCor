@@ -318,6 +318,39 @@ def extract_date_Steiermark(file_dir: str):
     except:
         return None
 
+def extract_date_TirolSitzung(file_dir: str):
+    locale.setlocale(locale.LC_ALL, 'de_AT.utf8')
+    try:
+        date_time = file_dir.split("vom ")[-1].split(" -")[0].split("und ")[-1].replace(".txt", "")
+        date_i = datetime.strptime(date_time, "%d. %B %Y")
+        return {"year": int(date_i.year), "month": int(date_i.month), "day": int(date_i.day)}
+    except:
+        return None
+
+
+def extract_date_TirolKurz(file_dir: str):
+    locale.setlocale(locale.LC_ALL, 'de_AT.utf8')
+    try:
+        date_time = file_dir.split("vom ")[-1].split(" -")[0].split("und ")[-1].replace(".txt", "")
+        date_i = datetime.strptime(date_time, "%d. %B %Y")
+        return {"year": int(date_i.year), "month": int(date_i.month), "day": int(date_i.day)}
+    except:
+        return None
+
+
+def extract_date_Vorarlberg(file_dir: str):
+    locale.setlocale(locale.LC_ALL, 'de_AT.utf8')
+    try:
+        date_time = file_dir.split("am ")[-1].split("#")[0].split(" -")[0]
+        try:
+            date_i = datetime.strptime(date_time, "%d.%m.%Y")
+        except:
+            date_i = datetime.strptime(date_time, "%d. %B %Y")
+        return {"year": int(date_i.year), "month": int(date_i.month), "day": int(date_i.day)}
+    except:
+        return None
+
+
 def extract_Bundeslaender(list_files: List[str]):
     for file_i in tqdm.tqdm(list_files, desc="Extract date from Files"):
         if "BadenWuertemmberg" in file_i:
@@ -375,6 +408,12 @@ def extract_Bundeslaender(list_files: List[str]):
             date_now = extract_date_Kaernten(file_i)
         elif "Steiermark" in file_i:
             date_now = extract_date_Steiermark(file_i)
+        elif "Vorarlberg" in file_i:
+            date_now = extract_date_Vorarlberg(file_i)
+        elif "Tirol/Sitzungsbericht" in file_i:
+            date_now = extract_date_TirolSitzung(file_i)
+        elif "Tirol/Kurzprotokoll" in file_i:
+            date_now = extract_date_TirolKurz(file_i)
         date_out = file_i.replace("/txt/", "/dates/").replace(".txt", ".json")
         if date_now is not None:
             save_json(date_now, date_out)
@@ -434,7 +473,10 @@ if __name__ == '__main__':
         # "Nationalrat",
         # "Kaernten",
         # "Bundesrat",
-        "Steiermark",
+        # "Steiermark",
+        # "Tirol/Sitzungsbericht",
+        # "Vorarlberg",
+        "Tirol/Kurzprotokoll",
     ]
     for bd_i in austria:
         reset_set_files()
