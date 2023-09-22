@@ -253,3 +253,19 @@ if __name__ == "__main__":
     #     global PATH
     #
     #     dir_of_subdirs_to_txt(f"/storage/projects/abrami/GerParCor/pdf/{bundesland}", [])
+
+    tirol = list(range(1970, 2024))
+    path_tirol = f"{base_path}/Austria/Tirol/Sitzungsbericht"
+    # out_tirol = f"{out_base}/Austria/Tirol/Sitzungsbericht"
+    for i in tirol:
+        input_path = f"{path_tirol}/{i} Periode"
+        if os.path.exists(input_path):
+            dir_to_txt(input_path)
+
+    tirol_kurz = list(range(1946, 2024))
+    path_tirol_kurz = f"{base_path}/Austria/Tirol/Kurzprotokoll"
+    # out_tirol_kurz = f"{out_base}/Austria/Tirol/Kurzprotokoll"
+    for i in tirol_kurz:
+        input_path = f"{path_tirol_kurz}/{i} Periode"
+        if os.path.exists(input_path):
+            dir_to_txt(input_path)

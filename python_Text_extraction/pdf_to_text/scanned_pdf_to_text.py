@@ -277,6 +277,22 @@ if __name__ == "__main__":
     #     input_path = f"{path_steiermark}/{i}"
     #     scan_dir_to_text(input_path, out_steiermark, True, dpi_convert, lang_old)
 
+    tirol = list(range(1921,1907))
+    path_tirol =f"{base_path}/Austria/Tirol/Sitzungsbericht"
+    out_tirol = f"{out_base}/Austria/Tirol/Sitzungsbericht"
+    for i in tirol:
+        input_path = f"{path_tirol}/{i} Periode"
+        if os.path.exists(input_path):
+            scan_dir_to_text(input_path, out_tirol, True, dpi_convert, lang_old)
+
+    tirol_kurz = list(range(1865, 1930))
+    path_tirol_kurz = f"{base_path}/Austria/Tirol/Kurzprotokoll"
+    out_tirol_kurz = f"{out_base}/Austria/Tirol/Kurzprotokoll"
+    for i in tirol_kurz:
+        input_path = f"{path_tirol_kurz}/{i} Periode"
+        if os.path.exists(input_path):
+            scan_dir_to_text(input_path, out_tirol_kurz, True, dpi_convert, lang_old)
+
 
     list_failed = [
         # "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/older/Landtag Baden-W\u00fcrttemberg (1953-1996)/1953-1954, Bd. 1.pdf",
@@ -332,64 +348,64 @@ if __name__ == "__main__":
         # "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/older/Landtag Baden-W\u00fcrttemberg (1953-1996)/1995-1996, Bd. 8.pdf",
         "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/older/Landtag W\u00fcrttemberg/ Erste Kammer (1820-1847, 1848-1918)/1836, Bd. 1.pdf"
     ]
-    scan_List_to_text(list_failed, f"/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/older/Landtag Baden-W\u00fcrttemberg (1953-1996)", True, dpi_convert, lang_old)
-    list_repaired = [
-        "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/0/00_0005_10051952.pdf",
-        "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/0/00_0008_28051952.pdf",
-        "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/1/01_0016_28011954.pdf",
-        "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/2/02_0084_15071959.pdf",
-        "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/2/02_0085_14101959.pdf",
-        "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/2/02_0086_11111959.pdf",
-        "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/2/02_0090_09121959.pdf",
-        "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/3/03_0012_27101960.pdf",
-        "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/3/03_0058_14061962.pdf",
-        "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/3/03_0073_06121962.pdf",
-        "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/3/03_0081_28031963.pdf",
-        "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/3/03_0087_20061963.pdf",
-        "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/3/03_0089_11071963.pdf",
-        "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/3/03_0112_27021964.pdf",
-        "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/3/03_0113_05031964.pdf",
-        "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/3/03_0115_19031964.pdf",
-        "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/4/04_0095_11051967.pdf",
-        "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/4/04_0099_20071967.pdf",
-        "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/4/04_0105_09111967.pdf",
-        "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/4/04_0106_23111967.pdf",
-        "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/4/04_0112_07121967.pdf",
-        "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/4/04_0124_28031968.pdf",
-        "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/4/04_0125_29031968.pdf",
-        "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/5/05_0019_29011969.pdf",
-        "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/5/05_0075_08071970.pdf",
-        "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/5/05_0108_24061971.pdf",
-        "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/5/05_0109_08071971.pdf",
-        "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/5/05_0135_02031972.pdf",
-        "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/6/06_0030_28061973.pdf",
-        "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/6/06_0032_10071973.pdf",
-        "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/6/06_0041_12121973.pdf",
-        "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/6/06_0050_01031974.pdf",
-        "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/6/06_0054_09051974.pdf",
-        "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/6/06_0056_20061974.pdf",
-        "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/6/06_0057_21061974.pdf",
-        "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/6/06_0059_26061974.pdf",
-        "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/6/06_0060_27061974.pdf",
-        "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/6/06_0068_14111974.pdf",
-        "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/6/06_0069_28111974.pdf",
-        "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/6/06_0073_23011975.pdf",
-        "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/6/06_0093_25091975.pdf",
-        "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/6/06_0100_03121975.pdf",
-        "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/6/06_0107_18021976.pdf",
-        "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/7/07_0062_19101978.pdf",
-        "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/7/07_0063_29111978.pdf",
-        "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/7/07_0066_07121978.pdf",
-        "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/7/07_0083_27091979.pdf",
-        "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/7/07_0087_29111979.pdf",
-        "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/7/07_0092_30011980.pdf",
-        "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/7/07_0093_31011980.pdf",
-        "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/8/08_0008_16071980.pdf",
-        "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/8/08_0077_10111983.pdf",
-    ]
-    scan_List_to_text(list_repaired,
-                      f"/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg",
-                      True, dpi_convert, lang_deu)
+    # scan_List_to_text(list_failed, f"/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/older/Landtag Baden-W\u00fcrttemberg (1953-1996)", True, dpi_convert, lang_old)
+    # list_repaired = [
+    #     "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/0/00_0005_10051952.pdf",
+    #     "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/0/00_0008_28051952.pdf",
+    #     "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/1/01_0016_28011954.pdf",
+    #     "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/2/02_0084_15071959.pdf",
+    #     "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/2/02_0085_14101959.pdf",
+    #     "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/2/02_0086_11111959.pdf",
+    #     "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/2/02_0090_09121959.pdf",
+    #     "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/3/03_0012_27101960.pdf",
+    #     "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/3/03_0058_14061962.pdf",
+    #     "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/3/03_0073_06121962.pdf",
+    #     "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/3/03_0081_28031963.pdf",
+    #     "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/3/03_0087_20061963.pdf",
+    #     "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/3/03_0089_11071963.pdf",
+    #     "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/3/03_0112_27021964.pdf",
+    #     "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/3/03_0113_05031964.pdf",
+    #     "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/3/03_0115_19031964.pdf",
+    #     "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/4/04_0095_11051967.pdf",
+    #     "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/4/04_0099_20071967.pdf",
+    #     "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/4/04_0105_09111967.pdf",
+    #     "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/4/04_0106_23111967.pdf",
+    #     "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/4/04_0112_07121967.pdf",
+    #     "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/4/04_0124_28031968.pdf",
+    #     "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/4/04_0125_29031968.pdf",
+    #     "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/5/05_0019_29011969.pdf",
+    #     "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/5/05_0075_08071970.pdf",
+    #     "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/5/05_0108_24061971.pdf",
+    #     "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/5/05_0109_08071971.pdf",
+    #     "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/5/05_0135_02031972.pdf",
+    #     "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/6/06_0030_28061973.pdf",
+    #     "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/6/06_0032_10071973.pdf",
+    #     "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/6/06_0041_12121973.pdf",
+    #     "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/6/06_0050_01031974.pdf",
+    #     "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/6/06_0054_09051974.pdf",
+    #     "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/6/06_0056_20061974.pdf",
+    #     "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/6/06_0057_21061974.pdf",
+    #     "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/6/06_0059_26061974.pdf",
+    #     "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/6/06_0060_27061974.pdf",
+    #     "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/6/06_0068_14111974.pdf",
+    #     "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/6/06_0069_28111974.pdf",
+    #     "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/6/06_0073_23011975.pdf",
+    #     "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/6/06_0093_25091975.pdf",
+    #     "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/6/06_0100_03121975.pdf",
+    #     "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/6/06_0107_18021976.pdf",
+    #     "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/7/07_0062_19101978.pdf",
+    #     "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/7/07_0063_29111978.pdf",
+    #     "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/7/07_0066_07121978.pdf",
+    #     "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/7/07_0083_27091979.pdf",
+    #     "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/7/07_0087_29111979.pdf",
+    #     "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/7/07_0092_30011980.pdf",
+    #     "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/7/07_0093_31011980.pdf",
+    #     "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/8/08_0008_16071980.pdf",
+    #     "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/8/08_0077_10111983.pdf",
+    # ]
+    # scan_List_to_text(list_repaired,
+    #                   f"/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg",
+    #                   True, dpi_convert, lang_deu)
 
     # older_input = [
     #     # "Alter Landtag Württemberg (1797-1799)",
