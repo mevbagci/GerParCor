@@ -268,9 +268,15 @@ if __name__ == "__main__":
     path_ober = f"{base_path}/Austria/Oberoestereich"
     out_ober = f"{out_base}/Austria/Oberoestereich"
     oberautria = ["18", "19", "20", "21", "22", "23",
-                  "XXIX", "XXVI", "XXVII" "XVIII"]
+                  # "XXIX", "XXVI", "XXVII" "XVIII"
+                  ]
     oberautria_old = [16, 17]
     for i in oberautria_old:
+        input_path = f"{path_ober}/{i}._Gesetzgebungsperiode"
+        if os.path.exists(input_path):
+            scan_dir_to_text(input_path, out_ober, True, dpi_convert, lang_old)
+
+    for i in oberautria:
         input_path = f"{path_ober}/{i}._Gesetzgebungsperiode"
         if os.path.exists(input_path):
             scan_dir_to_text(input_path, out_ober, True, dpi_convert, lang_old)
@@ -289,21 +295,21 @@ if __name__ == "__main__":
     #     input_path = f"{path_steiermark}/{i}"
     #     scan_dir_to_text(input_path, out_steiermark, True, dpi_convert, lang_old)
 
-    tirol = list(range(1921, 1970))
-    path_tirol =f"{base_path}/Austria/Tirol/Sitzungsbericht"
-    out_tirol = f"{out_base}/Austria/Tirol/Sitzungsbericht"
-    for i in tirol:
-        input_path = f"{path_tirol}/{i} Periode"
-        if os.path.exists(input_path):
-            scan_dir_to_text(input_path, out_tirol, True, dpi_convert, lang_old)
-
-    tirol_kurz = list(range(1865, 1930))
-    path_tirol_kurz = f"{base_path}/Austria/Tirol/Kurzprotokoll"
-    out_tirol_kurz = f"{out_base}/Austria/Tirol/Kurzprotokoll"
-    for i in tirol_kurz:
-        input_path = f"{path_tirol_kurz}/{i} Periode"
-        if os.path.exists(input_path):
-            scan_dir_to_text(input_path, out_tirol_kurz, True, dpi_convert, lang_old)
+    # tirol = list(range(1921, 1970))
+    # path_tirol =f"{base_path}/Austria/Tirol/Sitzungsbericht"
+    # out_tirol = f"{out_base}/Austria/Tirol/Sitzungsbericht"
+    # for i in tirol:
+    #     input_path = f"{path_tirol}/{i} Periode"
+    #     if os.path.exists(input_path):
+    #         scan_dir_to_text(input_path, out_tirol, True, dpi_convert, lang_old)
+    #
+    # tirol_kurz = list(range(1865, 1930))
+    # path_tirol_kurz = f"{base_path}/Austria/Tirol/Kurzprotokoll"
+    # out_tirol_kurz = f"{out_base}/Austria/Tirol/Kurzprotokoll"
+    # for i in tirol_kurz:
+    #     input_path = f"{path_tirol_kurz}/{i} Periode"
+    #     if os.path.exists(input_path):
+    #         scan_dir_to_text(input_path, out_tirol_kurz, True, dpi_convert, lang_old)
 
 
     list_failed = [
