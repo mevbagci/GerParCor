@@ -155,10 +155,10 @@ if __name__ == "__main__":
     all_path_baden = [
         0, 1, 2, 3, 4, 5, 6, 7, 8
     ]
-    for i in all_path_baden:
-        out_i = f"{path_out}/Germany/BadenWuertemmberg/{i}"
-        path_i = f"{path_baden}/{i}"
-        multiprocessing_spellchecker(path_i, "de-100k.txt", f"Symspell", out_i)
+    # for i in all_path_baden:
+    #     out_i = f"{path_out}/Germany/BadenWuertemmberg/{i}"
+    #     path_i = f"{path_baden}/{i}"
+    #     multiprocessing_spellchecker(path_i, "de-100k.txt", f"Symspell", out_i)
     ocr_path = [
         "older"
     ]
