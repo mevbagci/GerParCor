@@ -186,7 +186,7 @@ def download_saved_links(type_download=f"Protokoll"):
     number_core = int(multiprocessing.cpu_count()-1)
     pool = Pool(number_core)
     result = list(tqdm(pool.imap_unordered(part_func, downloads),
-                       desc=f"Downloadung"))
+                       desc=f"Downloadung", total=len(downloads)))
     pool.close()
     pool.join()
 
@@ -207,7 +207,7 @@ def get_download_page(special_url):
     link_download = driver.find_element(By.XPATH, f'/html/body/form/a[5]').get_attribute("href").replace('javascript:OpenPDF("', "").replace('")', "")
     link_names = special_url.split("##link##")[0].split("#__#")
     download_pdf(f"{dir_download}/{link_names[0]}/{link_names[1].split('-')[0]}/{link_names[2]}.pdf", link_download)
-    print("h")
+    # print("h")
 
 
 
