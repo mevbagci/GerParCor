@@ -282,7 +282,7 @@ if __name__ == "__main__":
     for i in oberautria:
         input_path = f"{path_ober}/{i}._Gesetzgebungsperiode"
         if os.path.exists(input_path):
-            scan_dir_to_text(input_path, out_ober, True, dpi_convert, lang_old)
+            scan_dir_to_text(input_path, out_ober, True, dpi_convert, lang_deu)
 
     # for i in niederaustria:
     #     input_path = f"{path_nieder}/{i}"
