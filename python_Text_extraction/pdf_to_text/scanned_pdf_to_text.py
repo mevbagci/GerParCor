@@ -195,6 +195,7 @@ def scan_dir_to_text(dir_path: str, out_name_dir: str, bad_quali: bool, dpi: int
     # print(set_files)
     for file_i in set_files:
         txt_file = file_i.replace("pdf", "txt")
+        #
         # txt_file = txt_file.replace("/out", "")
         if os.path.exists(txt_file):
             files_exist.add(file_i)
