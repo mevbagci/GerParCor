@@ -206,6 +206,16 @@ if __name__ == "__main__":
         if os.path.exists(path_i):
             multiprocessing_spellchecker(path_i, "de-100k.txt", f"Symspell", out_i)
 
+    #Bundesrat
+    older_input = [
+        "I", "II", "III", "IV",
+    ]
+    path_bundesrat = f"{path_txt}/Austria/Bundesrat"
+    for i in older_input:
+        out_i = f"{path_out}/Austria/Bundesrat/{i}"
+        path_i = f"{path_bundesrat}/{i}"
+        multiprocessing_spellchecker(path_i, "de-100k.txt", f"Symspell", out_i)
+
     # Oberoesterreich
     path_ober = f"{path_txt}/Austria/Oberoestereich"
     out_ober = f"{path_txt}/Austria/Oberoestereich"
