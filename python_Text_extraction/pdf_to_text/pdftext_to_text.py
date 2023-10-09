@@ -271,10 +271,26 @@ if __name__ == "__main__":
     #         dir_to_txt(input_path)
 
     #vorarlberg
-    vorarlberg = ["1887"]
-    path_vorarlberg = f"{base_path}/Austria/Vorarlberg"
-    for i in vorarlberg:
-        input_path = f"{path_vorarlberg}/{i}"
+    # vorarlberg = ["1887"]
+    # path_vorarlberg = f"{base_path}/Austria/Vorarlberg"
+    # for i in vorarlberg:
+    #     input_path = f"{path_vorarlberg}/{i}"
+    #     # os.makedirs(input_path, exist_ok=True)
+    #     # os.path.exists(input_path, exist)
+    #     dir_to_txt(input_path)
+
+    path_ober = f"{base_path}/Austria/Oberoestereich"
+    out_ober = f"{base_path}/Austria/Oberoestereich"
+    oberautria = [
+                  # "XXIX", "XXVI",
+                  "XXVII", "XXVIII"
+                  ]
+    for i in oberautria:
+        input_path = f"{path_ober}/{i}._Gesetzgebungsperiode"
         # os.makedirs(input_path, exist_ok=True)
         # os.path.exists(input_path, exist)
-        dir_to_txt(input_path)
+        if os.path.exists(input_path):
+            dir_to_txt(input_path)
+        else:
+            input_path = f"{path_ober}/{i}. Gesetzgebungsperiode"
+            dir_to_txt(input_path)
