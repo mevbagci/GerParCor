@@ -14,6 +14,7 @@ from functools import partial
 from typing import List
 
 set_files = set()
+Image.MAX_IMAGE_PIXELS = 999999999
 
 def pdf_to_image(pdf_path: str, dpi: int, lang: str, output_path, bad_quali: bool = False) -> (int, str):
     """
