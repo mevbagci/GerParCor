@@ -452,7 +452,7 @@ if __name__ == '__main__':
         # "Bremen",
         # "BadenWuertemmberg/17",
         # "Bayern",
-        # "Brandenburg",
+        "Brandenburg",
         # "Bremen,
         # "Hamburg",
         # "Sachsen",
@@ -478,12 +478,12 @@ if __name__ == '__main__':
         # "Vorarlberg",
         "Tirol/Kurzprotokoll",
     ]
-    for bd_i in austria:
-        reset_set_files()
-        get_all_path_files(f"/storage/projects/abrami/GerParCor/txt/Austria/{bd_i}", ".txt")
-        all_files = list(get_set_files())
-        print(f"Get Date for {bd_i}")
-        extract_Bundeslaender(all_files)
+    # for bd_i in austria:
+    #     reset_set_files()
+    #     get_all_path_files(f"/storage/projects/abrami/GerParCor/txt/Austria/{bd_i}", ".txt")
+    #     all_files = list(get_set_files())
+    #     print(f"Get Date for {bd_i}")
+    #     extract_Bundeslaender(all_files)
     # BadenW = []
     # for i in range(0, 9):
     #     BadenW.append(f"BadenWuertemmberg/{i}")

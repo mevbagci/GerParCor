@@ -226,8 +226,8 @@ if __name__ == "__main__":
     # for i_list in national_rat:
     #     dir_to_txt(f"{path_national}/{i_list}")
     #
-    for i_list in niederaustria:
-        dir_to_txt(f"{path_nieder}/{i_list}")
+    # for i_list in niederaustria:
+    #     dir_to_txt(f"{path_nieder}/{i_list}")
 
     # for i_list in salzburg:
     #     dir_to_txt(f"{path_salzburg}/{i_list}")
@@ -254,18 +254,27 @@ if __name__ == "__main__":
     #
     #     dir_of_subdirs_to_txt(f"/storage/projects/abrami/GerParCor/pdf/{bundesland}", [])
 
-    tirol = list(range(1970, 2024))
-    path_tirol = f"{base_path}/Austria/Tirol/Sitzungsbericht"
-    # out_tirol = f"{out_base}/Austria/Tirol/Sitzungsbericht"
-    for i in tirol:
-        input_path = f"{path_tirol}/{i} Periode"
-        if os.path.exists(input_path):
-            dir_to_txt(input_path)
+    # tirol = list(range(1970, 2024))
+    # path_tirol = f"{base_path}/Austria/Tirol/Sitzungsbericht"
+    # # out_tirol = f"{out_base}/Austria/Tirol/Sitzungsbericht"
+    # for i in tirol:
+    #     input_path = f"{path_tirol}/{i} Periode"
+    #     if os.path.exists(input_path):
+    #         dir_to_txt(input_path)
+    #
+    # tirol_kurz = list(range(1946, 2024))
+    # path_tirol_kurz = f"{base_path}/Austria/Tirol/Kurzprotokoll"
+    # # out_tirol_kurz = f"{out_base}/Austria/Tirol/Kurzprotokoll"
+    # for i in tirol_kurz:
+    #     input_path = f"{path_tirol_kurz}/{i} Periode"
+    #     if os.path.exists(input_path):
+    #         dir_to_txt(input_path)
 
-    tirol_kurz = list(range(1946, 2024))
-    path_tirol_kurz = f"{base_path}/Austria/Tirol/Kurzprotokoll"
-    # out_tirol_kurz = f"{out_base}/Austria/Tirol/Kurzprotokoll"
-    for i in tirol_kurz:
-        input_path = f"{path_tirol_kurz}/{i} Periode"
-        if os.path.exists(input_path):
-            dir_to_txt(input_path)
+    #vorarlberg
+    vorarlberg = ["1887"]
+    path_vorarlberg = f"{base_path}/Austria/Vorarlberg"
+    for i in vorarlberg:
+        input_path = f"{path_vorarlberg}/{i}"
+        # os.makedirs(input_path, exist_ok=True)
+        # os.path.exists(input_path, exist)
+        dir_to_txt(input_path)

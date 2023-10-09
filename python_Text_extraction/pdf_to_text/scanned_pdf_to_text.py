@@ -194,6 +194,7 @@ def scan_dir_to_text(dir_path: str, out_name_dir: str, bad_quali: bool, dpi: int
     # print(set_files)
     for file_i in set_files:
         txt_file = file_i.replace("pdf", "txt")
+        txt_file = txt_file.replace("/out", "")
         if os.path.exists(txt_file):
             files_exist.add(file_i)
     set_files = set_files.difference(files_exist)
@@ -262,6 +263,17 @@ if __name__ == "__main__":
     ]
     path_nieder = f"{base_path}/Austria/Niederoestereich"
     out_nieder = f"{out_base}/Austria/Niederoestereich"
+
+    #Oberoesterreich
+    path_ober = f"{base_path}/Austria/Oberoestereich"
+    out_ober = f"{out_base}/Austria/Oberoestereich"
+    oberautria = ["18", "19", "20", "21", "22", "23",
+                  "XXIX", "XXVI", "XXVII" "XVIII"]
+    oberautria_old = [16, 17]
+    for i in oberautria_old:
+        input_path = f"{path_ober}/{i}._Gesetzgebungsperiode"
+        if os.path.exists(input_path):
+            scan_dir_to_text(input_path, out_ober, True, dpi_convert, lang_old)
 
     # for i in niederaustria:
     #     input_path = f"{path_nieder}/{i}"
@@ -449,3 +461,5 @@ if __name__ == "__main__":
     # args = parser.parse_args()
     # scan_dir_to_text(dir_path=args.path_directory, out_name_dir=args.out, bad_quali=args.quali, dpi=args.dpi,
     #                  lang=args.lang)
+
+

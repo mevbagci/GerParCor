@@ -70,7 +70,7 @@ if __name__ == '__main__':
         2021, 2022, 2023
     ]
     austria = [
-        "Bundesrat", "Kaernten", "Nationalrat", "Niederoestereich", "Salzburg", "Steiermark", "Wien"
+        "Bundesrat", "Kaernten", "Nationalrat", "Niederoestereich", "Salzburg", "Steiermark", "Wien", "Tirol", "Vorarlberg"
     ]
     germany_failed = {}
     lichtenstein_failed = {}
