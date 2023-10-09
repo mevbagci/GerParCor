@@ -146,7 +146,7 @@ def get_all_path_pdf(path_dir: str):
     for file in os.scandir(path_dir):
         if file.is_dir():
             get_all_path_pdf(file)
-        elif (str(file.path)).endswith(".pdf"):
+        elif (str(file.path)).endswith("out.pdf"):
             set_files.add(str(file.path))
             if len(set_files) % 100 == 0:
                 print(len(set_files))
