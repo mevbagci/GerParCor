@@ -14,6 +14,11 @@ from urllib.parse import quote
 import json
 from tqdm import tqdm
 import gzip
+from multiprocessing import Pool
+from functools import partial
+import multiprocessing
+from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
 def bs4_downloader(html_dir):
     with open(html_dir, "r") as f:
@@ -90,7 +95,7 @@ def download_protokoll(page):
     for i in list(range(2, 35)):
         link_i = driver.find_element(By.XPATH, f'/html/body/form/table/tbody/tr[9]/td/table/tbody/tr/td/table/tbody/tr[{i}]/td[1]/table/tbody/tr/td[1]/a').get_attribute("href")
         text_i = driver.find_element(By.XPATH, f'/html/body/form/table/tbody/tr[9]/td/table/tbody/tr/td/table/tbody/tr[{i}]/td[1]/table/tbody/tr/td[2]/b/font').text
-        all_links[text_i]={
+        all_links[text_i] = {
             "link": link_i,
             "inter": {}
         }
@@ -114,7 +119,8 @@ def download_protokoll(page):
                         "protocol": {}
                     }
                 else:
-                    link_inter = driver.find_element(By.XPATH, f'/html/body/form/table/tbody/tr[9]/td/table/tbody/tr/td/table/tbody/tr[{counter}]/td[2]/table/tbody/tr/td[1]/a[2]').get_attribute("href")
+                    link_inter = driver.find_element(By.XPATH, f'/html/body/form/table/tbody/tr[9]/td/table/tbody/tr/td/table/tbody/tr[{counter}]/td[2]/table/tbody/tr/td[1]/a[2]').get_attribute(
+                        "href")
                     link_inter_text = driver.find_element(By.XPATH,
                                                           f'/html/body/form/table/tbody/tr[9]/td/table/tbody/tr/td/table/tbody/tr[{counter}]/td[2]/table/tbody/tr/td[2]/b[2]/font').text
                     number_inter = int(driver.find_element(By.XPATH, f'/html/body/form/table/tbody/tr[9]/td/table/tbody/tr/td/table/tbody/tr[{counter}]/td[3]/font').text)
@@ -162,6 +168,49 @@ def download_protokoll(page):
             #     print("h")
     save_json(all_links, f"/storage/projects/abrami/GerParCor/links/austria/Vorarlberg/vorarlberg.json")
 
+
+def download_saved_links(type_download=f"Protokoll"):
+    if not os.path.exists(f"/storage/projects/abrami/GerParCor/links/austria/Vorarlberg/vorarlberg.json"):
+        download_protokoll(f"https://suche.vorarlberg.at/VLR/vlr_gov.nsf/nachLandtagsperiode?OpenForm")
+    all_links = read_json(f"/storage/projects/abrami/GerParCor/links/austria/Vorarlberg/vorarlberg.json")
+    downloads = []
+    for link_id in all_links:
+        for inter_id in all_links[link_id]["inter"]:
+            for protocol_id in all_links[link_id]["inter"][inter_id]["protocol"]:
+                special_key = f"{link_id}#__#{inter_id}#__#{protocol_id}"
+                type_i = all_links[link_id]["inter"][inter_id]["protocol"][protocol_id]["typ"]
+                link_i = all_links[link_id]["inter"][inter_id]["protocol"][protocol_id]["link"]
+                if type_i == type_download:
+                    downloads.append(f"{special_key}##link##{link_i}")
+    part_func = partial(get_download_page)
+    number_core = int(multiprocessing.cpu_count()-1)
+    pool = Pool(number_core)
+    result = list(tqdm(pool.imap_unordered(part_func, downloads),
+                       desc=f"Downloadung"))
+    pool.close()
+    pool.join()
+
+
+def get_download_page(special_url):
+    chrome_options = webdriver.ChromeOptions()
+    dir_download = f'/storage/projects/abrami/GerParCor/pdf/Austria/Vorarlberg_test'
+    prefs = {'download.default_directory': dir_download, 'intl.accept_languages': 'de,de_DE'}
+    os.makedirs(dir_download, exist_ok=True)
+    chrome_options.add_experimental_option('prefs', prefs)
+    chrome_options.add_argument("--headless")
+    service = Service()
+    driver = webdriver.Chrome(service=service, options=chrome_options)
+    link_i = special_url.split("##link##")[-1]
+    driver.get(link_i)
+    wait = WebDriverWait(driver, 10)
+    wait.until(EC.presence_of_element_located((By.XPATH, f'/html/body/form/a[5]')))
+    link_download = driver.find_element(By.XPATH, f'/html/body/form/a[5]').get_attribute("href").replace('javascript:OpenPDF("', "").replace('")', "")
+    link_names = special_url.split("##link##")[0].split("#__#")
+    download_pdf(f"{dir_download}/{link_names[0]}/{link_names[1].split('-')[0]}/{link_names[2]}.pdf", link_download)
+    print("h")
+
+
+
 def save_json(json_data, data_dir, gzip_save=False):
     os.makedirs(os.path.dirname(data_dir), exist_ok=True)
     if gzip_save:
@@ -171,6 +220,7 @@ def save_json(json_data, data_dir, gzip_save=False):
         with open(data_dir, "w", encoding="UTF-8") as json_file:
             json.dump(json_data, json_file, indent=2)
 
+
 def read_json(data_dir, gzip_load=False):
     if gzip_load:
         with gzip.open(data_dir, "rt", encoding="UTF-8") as json_file:
@@ -179,10 +229,12 @@ def read_json(data_dir, gzip_load=False):
         with open(data_dir, "r", encoding="UTF-8") as json_file:
             return json.load(json_file)
 
+
 if __name__ == '__main__':
     test = f"https://suche.vorarlberg.at/VLR/vlr_gov.nsf/0/10BB6954AA682D1CC12587EB003D5A83?OpenDocument"
     # bs4_downloader(test)
     page_name = f"https://vorarlberg.at/web/landtag/lis"
     page_search = f"https://suche.vorarlberg.at/VLR/vlr_gov.nsf/nachLandtagsperiode?OpenForm"
-    download_protokoll(page_search)
+    # download_protokoll(page_search)
     # downlaod_from_tsv(f"vorarlberg.tsv")
+    download_saved_links()
