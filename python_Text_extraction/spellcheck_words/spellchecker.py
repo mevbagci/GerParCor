@@ -148,11 +148,27 @@ def summary_result_spellcheck(input_dir_results: str, end_with: str, spell_objec
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser()
-    parser.add_argument("-p", "--path_directory", help="Path to the directory with the .txt files")
-    parser.add_argument("-s", "--sym_speller", default="de-100k.txt", help="Name of the word lexicon for SymSpellpy")
-    parser.add_argument("-o", "--out", default="symspell_spellcheck", help="Directory path for the outputs of the spell checking")
-    parser.add_argument("-m", "--name_modifier", default="Symspell", help="Modify the output name")
-    args = parser.parse_args()
-    multiprocessing_spellchecker(in_txt_dir=args.path_directory, in_dir_speller=args.sym_speller, spell_object_name=args.name_modifier, out_dir=args.out)
+    path_txt = f"/storage/projects/abrami/GerParCor/txt"
+    path_out = f"/storage/projects/abrami/GerParCor/spellchecking"
+    # BadenWuertemmberg
+    path_baden = f"{path_txt}/Germany/BadenWuertemmberg"
+    all_path_baden = [
+        0, 1, 2, 3, 4, 5, 6, 7, 8
+    ]
+    for i in all_path_baden:
+        out_i = f"{path_out}/Germany/BadenWuertemmberg/{i}"
+        path_i = f"{path_baden}/{i}"
+        multiprocessing_spellchecker(path_i, "de-100k.txt", out_i, f"Symspell")
+    # ocr_path = [
+    #     "older"
+    # ]
+    #
+    #
+    # parser = argparse.ArgumentParser()
+    # parser.add_argument("-p", "--path_directory", help="Path to the directory with the .txt files")
+    # parser.add_argument("-s", "--sym_speller", default="de-100k.txt", help="Name of the word lexicon for SymSpellpy")
+    # parser.add_argument("-o", "--out", default="symspell_spellcheck", help="Directory path for the outputs of the spell checking")
+    # parser.add_argument("-m", "--name_modifier", default="Symspell", help="Modify the output name")
+    # args = parser.parse_args()
+    # multiprocessing_spellchecker(in_txt_dir=args.path_directory, in_dir_speller=args.sym_speller, spell_object_name=args.name_modifier, out_dir=args.out)
 
