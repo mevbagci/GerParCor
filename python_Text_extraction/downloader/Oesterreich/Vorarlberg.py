@@ -189,6 +189,13 @@ def download_saved_links(type_download=f"Protokoll"):
                        desc=f"Downloadung", total=len(downloads)))
     pool.close()
     pool.join()
+    successes, fails = 0, 0
+    for i in result:
+        if i:
+            successes += 1
+        else:
+            fails += 1
+    print(f"successes: {successes}, fails: {fails}")
 
 
 def get_download_page(special_url):
@@ -206,7 +213,11 @@ def get_download_page(special_url):
     wait.until(EC.presence_of_element_located((By.XPATH, f'/html/body/form/a[5]')))
     link_download = driver.find_element(By.XPATH, f'/html/body/form/a[5]').get_attribute("href").replace('javascript:OpenPDF("', "").replace('")', "")
     link_names = special_url.split("##link##")[0].split("#__#")
-    download_pdf(f"{dir_download}/{link_names[0]}/{link_names[1].split('-')[0]}/{link_names[2]}.pdf", link_download)
+    try:
+        download_pdf(f"{dir_download}/{link_names[0]}/{link_names[1].split('-')[0]}/{link_names[2].split('„')[0]}.pdf", link_download)
+        return True
+    except:
+        return False
     # print("h")
 
 
