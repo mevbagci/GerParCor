@@ -27,6 +27,7 @@ def pdf_to_image(pdf_path: str, dpi: int, lang: str, output_path, bad_quali: boo
     :return:
     """
     output_path = pdf_path.replace("/pdf/", "/txt/")
+    output_path = output_path.replace("/out", "")
     output_path = output_path.strip(".pdf") + "_image_safe"
     # output_path = output_path + "/" + pdf_path.split("/")[-1].strip(".pdf") + "_image_safe"
     pathlib.Path(output_path).mkdir(parents=True, exist_ok=True)
@@ -93,6 +94,7 @@ def image_to_text(image_path: str, pdf_path: str, file_limit: int, lang: str, ou
     # txt_data_name = txt_data_name.replace(" ", "_")
     # txt_path = f"{out_dir}/{txt_data_name}"
     txt_path = pdf_path.replace("/pdf/", "/txt/").replace(".pdf", ".txt")
+    txt_path = pdf_path.replace("/out", "")
     makedirs(os.path.dirname(txt_path), exist_ok=True)
     with open(txt_path, "w", encoding="UTF-8") as f:
         # Iterate from 1 to total number of pages
