@@ -213,8 +213,14 @@ def download_saved_links(type_download=f"Protokoll"):
                         else:
                             time.sleep(0.5)
                         counter += 1
-                        if counter > 200:
+                        if counter > 200000:
                             failed.append(special_key)
+                            list_files = get_last_downloaded_file(dir_download)
+                            for i in list_files:
+                                try:
+                                    os.remove(f"{dir_download}/{i}")
+                                except:
+                                    pass
                             break
     save_json(failed, "/storage/projects/abrami/GerParCor/links/austria/Vorarlberg/failed.json")
     # part_func = partial(get_download_page)
