@@ -28,6 +28,9 @@ def bs4_downloader(html_dir):
         print("h")
 
 
+def get_last_downloaded_file(directory):
+    return os.listdir(directory)
+
 def download_pdf(file_name, url):
     os.makedirs(os.path.dirname(file_name), exist_ok=True)
     response = urllib.request.urlopen(url)
@@ -170,6 +173,15 @@ def download_protokoll(page):
 
 
 def download_saved_links(type_download=f"Protokoll"):
+    chrome_options = webdriver.ChromeOptions()
+    dir_download = f'/storage/projects/abrami/GerParCor/pdf/Austria/Vorarlberg_temp'
+    download_directory = f'/storage/projects/abrami/GerParCor/pdf/Austria/Vorarlberg_test2'
+    prefs = {'download.default_directory': dir_download, 'intl.accept_languages': 'de,de_DE'}
+    os.makedirs(dir_download, exist_ok=True)
+    chrome_options.add_experimental_option('prefs', prefs)
+    chrome_options.add_argument("--headless")
+    service = Service()
+    driver = webdriver.Chrome(service=service, options=chrome_options)
     if not os.path.exists(f"/storage/projects/abrami/GerParCor/links/austria/Vorarlberg/vorarlberg.json"):
         download_protokoll(f"https://suche.vorarlberg.at/VLR/vlr_gov.nsf/nachLandtagsperiode?OpenForm")
     all_links = read_json(f"/storage/projects/abrami/GerParCor/links/austria/Vorarlberg/vorarlberg.json")
@@ -182,25 +194,41 @@ def download_saved_links(type_download=f"Protokoll"):
                 link_i = all_links[link_id]["inter"][inter_id]["protocol"][protocol_id]["link"]
                 if type_i == type_download:
                     downloads.append(f"{special_key}##link##{link_i}")
-    part_func = partial(get_download_page)
-    number_core = int(multiprocessing.cpu_count()-1)
-    pool = Pool(number_core)
-    result = list(tqdm(pool.imap_unordered(part_func, downloads),
-                       desc=f"Downloadung", total=len(downloads)))
-    pool.close()
-    pool.join()
-    successes, fails = 0, 0
-    for i in result:
-        if i:
-            successes += 1
-        else:
-            fails += 1
-    print(f"successes: {successes}, fails: {fails}")
+                    driver.get(link_i)
+                    # wait = WebDriverWait(driver, 10)
+                    # wait.until(EC.presence_of_element_located((By.XPATH, f'/html/body/form/a[5]')))
+                    # link_download = driver.find_element(By.XPATH, f'/html/body/form/a[5]').get_attribute("href").replace('javascript:OpenPDF("', "").replace('")', "")
+                    # download_pdf(f"{dir_download}/{link_id}/{inter_id.split('-')[0]}/{protocol_id.split('„')[0]}.pdf", link_download)
+                    while True:
+                        files = get_last_downloaded_file(dir_download)
+                        if len(files) > 0:
+                            if files[-1].endswith(".pdf"):
+                                time.sleep(0.1)
+                                os.makedirs(f"{download_directory}/{link_id}/{inter_id.split('-')[0]}", exist_ok=True)
+                                os.rename(f"{dir_download}/{files[-1]}", f"{download_directory}/{link_id}/{inter_id.split('-')[0]}/{files[-1]}")
+                                time.sleep(0.1)
+                                break
+                        else:
+                            time.sleep(0.5)
+    # part_func = partial(get_download_page)
+    # number_core = int(multiprocessing.cpu_count()-1)
+    # pool = Pool(number_core)
+    # result = list(tqdm(pool.imap_unordered(part_func, downloads),
+    #                    desc=f"Downloadung", total=len(downloads)))
+    # pool.close()
+    # pool.join()
+    # successes, fails = 0, 0
+    # for i in result:
+    #     if i:
+    #         successes += 1
+    #     else:
+    #         fails += 1
+    # print(f"successes: {successes}, fails: {fails}")
 
 
 def get_download_page(special_url):
     chrome_options = webdriver.ChromeOptions()
-    dir_download = f'/storage/projects/abrami/GerParCor/pdf/Austria/Vorarlberg_test'
+    dir_download = f'/storage/projects/abrami/GerParCor/pdf/Austria/Vorarlberg_test2'
     prefs = {'download.default_directory': dir_download, 'intl.accept_languages': 'de,de_DE'}
     os.makedirs(dir_download, exist_ok=True)
     chrome_options.add_experimental_option('prefs', prefs)
@@ -215,6 +243,11 @@ def get_download_page(special_url):
     link_names = special_url.split("##link##")[0].split("#__#")
     try:
         download_pdf(f"{dir_download}/{link_names[0]}/{link_names[1].split('-')[0]}/{link_names[2].split('„')[0]}.pdf", link_download)
+        while True:
+            if os.path.exists(f"{dir_download}/{link_names[0]}/{link_names[1].split('-')[0]}/{link_names[2].split('„')[0]}.pdf"):
+                break
+            else:
+                time.sleep(0.5)
         return True
     except:
         return False
