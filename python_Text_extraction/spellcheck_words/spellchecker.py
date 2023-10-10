@@ -134,17 +134,48 @@ def summary_result_spellcheck(input_dir_results: str, end_with: str, spell_objec
     number_right = 0
     number_wrong = 0
     out_first_line = f"Good_quality\tright_number\twrong_number\n"
-    for file_dir in tqdm(files, desc=f"Put all qualities together of {spell_object_name}"):
-        with open(file_dir, "r", encoding="UTF-8") as txt_file:
-            info_out = txt_file.readlines()[1].split()
-            quality_sum += float(info_out[0])
-            number_right += int(info_out[1])
-            number_wrong += int(info_out[2].replace("\n", ""))
-    quality_federal_state = quality_sum / len(files)
-    out_dir_name = f"{input_dir_results}/{spell_object_name}_all_quality_out.txt"
-    with open(out_dir_name, "w", encoding="UTF-8") as out_text_file:
-        out_text_file.write(out_first_line)
-        out_text_file.write(f"{quality_federal_state}\t{number_right}\t{number_wrong}")
+    if end_with ==".json":
+        out_dir_name = f"{input_dir_results}/{spell_object_name}_all_quality_out.json"
+        right = 0
+        wrong = 0
+        unknown = 0
+        number_words = 0
+        for file_dir in tqdm(files, desc=f"Put all qualities together of {spell_object_name}"):
+            with open(file_dir, "r", encoding="UTF-8") as json_file:
+                if file_dir == out_dir_name:
+                    continue
+                file_jsons = json.load(json_file)
+                for data_i in file_jsons:
+                    right += data_i["right_number"]
+                    wrong += data_i["wrong_number"]
+                    unknown += data_i["unknown_numbers"]
+                    number_words += data_i["number_of_words"]
+        quality_good = right/(right+wrong)
+        quality_unknown = right/number_words
+        data_sum = {
+            "right_number": right,
+            "wrong_number": wrong,
+            "unknown_number": unknown,
+            "number_of_words": number_words,
+            "quality_good": quality_good,
+            "quality_unknown": quality_unknown,
+            "text": f"Good_quality\tUnknown quality\tunknown words\tright words\twrong words\n"
+                    f"{quality_good}\%\t{quality_unknown}\%\t{unknown/number_words}\%\t{right/number_words}\%\t{wrong/number_words}"
+        }
+        with open(out_dir_name, "w", encoding="UTF-8") as json_file:
+            json.dump(data_sum, json_file, indent=2)
+    else:
+        for file_dir in tqdm(files, desc=f"Put all qualities together of {spell_object_name}"):
+            with open(file_dir, "r", encoding="UTF-8") as txt_file:
+                info_out = txt_file.readlines()[1].split()
+                quality_sum += float(info_out[0])
+                number_right += int(info_out[1])
+                number_wrong += int(info_out[2].replace("\n", ""))
+        quality_federal_state = quality_sum / len(files)
+        out_dir_name = f"{input_dir_results}/{spell_object_name}_all_quality_out.txt"
+        with open(out_dir_name, "w", encoding="UTF-8") as out_text_file:
+            out_text_file.write(out_first_line)
+            out_text_file.write(f"{quality_federal_state}\t{number_right}\t{number_wrong}")
 
 
 if __name__ == "__main__":
@@ -217,20 +248,34 @@ if __name__ == "__main__":
     #     multiprocessing_spellchecker(path_i, "de-100k.txt", f"Symspell", out_i)
 
     # Oberoesterreich
-    path_ober = f"{path_txt}/Austria/Oberoestereich"
-    out_ober = f"{path_txt}/Austria/Oberoestereich"
-    oberautria = ["18", "19", "20", "21", "22", "23",
-                      # "XXIX", "XXVI", "XXVII" "XVIII"
-                      ]
-    oberautria_old = [16, 17]
-    for i in oberautria:
-        out_i = f"{path_out}/Austria/Oberoestereich/{i}"
-        path_i = f"{path_ober}/{i}._Gesetzgebungsperiode"
-        multiprocessing_spellchecker(path_i, "de-100k.txt", f"Symspell", out_i)
-    for i in oberautria_old:
-        out_i = f"{path_out}/Austria/Oberoestereich/{i}"
-        path_i = f"{path_ober}/{i}._Gesetzgebungsperiode"
-        multiprocessing_spellchecker(path_i, "de-100k.txt", f"Symspell", out_i)
+    # path_ober = f"{path_txt}/Austria/Oberoestereich"
+    # out_ober = f"{path_txt}/Austria/Oberoestereich"
+    # oberautria = ["18", "19", "20", "21", "22", "23",
+    #                   # "XXIX", "XXVI", "XXVII" "XVIII"
+    #                   ]
+    # oberautria_old = [16, 17]
+    # for i in oberautria:
+    #     out_i = f"{path_out}/Austria/Oberoestereich/{i}"
+    #     path_i = f"{path_ober}/{i}._Gesetzgebungsperiode"
+    #     multiprocessing_spellchecker(path_i, "de-100k.txt", f"Symspell", out_i)
+    # for i in oberautria_old:
+    #     out_i = f"{path_out}/Austria/Oberoestereich/{i}"
+    #     path_i = f"{path_ober}/{i}._Gesetzgebungsperiode"
+    #     multiprocessing_spellchecker(path_i, "de-100k.txt", f"Symspell", out_i)
+
+    #Spellchecking
+    #Baden
+    # summary_result_spellcheck(f"{path_out}/Germany/BadenWuertemmberg/Fraktur", ".txt")
+    # summary_result_spellcheck(f"{path_out}/Germany/BadenWuertemmberg/Non-Fraktur", ".txt")
+
+    summary_result_spellcheck(f"{path_out}/Austria/Bundesrat/Fraktur", ".json")
+    summary_result_spellcheck(f"{path_out}/Austria/Niederoestereich/Non-Fraktur", ".txt")
+    summary_result_spellcheck(f"{path_out}/Austria/Oberoestereich/Non-Fraktur", ".txt")
+    summary_result_spellcheck(f"{path_out}/Austria/Oberoestereich/Fraktur", ".txt")
+    summary_result_spellcheck(f"{path_out}/Austria/Steiermark/Fraktur", ".txt")
+    summary_result_spellcheck(f"{path_out}/Austria/Tirol/Fraktur", ".txt")
+
+
     #
     # parser = argparse.ArgumentParser()
     # parser.add_argument("-p", "--path_directory", help="Path to the directory with the .txt files")
