@@ -159,62 +159,62 @@ if __name__ == "__main__":
     #     out_i = f"{path_out}/Germany/BadenWuertemmberg/{i}"
     #     path_i = f"{path_baden}/{i}"
     #     multiprocessing_spellchecker(path_i, "de-100k.txt", f"Symspell", out_i)
-    ocr_path = [
-        "older"
-    ]
-    for i in ocr_path:
-        out_i = f"{path_out}/Germany/BadenWuertemmberg/{i}"
-        path_i = f"{path_baden}/{i}"
-        multiprocessing_spellchecker(path_i, "de-100k.txt", f"Symspell", out_i)
-
-    #Niederaustria
-    path_nieder = f"{path_txt}/Austria/Niederoestereich"
-    niederaustria = [
-        "IV. Gesetzgebungsperiode", "V. Gesetzgebungsperiode", "VI. Gesetzgebungsperiode", "VII. Gesetzgebungsperiode"
-    ]
-    for i in niederaustria:
-        out_i = f"{path_out}/Austria/Niederoestereich/{i}"
-        path_i = f"{path_nieder}/{i}"
-        multiprocessing_spellchecker(path_i, "de-100k.txt", f"Symspell", out_i)
-
-    # steiermark
-    path_steiermark = f"{path_txt}/Austria/Steiermark"
-    steiermark = [
-            "1848", "1861 - 1866 (Periode I)", "1867 - 1869 (Periode II)", "1870 (Periode III)", "1871 - 1877 (Periode IV)", "1878 - 1883 (Periode V)", "1884 - 1889 (Periode VI)",
-            "1890 - 1896 (Periode VII)", "1896 - 1902 (Periode VIII)", "1902 - 1908 (Periode IX)", "1909 - 1914 (Periode X)", "1918 - 1919", "1919 - 1920", "1920 - 1923 (Periode I)",
-            "1923 - 1927 (Periode II)", "1927 - 1930 (Periode III)", "1931 - 1934 (Periode IV)", "1934 - 1938 (Periode V)"
-        ]
-
-    for i in steiermark:
-        out_i = f"{path_out}/Austria/Steiermark/{i}"
-        path_i = f"{path_steiermark}/{i}"
-        multiprocessing_spellchecker(path_i, "de-100k.txt", f"Symspell", out_i)
-
-    tirol = list(range(1921, 1970))
-    path_tirol = f"{path_txt}/Austria/Tirol/Sitzungsbericht"
-    for i in tirol:
-        out_i = f"{path_out}/Austria/Tirol/Sitzungsbericht/{i}"
-        path_i = f"{path_tirol}/{i} Periode"
-        if os.path.exists(path_i):
-            multiprocessing_spellchecker(path_i, "de-100k.txt", f"Symspell", out_i)
-
-    tirol_kurz = list(range(1865, 1930))
-    path_tirol_kurz = f"{path_txt}/Austria/Tirol/Kurzprotokoll"
-    for i in tirol_kurz:
-        out_i = f"{path_out}/Austria/Tirol/Kurzprotokoll/{i}"
-        path_i = f"{path_tirol_kurz}/{i} Periode"
-        if os.path.exists(path_i):
-            multiprocessing_spellchecker(path_i, "de-100k.txt", f"Symspell", out_i)
-
-    #Bundesrat
-    older_input = [
-        "I", "II", "III", "IV",
-    ]
-    path_bundesrat = f"{path_txt}/Austria/Bundesrat"
-    for i in older_input:
-        out_i = f"{path_out}/Austria/Bundesrat/{i}"
-        path_i = f"{path_bundesrat}/{i}"
-        multiprocessing_spellchecker(path_i, "de-100k.txt", f"Symspell", out_i)
+    # ocr_path = [
+    #     "older"
+    # ]
+    # for i in ocr_path:
+    #     out_i = f"{path_out}/Germany/BadenWuertemmberg/{i}"
+    #     path_i = f"{path_baden}/{i}"
+    #     multiprocessing_spellchecker(path_i, "de-100k.txt", f"Symspell", out_i)
+    #
+    # #Niederaustria
+    # path_nieder = f"{path_txt}/Austria/Niederoestereich"
+    # niederaustria = [
+    #     "IV. Gesetzgebungsperiode", "V. Gesetzgebungsperiode", "VI. Gesetzgebungsperiode", "VII. Gesetzgebungsperiode"
+    # ]
+    # for i in niederaustria:
+    #     out_i = f"{path_out}/Austria/Niederoestereich/{i}"
+    #     path_i = f"{path_nieder}/{i}"
+    #     multiprocessing_spellchecker(path_i, "de-100k.txt", f"Symspell", out_i)
+    #
+    # # steiermark
+    # path_steiermark = f"{path_txt}/Austria/Steiermark"
+    # steiermark = [
+    #         "1848", "1861 - 1866 (Periode I)", "1867 - 1869 (Periode II)", "1870 (Periode III)", "1871 - 1877 (Periode IV)", "1878 - 1883 (Periode V)", "1884 - 1889 (Periode VI)",
+    #         "1890 - 1896 (Periode VII)", "1896 - 1902 (Periode VIII)", "1902 - 1908 (Periode IX)", "1909 - 1914 (Periode X)", "1918 - 1919", "1919 - 1920", "1920 - 1923 (Periode I)",
+    #         "1923 - 1927 (Periode II)", "1927 - 1930 (Periode III)", "1931 - 1934 (Periode IV)", "1934 - 1938 (Periode V)"
+    #     ]
+    #
+    # for i in steiermark:
+    #     out_i = f"{path_out}/Austria/Steiermark/{i}"
+    #     path_i = f"{path_steiermark}/{i}"
+    #     multiprocessing_spellchecker(path_i, "de-100k.txt", f"Symspell", out_i)
+    #
+    # tirol = list(range(1921, 1970))
+    # path_tirol = f"{path_txt}/Austria/Tirol/Sitzungsbericht"
+    # for i in tirol:
+    #     out_i = f"{path_out}/Austria/Tirol/Sitzungsbericht/{i}"
+    #     path_i = f"{path_tirol}/{i} Periode"
+    #     if os.path.exists(path_i):
+    #         multiprocessing_spellchecker(path_i, "de-100k.txt", f"Symspell", out_i)
+    #
+    # tirol_kurz = list(range(1865, 1930))
+    # path_tirol_kurz = f"{path_txt}/Austria/Tirol/Kurzprotokoll"
+    # for i in tirol_kurz:
+    #     out_i = f"{path_out}/Austria/Tirol/Kurzprotokoll/{i}"
+    #     path_i = f"{path_tirol_kurz}/{i} Periode"
+    #     if os.path.exists(path_i):
+    #         multiprocessing_spellchecker(path_i, "de-100k.txt", f"Symspell", out_i)
+    #
+    # #Bundesrat
+    # older_input = [
+    #     "I", "II", "III", "IV",
+    # ]
+    # path_bundesrat = f"{path_txt}/Austria/Bundesrat"
+    # for i in older_input:
+    #     out_i = f"{path_out}/Austria/Bundesrat/{i}"
+    #     path_i = f"{path_bundesrat}/{i}"
+    #     multiprocessing_spellchecker(path_i, "de-100k.txt", f"Symspell", out_i)
 
     # Oberoesterreich
     path_ober = f"{path_txt}/Austria/Oberoestereich"
@@ -224,11 +224,11 @@ if __name__ == "__main__":
                       ]
     oberautria_old = [16, 17]
     for i in oberautria:
-        out_i = f"{path_out}/Austria/Oberoestereich/{i}"
+        out_i = f"{path_out}/Austria/Oberoestereich/{i}._Gesetzgebungsperiode"
         path_i = f"{path_ober}/{i}"
         multiprocessing_spellchecker(path_i, "de-100k.txt", f"Symspell", out_i)
     for i in oberautria_old:
-        out_i = f"{path_out}/Austria/Oberoestereich/{i}"
+        out_i = f"{path_out}/Austria/Oberoestereich/{i}._Gesetzgebungsperiode"
         path_i = f"{path_ober}/{i}"
         multiprocessing_spellchecker(path_i, "de-100k.txt", f"Symspell", out_i)
     #
