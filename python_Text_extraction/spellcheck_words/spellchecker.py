@@ -148,7 +148,7 @@ def summary_result_spellcheck(input_dir_results: str, end_with: str, spell_objec
                 for data_i in file_jsons:
                     right += data_i["right_number"]
                     wrong += data_i["wrong_number"]
-                    unknown += data_i["unknown_numbers"]
+                    unknown += data_i["unknown_number"]
                     number_words += data_i["number_of_words"]
         quality_good = right/(right+wrong)
         quality_unknown = right/number_words
@@ -160,7 +160,7 @@ def summary_result_spellcheck(input_dir_results: str, end_with: str, spell_objec
             "quality_good": quality_good,
             "quality_unknown": quality_unknown,
             "text": f"Good_quality\tUnknown quality\tunknown words\tright words\twrong words\n"
-                    f"{quality_good}\%\t{quality_unknown}\%\t{unknown/number_words}\%\t{right/number_words}\%\t{wrong/number_words}"
+                    f"{quality_good}%\t{quality_unknown}%\t{unknown/number_words}%\t{right/number_words}%\t{wrong/number_words}"
         }
         with open(out_dir_name, "w", encoding="UTF-8") as json_file:
             json.dump(data_sum, json_file, indent=2)
@@ -265,15 +265,15 @@ if __name__ == "__main__":
 
     #Spellchecking
     #Baden
-    # summary_result_spellcheck(f"{path_out}/Germany/BadenWuertemmberg/Fraktur", ".txt")
-    # summary_result_spellcheck(f"{path_out}/Germany/BadenWuertemmberg/Non-Fraktur", ".txt")
+    summary_result_spellcheck(f"{path_out}/Germany/BadenWuertemmberg/Fraktur", ".json")
+    summary_result_spellcheck(f"{path_out}/Germany/BadenWuertemmberg/Non-Fraktur", ".json")
 
     summary_result_spellcheck(f"{path_out}/Austria/Bundesrat/Fraktur", ".json")
-    summary_result_spellcheck(f"{path_out}/Austria/Niederoestereich/Non-Fraktur", ".txt")
-    summary_result_spellcheck(f"{path_out}/Austria/Oberoestereich/Non-Fraktur", ".txt")
-    summary_result_spellcheck(f"{path_out}/Austria/Oberoestereich/Fraktur", ".txt")
-    summary_result_spellcheck(f"{path_out}/Austria/Steiermark/Fraktur", ".txt")
-    summary_result_spellcheck(f"{path_out}/Austria/Tirol/Fraktur", ".txt")
+    summary_result_spellcheck(f"{path_out}/Austria/Niederoestereich/Non-Fraktur", ".json")
+    summary_result_spellcheck(f"{path_out}/Austria/Oberoestereich/Non-Fraktur", ".json")
+    summary_result_spellcheck(f"{path_out}/Austria/Oberoestereich/Fraktur", ".json")
+    summary_result_spellcheck(f"{path_out}/Austria/Steiermark/Fraktur", ".json")
+    summary_result_spellcheck(f"{path_out}/Austria/Tirol/Fraktur", ".json")
 
 
     #

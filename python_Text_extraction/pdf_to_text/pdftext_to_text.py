@@ -279,18 +279,62 @@ if __name__ == "__main__":
     #     # os.path.exists(input_path, exist)
     #     dir_to_txt(input_path)
 
-    path_ober = f"{base_path}/Austria/Oberoestereich"
-    out_ober = f"{base_path}/Austria/Oberoestereich"
-    oberautria = [
-                  # "XXIX", "XXVI",
-                  "XXVII", "XXVIII"
-                  ]
-    for i in oberautria:
-        input_path = f"{path_ober}/{i}._Gesetzgebungsperiode"
-        # os.makedirs(input_path, exist_ok=True)
-        # os.path.exists(input_path, exist)
-        if os.path.exists(input_path):
-            dir_to_txt(input_path)
-        else:
-            input_path = f"{path_ober}/{i}. Gesetzgebungsperiode"
-            dir_to_txt(input_path)
+    # path_ober = f"{base_path}/Austria/Oberoestereich"
+    # out_ober = f"{base_path}/Austria/Oberoestereich"
+    # oberautria = [
+    #               # "XXIX", "XXVI",
+    #               "XXVII", "XXVIII"
+    #               ]
+    # for i in oberautria:
+    #     input_path = f"{path_ober}/{i}._Gesetzgebungsperiode"
+    #     # os.makedirs(input_path, exist_ok=True)
+    #     # os.path.exists(input_path, exist)
+    #     if os.path.exists(input_path):
+    #         dir_to_txt(input_path)
+    #     else:
+    #         input_path = f"{path_ober}/{i}. Gesetzgebungsperiode"
+    #         dir_to_txt(input_path)
+
+    path_vorarlberg = f"{base_path}/Austria/Vorarlberg"
+    out_vorarlberg = f"{base_path}/Austria/Vorarlberg"
+    vorarlberg = {
+        "31. Landtagsperiode (6. November 2019 - 5. November 2024)": [2021, 2020, 2019],
+        "30. Landtagsperiode (15. Oktober 2014 - 5. November 2019)": list(range(2014, 2020)),
+        "29. Landtagsperiode (Oktober 2009 - September 2014)": list(range(2009, 2015)),
+        "28. Landtag (Oktober 2004 - September 2009)": list(range(2004, 2010)),
+        "27. Landtag (September 1999 - September 2004)": list(range(1999, 2005)),
+        "26. Landtag (September 1994 - September 1999)": list(range(1994, 2000))+[0],
+        "25. Landtag (Oktober 1989 - September 1994)": list(range(1989, 1995))+["(Not Categorized)"],
+        "24. Landtag (Oktober 1984 - September 1989)": list(range(2004, 2010))+["(Not Categorized)"],
+        "23. Landtag (November 1979 bis September 1984)": list(range(1979, 1985)),
+        "22. Landtag (November 1974 - Juli 1979)": list(range(1974, 1980)),
+        "21. Landtag (Oktober 1969 - Juli 1974)": list(range(1969, 1975))+["(Not Categorized)"],
+        "20. Landtag (Oktober 1964 - Juli 1969)": list(range(1964, 1970)),
+        "19. Landtag (Oktober 1959 - Oktober 1964)": list(range(1959, 1965)),
+        "18. Landtag (Oktober 1954 - Dezember 1958)": list(range(1954, 1959)),
+        "17. Landtag (Oktober 1949 - Juli 1954)": list(range(1949, 1955)),
+        "16. Landtag (November 1945 - September 1949)": list(range(1945, 1950)),
+        "15. Landtag (November 1934 - Dezember 1937)": list(range(1934, 1938)),
+        "14. Landtag (November 1932 - Oktober 1934)": list(range(1932, 1935)),
+        "13. Landtag (April 1928 - September 1932)": list(range(1928, 1933)),
+        "12. Landtag (6.11.1923 - 2.2.1928)": list(range(1923, 1929)),
+        "11. Landtag (17.6.1919 - 10.9.1923)": list(range(1919, 1924))+["(Not Categorized)"],
+        "10. Landtag (16.9.1909 - 4.6.1914)": list(range(1909, 1915))+["(Not Categorized)"],
+        "09. Landtag (22.12.1902 - 17.10.1908)": list(range(1902, 1909)),
+        "08. Landtag (26.1.1897 - 17.7.1902)": ["01", "02", "03", "04", "05", "06"],
+        "07. Landtag (14.10.1890-05.02.1896)": ["01", "02", "03", "04", "05", "06"],
+        "07. Landtag (14.10.1890 - 05.02.1896)": ["03", "06"],
+        "06. Landtag (11.08.1884 - 30.10.1889)": ["01", "02", "03", "04", "05", "06"],
+        "05. Landtag (24.09.1878 - 13.08.1883)": ["01", "02", "03", "04", "05"],
+        "04. Landtag (18.12.1871-21.04.1877)": ["01", "02", "03", "04"],
+        "04. Landtag (18.12.1871 - 21.04.1877)": ["04", "05", "06", "(Not Categorized)"],
+        "03. Landtag (20.08.1870 - 14.10.1871)": ["01", "02"],
+        "02. Landtag (18.02.1867 - 30.10.1869)": ["01", "02", "03"],
+        "01. Landtag (04.06.1861 - 29.12.1866)": ["01", "02", "03", "04", "05"],
+    }
+    for i in vorarlberg:
+        for year in vorarlberg[i]:
+            input_path = f"{path_vorarlberg}/{i}/{year}"
+            if os.path.exists(input_path):
+                dir_to_txt(input_path)
+
