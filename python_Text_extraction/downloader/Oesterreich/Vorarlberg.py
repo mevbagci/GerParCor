@@ -213,7 +213,7 @@ def download_saved_links(type_download=f"Protokoll"):
                         else:
                             time.sleep(0.5)
                         counter += 1
-                        if counter > 200000:
+                        if counter > 20000:
                             failed.append(special_key)
                             list_files = get_last_downloaded_file(dir_download)
                             for i in list_files:
