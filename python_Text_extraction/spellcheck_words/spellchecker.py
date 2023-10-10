@@ -224,12 +224,12 @@ if __name__ == "__main__":
                       ]
     oberautria_old = [16, 17]
     for i in oberautria:
-        out_i = f"{path_out}/Austria/Oberoestereich/{i}._Gesetzgebungsperiode"
-        path_i = f"{path_ober}/{i}"
+        out_i = f"{path_out}/Austria/Oberoestereich/{i}"
+        path_i = f"{path_ober}/{i}._Gesetzgebungsperiode"
         multiprocessing_spellchecker(path_i, "de-100k.txt", f"Symspell", out_i)
     for i in oberautria_old:
-        out_i = f"{path_out}/Austria/Oberoestereich/{i}._Gesetzgebungsperiode"
-        path_i = f"{path_ober}/{i}"
+        out_i = f"{path_out}/Austria/Oberoestereich/{i}"
+        path_i = f"{path_ober}/{i}._Gesetzgebungsperiode"
         multiprocessing_spellchecker(path_i, "de-100k.txt", f"Symspell", out_i)
     #
     # parser = argparse.ArgumentParser()
