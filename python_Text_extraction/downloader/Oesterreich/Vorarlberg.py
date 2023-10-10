@@ -187,41 +187,45 @@ def download_saved_links(type_download=f"Protokoll"):
     all_links = read_json(f"/storage/projects/abrami/GerParCor/links/austria/Vorarlberg/vorarlberg.json")
     downloads = []
     failed = []
+    start = False
     for link_id in all_links:
         for inter_id in all_links[link_id]["inter"]:
-            for protocol_id in tqdm(all_links[link_id]["inter"][inter_id]["protocol"], desc=f"{link_id} ; {inter_id}"):
-                special_key = f"{link_id}#__#{inter_id}#__#{protocol_id}"
-                type_i = all_links[link_id]["inter"][inter_id]["protocol"][protocol_id]["typ"]
-                link_i = all_links[link_id]["inter"][inter_id]["protocol"][protocol_id]["link"]
-                if type_i == type_download:
-                    downloads.append(f"{special_key}##link##{link_i}")
-                    driver.get(link_i)
-                    counter = 0
-                    # wait = WebDriverWait(driver, 10)
-                    # wait.until(EC.presence_of_element_located((By.XPATH, f'/html/body/form/a[5]')))
-                    # link_download = driver.find_element(By.XPATH, f'/html/body/form/a[5]').get_attribute("href").replace('javascript:OpenPDF("', "").replace('")', "")
-                    # download_pdf(f"{dir_download}/{link_id}/{inter_id.split('-')[0]}/{protocol_id.split('„')[0]}.pdf", link_download)
-                    while True:
-                        files = get_last_downloaded_file(dir_download)
-                        if len(files) > 0:
-                            if files[-1].endswith(".pdf"):
-                                time.sleep(0.1)
-                                os.makedirs(f"{download_directory}/{link_id}/{inter_id.split('-')[0]}", exist_ok=True)
-                                os.rename(f"{dir_download}/{files[-1]}", f"{download_directory}/{link_id}/{inter_id.split('-')[0]}/{files[-1]}")
-                                time.sleep(0.1)
+            for c, protocol_id in enumerate(tqdm(all_links[link_id]["inter"][inter_id]["protocol"], desc=f"{link_id} ; {inter_id}")):
+                if link_id == "28. Landtag (Oktober 2004 - September 2009)" and inter_id == "2008-09" and c == 14:
+                    start = True
+                if start:
+                    special_key = f"{link_id}#__#{inter_id}#__#{protocol_id}"
+                    type_i = all_links[link_id]["inter"][inter_id]["protocol"][protocol_id]["typ"]
+                    link_i = all_links[link_id]["inter"][inter_id]["protocol"][protocol_id]["link"]
+                    if type_i == type_download:
+                        downloads.append(f"{special_key}##link##{link_i}")
+                        driver.get(link_i)
+                        counter = 0
+                        # wait = WebDriverWait(driver, 10)
+                        # wait.until(EC.presence_of_element_located((By.XPATH, f'/html/body/form/a[5]')))
+                        # link_download = driver.find_element(By.XPATH, f'/html/body/form/a[5]').get_attribute("href").replace('javascript:OpenPDF("', "").replace('")', "")
+                        # download_pdf(f"{dir_download}/{link_id}/{inter_id.split('-')[0]}/{protocol_id.split('„')[0]}.pdf", link_download)
+                        while True:
+                            files = get_last_downloaded_file(dir_download)
+                            if len(files) > 0:
+                                if files[-1].endswith(".pdf"):
+                                    time.sleep(0.1)
+                                    os.makedirs(f"{download_directory}/{link_id}/{inter_id.split('-')[0]}", exist_ok=True)
+                                    os.rename(f"{dir_download}/{files[-1]}", f"{download_directory}/{link_id}/{inter_id.split('-')[0]}/{files[-1]}")
+                                    time.sleep(0.1)
+                                    break
+                            else:
+                                time.sleep(0.5)
+                            counter += 1
+                            if counter > 20000:
+                                failed.append(special_key)
+                                list_files = get_last_downloaded_file(dir_download)
+                                for i in list_files:
+                                    try:
+                                        os.remove(f"{dir_download}/{i}")
+                                    except:
+                                        pass
                                 break
-                        else:
-                            time.sleep(0.5)
-                        counter += 1
-                        if counter > 20000:
-                            failed.append(special_key)
-                            list_files = get_last_downloaded_file(dir_download)
-                            for i in list_files:
-                                try:
-                                    os.remove(f"{dir_download}/{i}")
-                                except:
-                                    pass
-                            break
     save_json(failed, "/storage/projects/abrami/GerParCor/links/austria/Vorarlberg/failed.json")
     # part_func = partial(get_download_page)
     # number_core = int(multiprocessing.cpu_count()-1)
