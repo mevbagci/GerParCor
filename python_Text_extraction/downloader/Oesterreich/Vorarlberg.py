@@ -191,7 +191,7 @@ def download_saved_links(type_download=f"Protokoll"):
     for link_id in all_links:
         for inter_id in all_links[link_id]["inter"]:
             for c, protocol_id in enumerate(tqdm(all_links[link_id]["inter"][inter_id]["protocol"], desc=f"{link_id} ; {inter_id}")):
-                if link_id == "28. Landtag (Oktober 2004 - September 2009)" and inter_id == "2008-09" and c == 15:
+                if link_id == "28. Landtag (Oktober 2004 - September 2009)" and inter_id == "2007-09" and c == 2:
                     start = True
                 if start:
                     special_key = f"{link_id}#__#{inter_id}#__#{protocol_id}"
