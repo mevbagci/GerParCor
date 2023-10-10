@@ -213,7 +213,7 @@ def download_saved_links(type_download=f"Protokoll"):
                         else:
                             time.sleep(0.5)
                         counter += 1
-                        if counter > 20:
+                        if counter > 200:
                             failed.append(special_key)
                             break
     save_json(failed, "/storage/projects/abrami/GerParCor/links/austria/Vorarlberg/failed.json")
