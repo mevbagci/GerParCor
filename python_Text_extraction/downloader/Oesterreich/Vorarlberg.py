@@ -189,7 +189,7 @@ def download_saved_links(type_download=f"Protokoll"):
     failed = []
     for link_id in all_links:
         for inter_id in all_links[link_id]["inter"]:
-            for protocol_id in all_links[link_id]["inter"][inter_id]["protocol"]:
+            for protocol_id in tqdm([link_id]["inter"][inter_id]["protocol"], desc=f"{link_id} ; {inter_id}"):
                 special_key = f"{link_id}#__#{inter_id}#__#{protocol_id}"
                 type_i = all_links[link_id]["inter"][inter_id]["protocol"][protocol_id]["typ"]
                 link_i = all_links[link_id]["inter"][inter_id]["protocol"][protocol_id]["link"]
