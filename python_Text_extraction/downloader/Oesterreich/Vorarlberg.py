@@ -186,6 +186,7 @@ def download_saved_links(type_download=f"Protokoll"):
         download_protokoll(f"https://suche.vorarlberg.at/VLR/vlr_gov.nsf/nachLandtagsperiode?OpenForm")
     all_links = read_json(f"/storage/projects/abrami/GerParCor/links/austria/Vorarlberg/vorarlberg.json")
     downloads = []
+    failed = []
     for link_id in all_links:
         for inter_id in all_links[link_id]["inter"]:
             for protocol_id in all_links[link_id]["inter"][inter_id]["protocol"]:
@@ -195,6 +196,7 @@ def download_saved_links(type_download=f"Protokoll"):
                 if type_i == type_download:
                     downloads.append(f"{special_key}##link##{link_i}")
                     driver.get(link_i)
+                    counter = 0
                     # wait = WebDriverWait(driver, 10)
                     # wait.until(EC.presence_of_element_located((By.XPATH, f'/html/body/form/a[5]')))
                     # link_download = driver.find_element(By.XPATH, f'/html/body/form/a[5]').get_attribute("href").replace('javascript:OpenPDF("', "").replace('")', "")
@@ -210,6 +212,11 @@ def download_saved_links(type_download=f"Protokoll"):
                                 break
                         else:
                             time.sleep(0.5)
+                        counter += 1
+                        if counter > 20:
+                            failed.append(special_key)
+                            break
+    save_json(failed, "/storage/projects/abrami/GerParCor/links/austria/Vorarlberg/failed.json")
     # part_func = partial(get_download_page)
     # number_core = int(multiprocessing.cpu_count()-1)
     # pool = Pool(number_core)
