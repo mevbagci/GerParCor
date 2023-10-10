@@ -214,10 +214,12 @@ def download_saved_links(type_download=f"Protokoll"):
                                     os.rename(f"{dir_download}/{files[-1]}", f"{download_directory}/{link_id}/{inter_id.split('-')[0]}/{files[-1]}")
                                     time.sleep(0.1)
                                     break
+                                else:
+                                    time.sleep(0.1)
                             else:
-                                time.sleep(0.5)
+                                time.sleep(0.01)
                             counter += 1
-                            if counter > 20000:
+                            if counter > 2000:
                                 failed.append(special_key)
                                 list_files = get_last_downloaded_file(dir_download)
                                 for i in list_files:
