@@ -14,6 +14,8 @@ from urllib.parse import quote
 import json
 from tqdm import tqdm
 import gzip
+import locale
+from datetime import datetime
 from multiprocessing import Pool
 from functools import partial
 import multiprocessing
@@ -212,9 +214,9 @@ def download_saved_links(type_download=f"Protokoll"):
                         sitzung = split_inter_id[1]
                         year_sitzung = split_inter_id[0]
                     if type_i == type_download:
-                        start_id = int(link_id.split(".")[0])
-                        if start_id > 27:
-                            continue
+                        # start_id = int(link_id.split(".")[0])
+                        # if start_id > 27:
+                        #     continue
                         if complete_data:
                             if "komplette" not in protocol_id:
                                 continue
@@ -234,10 +236,32 @@ def download_saved_links(type_download=f"Protokoll"):
                                     date_i = "XXXX"
                                     for info_i in infos_i:
                                         if "Behandelt im Landtag " in info_i:
-                                            date_i = info_i.split("Behandelt im Landtag ")[-1].split(" ")[0].replace("/","_")
+                                            date_i = info_i.split("Behandelt im Landtag ")[-1].split(" ")[0]
+                                            if "./" in date_i:
+                                                date_i = date_i.replace("./", "-")
+                                            if "/" in date_i:
+                                                date_i = date_i.split("/")
+                                                date_i = f"{date_i[1]}.{date_i[0]}.{date_i[2]}"
                                             break
                                     if date_i == "XXXX" and "am " in protocol_id:
-                                        date_i = protocol_id.split("am ")[-1].split(" ")[0].replace("./","-").replace("/","_")
+                                        date_i = protocol_id.split("am ")[-1]
+                                        if ". " in date_i:
+                                            date_i = date_i.split(" ")
+                                            date_i = f"{date_i[0]} {date_i[1]} {date_i[2]}"
+                                            try:
+                                                locale.setlocale(locale.LC_ALL, 'de_AT.utf8')
+                                                date_test = datetime.strptime(date_i, "%d. %B %Y")
+                                                date_i = date_test.strftime("%d.%m.%Y")
+                                                # date_i = f"{date_test.day}.{date_test.month}.{date_test.year}"
+                                            except:
+                                                pass
+                                        else:
+                                            date_i = date_i.split(" ")[0]
+                                        if "./" in date_i:
+                                            date_i = date_i.replace("./", "-")
+                                        if "/" in date_i:
+                                            date_i = date_i.split("/")
+                                            date_i = f"{date_i[1]}.{date_i[0]}.{date_i[2]}"
                                     if date_i == "XXXX":
                                         list_files = get_last_downloaded_file(dir_download)
                                         for i in list_files:
