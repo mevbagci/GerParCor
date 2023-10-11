@@ -174,8 +174,8 @@ def download_protokoll(page):
 
 def download_saved_links(type_download=f"Protokoll"):
     chrome_options = webdriver.ChromeOptions()
-    dir_download = f'/storage/projects/abrami/GerParCor/pdf/Austria/Vorarlberg_temp'
-    download_directory = f'/storage/projects/abrami/GerParCor/pdf/Austria/Vorarlberg_test2'
+    dir_download = f'/storage/projects/abrami/GerParCor/pdf/Austria/Vorarlberg_temp3'
+    download_directory = f'/storage/projects/abrami/GerParCor/pdf/Austria/Vorarlberg_test3'
     prefs = {'download.default_directory': dir_download, 'intl.accept_languages': 'de,de_DE'}
     os.makedirs(dir_download, exist_ok=True)
     chrome_options.add_experimental_option('prefs', prefs)
@@ -187,17 +187,37 @@ def download_saved_links(type_download=f"Protokoll"):
     all_links = read_json(f"/storage/projects/abrami/GerParCor/links/austria/Vorarlberg/vorarlberg.json")
     downloads = []
     failed = []
-    start = False
+    start = True
     for link_id in all_links:
         for inter_id in all_links[link_id]["inter"]:
             for c, protocol_id in enumerate(tqdm(all_links[link_id]["inter"][inter_id]["protocol"], desc=f"{link_id} ; {inter_id}")):
-                if link_id == "28. Landtag (Oktober 2004 - September 2009)" and inter_id == "2007-09" and c == 2:
-                    start = True
+                # if link_id == "28. Landtag (Oktober 2004 - September 2009)" and inter_id == "2007-09" and c == 2:
+                #     start = True
                 if start:
+                    complete_data = False
                     special_key = f"{link_id}#__#{inter_id}#__#{protocol_id}"
                     type_i = all_links[link_id]["inter"][inter_id]["protocol"][protocol_id]["typ"]
                     link_i = all_links[link_id]["inter"][inter_id]["protocol"][protocol_id]["link"]
+                    split_inter_id = inter_id.split("-")
+                    for protocol_id2 in all_links[link_id]["inter"][inter_id]["protocol"]:
+                        if type_i == type_download:
+                            if "komplette" in protocol_id2:
+                                complete_data = True
+                    if len(split_inter_id)<=2:
+                        year_sitzung = split_inter_id[0]
+                    else:
+                        year_sitzung = split_inter_id[1]
+                    sitzung = str(split_inter_id[-1])
+                    if sitzung.split(" ")[0].isalpha():
+                        sitzung = split_inter_id[1]
+                        year_sitzung = split_inter_id[0]
                     if type_i == type_download:
+                        start_id = int(link_id.split(".")[0])
+                        if start_id > 27:
+                            continue
+                        if complete_data:
+                            if "komplette" not in protocol_id:
+                                continue
                         downloads.append(f"{special_key}##link##{link_i}")
                         driver.get(link_i)
                         counter = 0
@@ -209,17 +229,34 @@ def download_saved_links(type_download=f"Protokoll"):
                             files = get_last_downloaded_file(dir_download)
                             if len(files) > 0:
                                 if files[-1].endswith(".pdf"):
-                                    time.sleep(0.1)
-                                    os.makedirs(f"{download_directory}/{link_id}/{inter_id.split('-')[0]}", exist_ok=True)
-                                    os.rename(f"{dir_download}/{files[-1]}", f"{download_directory}/{link_id}/{inter_id.split('-')[0]}/{files[-1]}")
-                                    time.sleep(0.1)
+                                    time.sleep(1)
+                                    infos_i = driver.find_element(By.XPATH, f'/html/body/form/table/tbody/tr/td[2]').text.split("\n")
+                                    date_i = "XXXX"
+                                    for info_i in infos_i:
+                                        if "Behandelt im Landtag " in info_i:
+                                            date_i = info_i.split("Behandelt im Landtag ")[-1].split(" ")[0].replace("/","_")
+                                            break
+                                    if date_i == "XXXX" and "am " in protocol_id:
+                                        date_i = protocol_id.split("am ")[-1].split(" ")[0].replace("./","-").replace("/","_")
+                                    if date_i == "XXXX":
+                                        list_files = get_last_downloaded_file(dir_download)
+                                        for i in list_files:
+                                            try:
+                                                os.remove(f"{dir_download}/{i}")
+                                            except:
+                                                pass
+                                        break
+                                    out_name = f"{download_directory}/{link_id}/{year_sitzung}/{sitzung}##{date_i}##{files[-1]}"
+                                    os.makedirs(f"{download_directory}/{link_id}/{year_sitzung}", exist_ok=True)
+                                    os.rename(f"{dir_download}/{files[-1]}", out_name)
+                                    time.sleep(1)
                                     break
                                 else:
                                     time.sleep(0.1)
                             else:
                                 time.sleep(0.01)
                             counter += 1
-                            if counter > 2000:
+                            if counter > 50000:
                                 failed.append(special_key)
                                 list_files = get_last_downloaded_file(dir_download)
                                 for i in list_files:
