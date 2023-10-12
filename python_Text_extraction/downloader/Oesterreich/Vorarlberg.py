@@ -18,7 +18,7 @@ import locale
 from datetime import datetime
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from PyPDF2 import PdfMerger, PdfReader
+from PyPDF2 import PdfMerger, PdfReader, PdfWriter
 from help_function import reset_set_files, get_set_files, get_all_path_files
 
 
@@ -371,7 +371,7 @@ def merge_all_pdfs(pdf_dir):
     for key_i in tqdm(files_divded, desc=f"Merge files"):
         mergedObject = PdfMerger()
         for file_i in files_divded[key_i]:
-            mergedObject.append(PdfReader(file_i, 'rb'))
+            mergedObject.append(PdfReader(file_i, strict=False))
         mergedObject.write(f"{key_i}##Komplette_Sitzung.pdf")
         for file_i in files_divded[key_i]:
             out_i = key_i.replace("Vorarlberg_test3", "Vorarlberg_merged3")
@@ -379,6 +379,27 @@ def merge_all_pdfs(pdf_dir):
             os.makedirs(f"{out_i}", exist_ok=True)
             os.rename(file_i, f"{out_i}/{file_split}")
             time.sleep(0.5)
+
+def delete_ocr_typed_files(pdf_dir):
+    reset_set_files()
+    get_all_path_files(pdf_dir, ".pdf")
+    all_files = list(get_set_files())
+    all_files = sorted(all_files)
+    for file_i in tqdm(all_files, desc=f"Divid files"):
+        splitet_file = file_i.split("/")
+        if int(splitet_file[-2]) > 1938:
+            continue
+        pdf_file = PdfReader(file_i, strict=False)
+        pdf_newfile = PdfWriter()
+        for page in range(0, int(len(pdf_file.pages)/2)):
+            pdf_newfile.add_page(pdf_file.pages[page])
+        new_place = file_i.replace("Vorarlberg_test3", "Vorarlberg_test3_with_ocr")
+        os.makedirs(os.path.dirname(new_place), exist_ok=True)
+        os.rename(file_i, new_place)
+        time.sleep(0.1)
+        pdf_newfile.write(f"{file_i}_new.pdf")
+        # print("h")
+
 
 def save_json(json_data, data_dir, gzip_save=False):
     os.makedirs(os.path.dirname(data_dir), exist_ok=True)
@@ -407,4 +428,5 @@ if __name__ == '__main__':
     # download_protokoll(page_search)
     # downlaod_from_tsv(f"vorarlberg.tsv")
     # download_saved_links()
-    merge_all_pdfs(f"/storage/projects/abrami/GerParCor/pdf/Austria/Vorarlberg_test3")
+    # merge_all_pdfs(f"/storage/projects/abrami/GerParCor/pdf/Austria/Vorarlberg_test3")
+    delete_ocr_typed_files(f"/storage/projects/abrami/GerParCor/pdf/Austria/Vorarlberg_test3")
