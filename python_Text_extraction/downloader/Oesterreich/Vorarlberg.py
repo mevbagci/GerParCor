@@ -431,5 +431,5 @@ if __name__ == '__main__':
     # download_protokoll(page_search)
     # downlaod_from_tsv(f"vorarlberg.tsv")
     # download_saved_links()
-    # merge_all_pdfs(f"/storage/projects/abrami/GerParCor/pdf/Austria/Vorarlberg_test3")
-    delete_ocr_typed_files(f"/storage/projects/abrami/GerParCor/pdf/Austria/Vorarlberg_test3")
+    merge_all_pdfs(f"/storage/projects/abrami/GerParCor/pdf/Austria/Vorarlberg_test3")
+    # delete_ocr_typed_files(f"/storage/projects/abrami/GerParCor/pdf/Austria/Vorarlberg_test3")
