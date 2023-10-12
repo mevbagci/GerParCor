@@ -1,3 +1,4 @@
+import copy
 import os
 import time
 
@@ -6,7 +7,6 @@ from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 from bs4 import BeautifulSoup
-from selenium.webdriver.support.ui import Select
 import urllib
 import pandas as pd
 from urllib import request
@@ -16,11 +16,11 @@ from tqdm import tqdm
 import gzip
 import locale
 from datetime import datetime
-from multiprocessing import Pool
-from functools import partial
-import multiprocessing
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from PyPDF2 import PdfMerger, PdfReader
+from help_function import reset_set_files, get_set_files, get_all_path_files
+
 
 def bs4_downloader(html_dir):
     with open(html_dir, "r") as f:
@@ -32,6 +32,7 @@ def bs4_downloader(html_dir):
 
 def get_last_downloaded_file(directory):
     return os.listdir(directory)
+
 
 def download_pdf(file_name, url):
     os.makedirs(os.path.dirname(file_name), exist_ok=True)
@@ -98,8 +99,11 @@ def download_protokoll(page):
     time.sleep(5)
     all_links = {}
     for i in list(range(2, 35)):
-        link_i = driver.find_element(By.XPATH, f'/html/body/form/table/tbody/tr[9]/td/table/tbody/tr/td/table/tbody/tr[{i}]/td[1]/table/tbody/tr/td[1]/a').get_attribute("href")
-        text_i = driver.find_element(By.XPATH, f'/html/body/form/table/tbody/tr[9]/td/table/tbody/tr/td/table/tbody/tr[{i}]/td[1]/table/tbody/tr/td[2]/b/font').text
+        link_i = driver.find_element(By.XPATH,
+                                     f'/html/body/form/table/tbody/tr[9]/td/table/tbody/tr/td/table/tbody/tr[{i}]/td[1]/table/tbody/tr/td[1]/a').get_attribute(
+            "href")
+        text_i = driver.find_element(By.XPATH,
+                                     f'/html/body/form/table/tbody/tr[9]/td/table/tbody/tr/td/table/tbody/tr[{i}]/td[1]/table/tbody/tr/td[2]/b/font').text
         all_links[text_i] = {
             "link": link_i,
             "inter": {}
@@ -113,9 +117,13 @@ def download_protokoll(page):
         counter = 3
         while True:
             try:
-                link_inter = driver.find_element(By.XPATH, f'/html/body/form/table/tbody/tr[9]/td/table/tbody/tr/td/table/tbody/tr[{counter}]/td[2]/table/tbody/tr/td[1]/a').get_attribute("href")
-                link_inter_text = driver.find_element(By.XPATH, f'/html/body/form/table/tbody/tr[9]/td/table/tbody/tr/td/table/tbody/tr[{counter}]/td[2]/table/tbody/tr/td[2]/b/font').text
-                number_inter = int(driver.find_element(By.XPATH, f'/html/body/form/table/tbody/tr[9]/td/table/tbody/tr/td/table/tbody/tr[{counter}]/td[3]/font').text)
+                link_inter = driver.find_element(By.XPATH,
+                                                 f'/html/body/form/table/tbody/tr[9]/td/table/tbody/tr/td/table/tbody/tr[{counter}]/td[2]/table/tbody/tr/td[1]/a').get_attribute(
+                    "href")
+                link_inter_text = driver.find_element(By.XPATH,
+                                                      f'/html/body/form/table/tbody/tr[9]/td/table/tbody/tr/td/table/tbody/tr[{counter}]/td[2]/table/tbody/tr/td[2]/b/font').text
+                number_inter = int(driver.find_element(By.XPATH,
+                                                       f'/html/body/form/table/tbody/tr[9]/td/table/tbody/tr/td/table/tbody/tr[{counter}]/td[3]/font').text)
                 if link_inter is not None:
                     all_inter_links.append(link_inter)
                     all_links[link_id]["inter"][link_inter_text] = {
@@ -124,11 +132,13 @@ def download_protokoll(page):
                         "protocol": {}
                     }
                 else:
-                    link_inter = driver.find_element(By.XPATH, f'/html/body/form/table/tbody/tr[9]/td/table/tbody/tr/td/table/tbody/tr[{counter}]/td[2]/table/tbody/tr/td[1]/a[2]').get_attribute(
+                    link_inter = driver.find_element(By.XPATH,
+                                                     f'/html/body/form/table/tbody/tr[9]/td/table/tbody/tr/td/table/tbody/tr[{counter}]/td[2]/table/tbody/tr/td[1]/a[2]').get_attribute(
                         "href")
                     link_inter_text = driver.find_element(By.XPATH,
                                                           f'/html/body/form/table/tbody/tr[9]/td/table/tbody/tr/td/table/tbody/tr[{counter}]/td[2]/table/tbody/tr/td[2]/b[2]/font').text
-                    number_inter = int(driver.find_element(By.XPATH, f'/html/body/form/table/tbody/tr[9]/td/table/tbody/tr/td/table/tbody/tr[{counter}]/td[3]/font').text)
+                    number_inter = int(driver.find_element(By.XPATH,
+                                                           f'/html/body/form/table/tbody/tr[9]/td/table/tbody/tr/td/table/tbody/tr[{counter}]/td[3]/font').text)
                     if link_inter is not None:
                         all_inter_links.append(link_inter)
                         all_links[link_id]["inter"][link_inter_text] = {
@@ -151,9 +161,11 @@ def download_protokoll(page):
             time.sleep(2)
             while True:
                 try:
-                    link_element = driver.find_element(By.XPATH, f'/html/body/form/table/tbody/tr[9]/td/table/tbody/tr/td/table/tbody/tr[{counter}]/td[5]/font/a')
+                    link_element = driver.find_element(By.XPATH,
+                                                       f'/html/body/form/table/tbody/tr[9]/td/table/tbody/tr/td/table/tbody/tr[{counter}]/td[5]/font/a')
                     link_protocol = link_element.get_attribute("href")
-                    typ_protocol = driver.find_element(By.XPATH, f'/html/body/form/table/tbody/tr[9]/td/table/tbody/tr/td/table/tbody/tr[{counter}]/td[4]').text
+                    typ_protocol = driver.find_element(By.XPATH,
+                                                       f'/html/body/form/table/tbody/tr[9]/td/table/tbody/tr/td/table/tbody/tr[{counter}]/td[4]').text
                     if link_protocol is not None:
                         all_links[link_id]["inter"][inter_link_id]["protocol"][link_element.text] = {
                             "link": link_protocol,
@@ -192,7 +204,8 @@ def download_saved_links(type_download=f"Protokoll"):
     start = False
     for link_id in all_links:
         for inter_id in all_links[link_id]["inter"]:
-            for c, protocol_id in enumerate(tqdm(all_links[link_id]["inter"][inter_id]["protocol"], desc=f"{link_id} ; {inter_id}")):
+            for c, protocol_id in enumerate(
+                    tqdm(all_links[link_id]["inter"][inter_id]["protocol"], desc=f"{link_id} ; {inter_id}")):
                 if link_id == "28. Landtag (Oktober 2004 - September 2009)" and inter_id == "2007-09" and c == 2:
                     start = True
                 if start:
@@ -205,7 +218,7 @@ def download_saved_links(type_download=f"Protokoll"):
                         if type_i == type_download:
                             if "komplette" in protocol_id2:
                                 complete_data = True
-                    if len(split_inter_id)<=2:
+                    if len(split_inter_id) <= 2:
                         year_sitzung = split_inter_id[0]
                     else:
                         year_sitzung = split_inter_id[1]
@@ -232,7 +245,9 @@ def download_saved_links(type_download=f"Protokoll"):
                             if len(files) > 0:
                                 if files[-1].endswith(".pdf"):
                                     time.sleep(1)
-                                    infos_i = driver.find_element(By.XPATH, f'/html/body/form/table/tbody/tr/td[2]').text.split("\n")
+                                    infos_i = driver.find_element(By.XPATH,
+                                                                  f'/html/body/form/table/tbody/tr/td[2]').text.split(
+                                        "\n")
                                     date_i = "XXXX"
                                     for info_i in infos_i:
                                         if "Behandelt im Landtag " in info_i:
@@ -319,12 +334,15 @@ def get_download_page(special_url):
     driver.get(link_i)
     wait = WebDriverWait(driver, 10)
     wait.until(EC.presence_of_element_located((By.XPATH, f'/html/body/form/a[5]')))
-    link_download = driver.find_element(By.XPATH, f'/html/body/form/a[5]').get_attribute("href").replace('javascript:OpenPDF("', "").replace('")', "")
+    link_download = driver.find_element(By.XPATH, f'/html/body/form/a[5]').get_attribute("href").replace(
+        'javascript:OpenPDF("', "").replace('")', "")
     link_names = special_url.split("##link##")[0].split("#__#")
     try:
-        download_pdf(f"{dir_download}/{link_names[0]}/{link_names[1].split('-')[0]}/{link_names[2].split('„')[0]}.pdf", link_download)
+        download_pdf(f"{dir_download}/{link_names[0]}/{link_names[1].split('-')[0]}/{link_names[2].split('„')[0]}.pdf",
+                     link_download)
         while True:
-            if os.path.exists(f"{dir_download}/{link_names[0]}/{link_names[1].split('-')[0]}/{link_names[2].split('„')[0]}.pdf"):
+            if os.path.exists(
+                    f"{dir_download}/{link_names[0]}/{link_names[1].split('-')[0]}/{link_names[2].split('„')[0]}.pdf"):
                 break
             else:
                 time.sleep(0.5)
@@ -334,6 +352,32 @@ def get_download_page(special_url):
     # print("h")
 
 
+def merge_all_pdfs(pdf_dir):
+    reset_set_files()
+    get_all_path_files(pdf_dir, ".pdf")
+    all_files = list(get_set_files())
+    all_files = sorted(all_files)
+    files_divded = {}
+    for file_i in tqdm(all_files, desc=f"Divid files"):
+        splitet_file = file_i.split("##")
+        key_i = f"{splitet_file[0]}##{splitet_file[1]}"
+        if key_i not in files_divded:
+            files_divded[key_i] = []
+        files_divded[key_i].append(file_i)
+    copy_files = copy.deepcopy(files_divded)
+    for key_i in copy_files:
+        if len(copy_files[key_i]) == 1:
+            del files_divded[key_i]
+    for key_i in tqdm(files_divded, desc=f"Merge files"):
+        mergedObject = PdfMerger()
+        for file_i in files_divded[key_i]:
+            mergedObject.append(PdfReader(file_i, 'rb'))
+        mergedObject.write(f"{key_i}##Komplette_Sitzung.pdf")
+        for file_i in files_divded[key_i]:
+            file_split = file_i.split("/")[-1]
+            os.makedirs(f"{key_i}", exist_ok=True)
+            os.rename(file_i, f"{key_i}/{file_split}")
+            time.sleep(0.5)
 
 def save_json(json_data, data_dir, gzip_save=False):
     os.makedirs(os.path.dirname(data_dir), exist_ok=True)
@@ -361,4 +405,5 @@ if __name__ == '__main__':
     page_search = f"https://suche.vorarlberg.at/VLR/vlr_gov.nsf/nachLandtagsperiode?OpenForm"
     # download_protokoll(page_search)
     # downlaod_from_tsv(f"vorarlberg.tsv")
-    download_saved_links()
+    # download_saved_links()
+    merge_all_pdfs(f"/storage/projects/abrami/GerParCor/pdf/Austria/Vorarlberg_test3")
