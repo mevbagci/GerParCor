@@ -387,17 +387,20 @@ def delete_ocr_typed_files(pdf_dir):
     all_files = sorted(all_files)
     for file_i in tqdm(all_files, desc=f"Divid files"):
         splitet_file = file_i.split("/")
-        if int(splitet_file[-2]) > 1938:
+        new_place = file_i.replace("Vorarlberg_test3", "Vorarlberg_test3_with_ocr")
+        if os.path.exists(new_place):
             continue
+        if splitet_file[-2].isnumeric():
+            if int(splitet_file[-2]) > 1938:
+                break
         pdf_file = PdfReader(file_i, strict=False)
         pdf_newfile = PdfWriter()
         for page in range(0, int(len(pdf_file.pages)/2)):
             pdf_newfile.add_page(pdf_file.pages[page])
-        new_place = file_i.replace("Vorarlberg_test3", "Vorarlberg_test3_with_ocr")
         os.makedirs(os.path.dirname(new_place), exist_ok=True)
         os.rename(file_i, new_place)
         time.sleep(0.1)
-        pdf_newfile.write(f"{file_i}.pdf")
+        pdf_newfile.write(f"{file_i}")
         # print("h")
 
 
