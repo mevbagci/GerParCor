@@ -397,7 +397,7 @@ def delete_ocr_typed_files(pdf_dir):
         os.makedirs(os.path.dirname(new_place), exist_ok=True)
         os.rename(file_i, new_place)
         time.sleep(0.1)
-        pdf_newfile.write(f"{file_i}_new.pdf")
+        pdf_newfile.write(f"{file_i}.pdf")
         # print("h")
 
 
