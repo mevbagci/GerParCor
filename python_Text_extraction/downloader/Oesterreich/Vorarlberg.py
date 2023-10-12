@@ -374,9 +374,10 @@ def merge_all_pdfs(pdf_dir):
             mergedObject.append(PdfReader(file_i, 'rb'))
         mergedObject.write(f"{key_i}##Komplette_Sitzung.pdf")
         for file_i in files_divded[key_i]:
+            out_i = key_i.replace("Vorarlberg_test3", "Vorarlberg_merged3")
             file_split = file_i.split("/")[-1]
-            os.makedirs(f"{key_i}", exist_ok=True)
-            os.rename(file_i, f"{key_i}/{file_split}")
+            os.makedirs(f"{out_i}", exist_ok=True)
+            os.rename(file_i, f"{out_i}/{file_split}")
             time.sleep(0.5)
 
 def save_json(json_data, data_dir, gzip_save=False):
