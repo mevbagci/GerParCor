@@ -402,7 +402,7 @@ def remerge_all_pdfs(pdf_dir):
     for key_i in tqdm(files_divded, desc=f"Merge files"):
         mergedObject = PdfMerger()
         files_sorted = sorted(copy.deepcopy(files_divded[key_i]), key=os.path.getmtime)
-        print("h")
+        # print("h")
         out_i = key_i.replace("Vorarlberg_merged3", "Vorarlberg_test3")
         for file_i in files_sorted:
             mergedObject.append(PdfReader(file_i, strict=False))
