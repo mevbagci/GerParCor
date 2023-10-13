@@ -295,8 +295,8 @@ if __name__ == "__main__":
     #         input_path = f"{path_ober}/{i}. Gesetzgebungsperiode"
     #         dir_to_txt(input_path)
 
-    path_vorarlberg = f"{base_path}/Austria/Vorarlberg_test3"
-    out_vorarlberg = f"{base_path}/Austria/Vorarlberg_test3"
+    path_vorarlberg = f"{base_path}/Austria/Vorarlberg_test4"
+    out_vorarlberg = f"{base_path}/Austria/Vorarlberg_test4"
     vorarlberg = {
         "31. Landtagsperiode (6. November 2019 - 5. November 2024)": [2021, 2020, 2019],
         "30. Landtagsperiode (15. Oktober 2014 - 5. November 2019)": list(range(2014, 2020)),
