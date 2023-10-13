@@ -380,6 +380,41 @@ def merge_all_pdfs(pdf_dir):
             os.rename(file_i, f"{out_i}/{file_split}")
             time.sleep(0.5)
 
+
+def remerge_all_pdfs(pdf_dir):
+    reset_set_files()
+    get_all_path_files(pdf_dir, ".pdf")
+    all_files = list(get_set_files())
+    all_files = sorted(all_files)
+    files_divded = {}
+    for file_i in tqdm(all_files, desc=f"Divid files"):
+        splitet_file = file_i.split("/")
+        splits = splitet_file[:-2]+splitet_file[-1:]
+        splitet_file = "/".join(splits).split("##")
+        key_i = f"{splitet_file[0]}##{splitet_file[1]}"
+        if key_i not in files_divded:
+            files_divded[key_i] = []
+        files_divded[key_i].append(file_i)
+    copy_files = copy.deepcopy(files_divded)
+    for key_i in copy_files:
+        if len(copy_files[key_i]) == 1:
+            del files_divded[key_i]
+    for key_i in tqdm(files_divded, desc=f"Merge files"):
+        mergedObject = PdfMerger()
+        files_sorted = sorted(copy.deepcopy(files_divded[key_i]), key=os.path.getmtime)
+        print("h")
+        out_i = key_i.replace("Vorarlberg_merged3", "Vorarlberg_test3")
+        for file_i in files_sorted:
+            mergedObject.append(PdfReader(file_i, strict=False))
+        mergedObject.write(f"{out_i}##Komplette_Sitzung.pdf")
+
+        # for file_i in files_divded[key_i]:
+        #     out_i = key_i.replace("Vorarlberg_merged3", "Vorarlberg_test3")
+        #     file_split = file_i.split("/")[-1]
+        #     os.makedirs(f"{out_i}", exist_ok=True)
+        #     os.rename(file_i, f"{out_i}/{file_split}")
+        #     time.sleep(0.5)
+
 def delete_ocr_typed_files(pdf_dir):
     reset_set_files()
     get_all_path_files(pdf_dir, ".pdf")
@@ -431,5 +466,6 @@ if __name__ == '__main__':
     # download_protokoll(page_search)
     # downlaod_from_tsv(f"vorarlberg.tsv")
     # download_saved_links()
-    merge_all_pdfs(f"/storage/projects/abrami/GerParCor/pdf/Austria/Vorarlberg_test3")
+    # merge_all_pdfs(f"/storage/projects/abrami/GerParCor/pdf/Austria/Vorarlberg_test3")
+    remerge_all_pdfs(f"/storage/projects/abrami/GerParCor/pdf/Austria/Vorarlberg_merged3")
     # delete_ocr_typed_files(f"/storage/projects/abrami/GerParCor/pdf/Austria/Vorarlberg_test3")
