@@ -189,7 +189,7 @@ def download_protokoll(page):
 def download_saved_links(type_download=f"Protokoll"):
     chrome_options = webdriver.ChromeOptions()
     dir_download = f'/storage/projects/abrami/GerParCor/pdf/Austria/Vorarlberg_temp3'
-    download_directory = f'/storage/projects/abrami/GerParCor/pdf/Austria/Vorarlberg_test3'
+    download_directory = f'/storage/projects/abrami/GerParCor/pdf/Austria/Vorarlberg_test4'
     prefs = {'download.default_directory': dir_download, 'intl.accept_languages': 'de,de_DE'}
     os.makedirs(dir_download, exist_ok=True)
     chrome_options.add_experimental_option('prefs', prefs)
@@ -422,7 +422,7 @@ def delete_ocr_typed_files(pdf_dir):
     all_files = sorted(all_files)
     for file_i in tqdm(all_files, desc=f"Divid files"):
         splitet_file = file_i.split("/")
-        new_place = file_i.replace("Vorarlberg_test3", "Vorarlberg_test3_with_ocr")
+        new_place = file_i.replace("Vorarlberg_test4", "Vorarlberg_test4_with_ocr")
         if os.path.exists(new_place):
             continue
         if splitet_file[-2].isnumeric():
@@ -465,7 +465,7 @@ if __name__ == '__main__':
     page_search = f"https://suche.vorarlberg.at/VLR/vlr_gov.nsf/nachLandtagsperiode?OpenForm"
     # download_protokoll(page_search)
     # downlaod_from_tsv(f"vorarlberg.tsv")
-    # download_saved_links()
+    download_saved_links()
     # merge_all_pdfs(f"/storage/projects/abrami/GerParCor/pdf/Austria/Vorarlberg_test3")
-    remerge_all_pdfs(f"/storage/projects/abrami/GerParCor/pdf/Austria/Vorarlberg_merged3")
-    # delete_ocr_typed_files(f"/storage/projects/abrami/GerParCor/pdf/Austria/Vorarlberg_test3")
+    # remerge_all_pdfs(f"/storage/projects/abrami/GerParCor/pdf/Austria/Vorarlberg_merged3")
+    delete_ocr_typed_files(f"/storage/projects/abrami/GerParCor/pdf/Austria/Vorarlberg_test4")
