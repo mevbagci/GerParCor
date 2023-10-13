@@ -201,7 +201,7 @@ def download_saved_links(type_download=f"Protokoll"):
     all_links = read_json(f"/storage/projects/abrami/GerParCor/links/austria/Vorarlberg/vorarlberg.json")
     downloads = []
     failed = []
-    start = False
+    start = True
     for link_id in all_links:
         for inter_id in all_links[link_id]["inter"]:
             for c, protocol_id in enumerate(
