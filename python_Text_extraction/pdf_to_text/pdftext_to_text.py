@@ -295,8 +295,8 @@ if __name__ == "__main__":
     #         input_path = f"{path_ober}/{i}. Gesetzgebungsperiode"
     #         dir_to_txt(input_path)
 
-    path_vorarlberg = f"{base_path}/Austria/Vorarlberg"
-    out_vorarlberg = f"{base_path}/Austria/Vorarlberg"
+    path_vorarlberg = f"{base_path}/Austria/Vorarlberg_test3"
+    out_vorarlberg = f"{base_path}/Austria/Vorarlberg_test3"
     vorarlberg = {
         "31. Landtagsperiode (6. November 2019 - 5. November 2024)": [2021, 2020, 2019],
         "30. Landtagsperiode (15. Oktober 2014 - 5. November 2019)": list(range(2014, 2020)),
@@ -321,16 +321,16 @@ if __name__ == "__main__":
         "11. Landtag (17.6.1919 - 10.9.1923)": list(range(1919, 1924))+["(Not Categorized)"],
         "10. Landtag (16.9.1909 - 4.6.1914)": list(range(1909, 1915))+["(Not Categorized)"],
         "09. Landtag (22.12.1902 - 17.10.1908)": list(range(1902, 1909)),
-        "08. Landtag (26.1.1897 - 17.7.1902)": ["01", "02", "03", "04", "05", "06"],
-        "07. Landtag (14.10.1890-05.02.1896)": ["01", "02", "03", "04", "05", "06"],
-        "07. Landtag (14.10.1890 - 05.02.1896)": ["03", "06"],
-        "06. Landtag (11.08.1884 - 30.10.1889)": ["01", "02", "03", "04", "05", "06"],
-        "05. Landtag (24.09.1878 - 13.08.1883)": ["01", "02", "03", "04", "05"],
-        "04. Landtag (18.12.1871-21.04.1877)": ["01", "02", "03", "04"],
-        "04. Landtag (18.12.1871 - 21.04.1877)": ["04", "05", "06", "(Not Categorized)"],
-        "03. Landtag (20.08.1870 - 14.10.1871)": ["01", "02"],
-        "02. Landtag (18.02.1867 - 30.10.1869)": ["01", "02", "03"],
-        "01. Landtag (04.06.1861 - 29.12.1866)": ["01", "02", "03", "04", "05"],
+        "08. Landtag (26.1.1897 - 17.7.1902)": list(range(1897, 1903)),
+        "07. Landtag (14.10.1890-05.02.1896)": list(range(1890, 1897)),
+        "07. Landtag (14.10.1890 - 05.02.1896)": list(range(1890, 1897)),
+        "06. Landtag (11.08.1884 - 30.10.1889)":  list(range(1884, 1890)),
+        "05. Landtag (24.09.1878 - 13.08.1883)":  list(range(1878, 1884)),
+        "04. Landtag (18.12.1871-21.04.1877)":  list(range(1871, 1878)),
+        "04. Landtag (18.12.1871 - 21.04.1877)":  list(range(1871, 1878))+["(Not Categorized)"],
+        "03. Landtag (20.08.1870 - 14.10.1871)":  list(range(1870, 1872)),
+        "02. Landtag (18.02.1867 - 30.10.1869)":  list(range(1867, 1870)),
+        "01. Landtag (04.06.1861 - 29.12.1866)":  list(range(1861, 1867))
     }
     for i in vorarlberg:
         for year in vorarlberg[i]:
