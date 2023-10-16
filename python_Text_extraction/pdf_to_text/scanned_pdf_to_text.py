@@ -3,6 +3,7 @@ import argparse
 from PIL import Image
 import pytesseract
 from pdf2image import convert_from_path
+from typing import Union, Optional, Tuple, List, Set
 import os
 from tqdm import tqdm
 from os import makedirs
@@ -11,7 +12,10 @@ import cv2
 import pathlib
 from multiprocessing import Pool
 from functools import partial
-from typing import List
+import codecs
+import cassis
+import time
+from datetime import datetime
 
 set_files = set()
 Image.MAX_IMAGE_PIXELS = 999999999
@@ -245,6 +249,72 @@ def scan_List_to_text(dir_path: List[str], out_name_dir: str, bad_quali: bool, d
         else:
             fails += 1
     print(f"successes: {successes}, fails: {fails}")
+
+
+def save_txt_as_xmi(txt_path:str, landtag:str, datum: str,
+                    typesystem:cassis.TypeSystem, user1:str, user2:str,
+                    origin_path:str, quelle:str, subtilte_protocol:str,
+                    save_path:str, mask_key:str) -> None:
+    """
+    landtag: parliament of the given protocol
+    datum: date of the protocol with style: DD.MM.YYYY
+    Function to save a txt file as apache uima xmi.
+    :param txt_path:
+    :param landtag:
+    :param datum:
+    :param typesystem:
+    :return:
+    """
+    with codecs.open(txt_path, "r", "utf-8") as f:
+        text = f.read()
+    # if MASK[mask_key]["filter"]:
+    #     text = ''.join(c for c in text if valid_xml_char_ordinal(c))
+    cas = cassis.Cas(typesystem=typesystem)
+
+    cas.sofa_string = text
+    cas.sofa_mime = "text"
+
+
+    DocumentMetaData = typesystem.get_type("de.tudarmstadt.ukp.dkpro.core.api.metadata.type.DocumentMetaData")
+    DocumentAnnotation = typesystem.get_type("org.texttechnologylab.annotation.DocumentAnnotation")
+    DocumentModification = typesystem.get_type("org.texttechnologylab.annotation.DocumentModification")
+    # DocumentMetaData
+    document_title = landtag + "-Plenarprotokoll vom " + datum
+    document_id = txt_path.split("/")[-1].replace(" ", "_").replace(".txt", ".xmi")
+    # DocumentAnnotation
+    date_time_obj = datetime.strptime(datum, '%d.%m.%Y')
+    author = quelle
+    subtitle = subtilte_protocol
+    day = int(datum.split(".")[0])
+    month = int(datum.split(".")[1])
+    year = int(datum.split(".")[2])
+    timestamp = int(datetime.timestamp(date_time_obj) * 1000)
+    # DocumentModification
+    user1 = user1
+    user2 = user2
+    comment1 = "Download"
+    comment2 = "Transformation/Conversion"
+    timestamp2 = int(os.path.getmtime(origin_path) * 1000)
+    timestamp3 = int(current_milli_time())
+
+    cas.add_all([
+        DocumentMetaData(documentTitle=document_title, documentId=document_id),
+        DocumentAnnotation(author=author, dateDay=day, subtitle=subtitle,
+                           dateMonth=month, dateYear=year, timestamp=timestamp),
+        DocumentModification(user=user1, timestamp=timestamp2, comment=comment1),
+        DocumentModification(user=user2, timestamp=timestamp3, comment=comment2)
+    ])
+
+    cas.to_xmi(save_path + "/" + document_id)
+
+    return
+
+def current_milli_time() -> Optional[int]:
+    """
+    returns timestamp in milliseconds.
+    :return:
+    """
+    return round(time.time() * 1000)
 
 
 if __name__ == "__main__":
