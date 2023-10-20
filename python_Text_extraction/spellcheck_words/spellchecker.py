@@ -22,13 +22,17 @@ def spellchecker(input_txt_dir: str, speller: SymSpell, spell_object_name: str):
     wrong = 0
     unknown = 0
     number_of_words = 0
+    skipped_words = 0
+    all_words = 0
     quality_good, quality_good_unknown = 0.0, 0.0
+    quality = 0.0
     try:
         with open(input_txt_dir, "r", encoding="UTF-8") as text_file:
             text = text_file.read()
             text = text.replace("\n", " ")
         for word in text.split():
             #  and not "ſ" in word:
+            all_words += 1
             if word.isalnum() and not word.isdigit():
                 number_of_words += 1
                 suggestions = speller.lookup(word.lower(), Verbosity.CLOSEST, max_edit_distance=2)
@@ -39,22 +43,31 @@ def spellchecker(input_txt_dir: str, speller: SymSpell, spell_object_name: str):
                         wrong += 1
                 else:
                     unknown += 1
+            else:
+                skipped_words += 1
         if right != 0 and wrong != 0:
             quality_good = right / (wrong + right)
             quality_good_unknown = right / number_of_words
+            quality = right / (wrong + right + unknown + skipped_words)
         elif wrong == 0:
             quality_good, quality_good_unknown = 1.0, 1.0
+            quality = 1.0
         elif right:
             quality_good, quality_good_unknown = 0.0, 0.0
+            quality = 0.0
         file_base_name = str(os.path.basename(input_txt_dir))
         name_data = f"{spell_object_name}_{file_base_name}"
         dict_spellcheck_text = {"name": name_data,
                                 "right_number": right,
                                 "wrong_number": wrong,
                                 "unknown_number": unknown,
+                                "skipped_words": skipped_words,
                                 "number_of_words": number_of_words,
                                 "quality_good": quality_good,
-                                "quality_good_unknown": quality_good_unknown}
+                                "quality_good_unknown": quality_good_unknown,
+                                "quality": quality,
+                                "all_words": all_words,
+                                }
         return dict_spellcheck_text
     except Exception as ex:
         print(f"{input_txt_dir}, Error: {ex}")
@@ -133,6 +146,8 @@ def summary_result_spellcheck(input_dir_results: str, end_with: str, spell_objec
     quality_sum = 0
     number_right = 0
     number_wrong = 0
+    skipped_words = 0
+    all_words = 0
     out_first_line = f"Good_quality\tright_number\twrong_number\n"
     if end_with ==".json":
         out_dir_name = f"{input_dir_results}/{spell_object_name}_all_quality_out.json"
@@ -150,15 +165,33 @@ def summary_result_spellcheck(input_dir_results: str, end_with: str, spell_objec
                     wrong += data_i["wrong_number"]
                     unknown += data_i["unknown_number"]
                     number_words += data_i["number_of_words"]
+                    all_words += data_i["all_words"]
+                    skipped_words += data_i["skipped_words"]
         quality_good = right/(right+wrong)
         quality_unknown = right/number_words
+        quality = right/all_words
+        percent_right = right/number_words
+        percent_wrong = wrong/number_words
+        percent_unknown = unknown/number_words
+        percent_right_with_skipped = right/all_words
+        percent_wrong_with_skipped = wrong/all_words
+        percent_unknown_with_skipped = unknown/all_words
         data_sum = {
             "right_number": right,
             "wrong_number": wrong,
             "unknown_number": unknown,
             "number_of_words": number_words,
+            "skipped_words": skipped_words,
+            "all_words": all_words,
             "quality_good": quality_good,
             "quality_unknown": quality_unknown,
+            "quality": quality,
+            "percent_right": percent_right,
+            "percent_wrong": percent_wrong,
+            "percent_unknown": percent_unknown,
+            "percent_right_with_skipped": percent_right_with_skipped,
+            "percent_wrong_with_skipped": percent_wrong_with_skipped,
+            "percent_unknown_with_skipped": percent_unknown_with_skipped,
             "text": f"Good_quality\tUnknown quality\tunknown words\tright words\twrong words\n"
                     f"{quality_good}%\t{quality_unknown}%\t{unknown/number_words}%\t{right/number_words}%\t{wrong/number_words}"
         }

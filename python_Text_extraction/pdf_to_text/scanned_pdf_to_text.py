@@ -20,6 +20,10 @@ from datetime import datetime
 set_files = set()
 Image.MAX_IMAGE_PIXELS = 999999999
 
+with open('TypeSystem.xml', 'rb') as f:
+    typesystem_cassis = cassis.load_typesystem(f)
+
+
 def pdf_to_image(pdf_path: str, dpi: int, lang: str, output_path, bad_quali: bool = False) -> (int, str):
     """
     Function takes pdf scan as input and converts it to single images (one per page).
@@ -127,7 +131,8 @@ def image_to_text(image_path: str, pdf_path: str, file_limit: int, lang: str, ou
 
             # Finally, write the processed text to the file.
             f.write(text)
-
+    path_xmi = "/".join(txt_path.split("/")[:-1]).replace("/txt/", "/xmi/")
+    save_txt_as_xmi(txt_path, typesystem_cassis, "Abrami", "Bagci", pdf_path, path_xmi)
         # Close the file after writing all the text.
 
     # Delete saved images
@@ -251,18 +256,18 @@ def scan_List_to_text(dir_path: List[str], out_name_dir: str, bad_quali: bool, d
     print(f"successes: {successes}, fails: {fails}")
 
 
-def save_txt_as_xmi(txt_path:str, landtag:str, datum: str,
-                    typesystem:cassis.TypeSystem, user1:str, user2:str,
-                    origin_path:str, quelle:str, subtilte_protocol:str,
-                    save_path:str, mask_key:str) -> None:
+def save_txt_as_xmi(txt_path: str,
+                    typesystem: cassis.TypeSystem, user1: str, user2: str,
+                    origin_path: str,
+                    save_path: str) -> None:
     """
     landtag: parliament of the given protocol
-    datum: date of the protocol with style: DD.MM.YYYY
-    Function to save a txt file as apache uima xmi.
     :param txt_path:
-    :param landtag:
-    :param datum:
     :param typesystem:
+    :param user1:
+    :param user2:
+    :param origin_path:
+    :param save_path:
     :return:
     """
     with codecs.open(txt_path, "r", "utf-8") as f:
@@ -273,22 +278,11 @@ def save_txt_as_xmi(txt_path:str, landtag:str, datum: str,
 
     cas.sofa_string = text
     cas.sofa_mime = "text"
-
-
     DocumentMetaData = typesystem.get_type("de.tudarmstadt.ukp.dkpro.core.api.metadata.type.DocumentMetaData")
-    DocumentAnnotation = typesystem.get_type("org.texttechnologylab.annotation.DocumentAnnotation")
     DocumentModification = typesystem.get_type("org.texttechnologylab.annotation.DocumentModification")
     # DocumentMetaData
-    document_title = landtag + "-Plenarprotokoll vom " + datum
     document_id = txt_path.split("/")[-1].replace(" ", "_").replace(".txt", ".xmi")
-    # DocumentAnnotation
-    date_time_obj = datetime.strptime(datum, '%d.%m.%Y')
-    author = quelle
-    subtitle = subtilte_protocol
-    day = int(datum.split(".")[0])
-    month = int(datum.split(".")[1])
-    year = int(datum.split(".")[2])
-    timestamp = int(datetime.timestamp(date_time_obj) * 1000)
+    document_title = document_id
     # DocumentModification
     user1 = user1
     user2 = user2
@@ -299,8 +293,6 @@ def save_txt_as_xmi(txt_path:str, landtag:str, datum: str,
 
     cas.add_all([
         DocumentMetaData(documentTitle=document_title, documentId=document_id),
-        DocumentAnnotation(author=author, dateDay=day, subtitle=subtitle,
-                           dateMonth=month, dateYear=year, timestamp=timestamp),
         DocumentModification(user=user1, timestamp=timestamp2, comment=comment1),
         DocumentModification(user=user2, timestamp=timestamp3, comment=comment2)
     ])
@@ -308,6 +300,7 @@ def save_txt_as_xmi(txt_path:str, landtag:str, datum: str,
     cas.to_xmi(save_path + "/" + document_id)
 
     return
+
 
 def current_milli_time() -> Optional[int]:
     """
@@ -326,9 +319,8 @@ if __name__ == "__main__":
     out_base = f"/storage/projects/abrami/GerParCor/txt"
     base_path = f"/storage/projects/abrami/GerParCor/pdf"
     older_input = [
-        "I", "II", "III", "IV", #frak
+        "I", "II", "III", "IV",  # frak
     ]
-
 
     # NiederOestereich
     niederaustria = [
@@ -337,7 +329,7 @@ if __name__ == "__main__":
     path_nieder = f"{base_path}/Austria/Niederoestereich"
     out_nieder = f"{out_base}/Austria/Niederoestereich"
 
-    #Oberoesterreich
+    # Oberoesterreich
     path_ober = f"{base_path}/Austria/Oberoestereich"
     out_ober = f"{out_base}/Austria/Oberoestereich"
     oberautria = ["18", "19", "20", "21", "22", "23",
@@ -383,7 +375,6 @@ if __name__ == "__main__":
     #     input_path = f"{path_tirol_kurz}/{i} Periode"
     #     if os.path.exists(input_path):
     #         scan_dir_to_text(input_path, out_tirol_kurz, True, dpi_convert, lang_old)
-
 
     list_failed = [
         # "/storage/projects/abrami/GerParCor/pdf/Germany/BadenWuertemmberg/older/Landtag Baden-W\u00fcrttemberg (1953-1996)/1953-1954, Bd. 1.pdf",
@@ -540,5 +531,3 @@ if __name__ == "__main__":
     # args = parser.parse_args()
     # scan_dir_to_text(dir_path=args.path_directory, out_name_dir=args.out, bad_quali=args.quali, dpi=args.dpi,
     #                  lang=args.lang)
-
-
